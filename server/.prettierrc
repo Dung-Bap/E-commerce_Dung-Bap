@@ -1,0 +1,18 @@
+{
+    "singleQuote": true,
+    "printWidth": 120,
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "tabWidth": 4,
+    "semi": true,
+    "endOfLine": "lf",
+    "arrowParens": "avoid",
+    "overrides": [
+        {
+            "files": "*.hbs",
+            "options": {
+                "parser": "html"
+            }
+        }
+    ]
+}
