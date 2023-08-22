@@ -16,12 +16,12 @@ var userSchema = new mongoose.Schema(
         email: {
             type: String,
             required: true,
-            unique: true,
+            // unique: true,
         },
         mobile: {
             type: String,
             required: true,
-            unique: true,
+            // unique: true,
         },
         password: {
             type: String,
@@ -72,6 +72,12 @@ userSchema.pre("save", async function (next) {
     const salt = bcrypt.genSaltSync(10);
     this.password = await bcrypt.hash(this.password, salt);
 });
+// hàm kiểm tra xem pass khi login có đúng trong db hay không
+userSchema.methods = {
+    isCorrectPassword: async function (password) {
+        return await bcrypt.compare(password, this.password);
+    },
+};
 
 //Export the model
 module.exports = mongoose.model("User", userSchema);

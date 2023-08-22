@@ -5,6 +5,7 @@ const ctrls = require("../controllers/user");
 // de du lieu k bi lộ, gui qua post, put
 
 router.post("/register", ctrls.register);
+router.post("/login", ctrls.login);
 
 module.exports = router;
 
