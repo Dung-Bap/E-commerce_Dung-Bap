@@ -2,6 +2,10 @@
 
 const User = require("../models/user");
 const asyncHandler = require("express-async-handler");
+const {
+    generateAccessToken,
+    generateRefreshToken,
+} = require("../middlewares/jwt");
 
 //api/user/register
 const register = asyncHandler(async (req, res) => {
@@ -41,16 +45,42 @@ const login = asyncHandler(async (req, res, next) => {
         // ẩn field password and role bằng rest và object literals
         // do moongo không hỗ trợ nên phải toObject() để trở thành plain object
         const { password, role, ...userData } = response.toObject();
+        const accessToken = generateAccessToken(response._id, role);
+        const refreshToken = generateRefreshToken(response._id);
+        // Lưu refreshToken vào Cookie (dùng để cấp mới acceccToken)
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+        await User.findByIdAndUpdate(
+            response._id,
+            { refreshToken },
+            { new: true }
+        );
         return res.status(200).json({
             success: true,
+            accessToken,
             userData,
         });
     } else {
         throw new Error("Invalid authentication! ");
     }
 });
+//api/user/curent
+const getCurrent = asyncHandler(async (req, res, next) => {
+    // Do khi verify có thêm field user nên lấy nó thành id luôn
+    const { _id } = req.user;
+    const user = await User.findById(_id).select(
+        "-password -role -refreshToken"
+    ); // .select để không lấy field "-password -role -refreshToken"
+    return res.status(200).json({
+        success: true,
+        result: user ? user : "User not found",
+    });
+});
 
 module.exports = {
     register,
     login,
+    getCurrent,
 };
