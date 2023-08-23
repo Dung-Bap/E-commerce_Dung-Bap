@@ -1,7 +1,8 @@
 /** @format */
 // !mdbgum
-const mongoose = require("mongoose"); // Erase if already required
-const bcrypt = require("bcrypt"); // dung de hash password
+const mongoose = require('mongoose'); // Erase if already required
+const bcrypt = require('bcrypt'); // dung de hash password
+const crypto = require('crypto');
 // Declare the Schema of the Mongo model
 var userSchema = new mongoose.Schema(
     {
@@ -16,12 +17,12 @@ var userSchema = new mongoose.Schema(
         email: {
             type: String,
             required: true,
-            // unique: true,
+            unique: true,
         },
         mobile: {
             type: String,
             required: true,
-            // unique: true,
+            unique: true,
         },
         password: {
             type: String,
@@ -30,16 +31,16 @@ var userSchema = new mongoose.Schema(
         // phân quyền, mặc định là user
         role: {
             type: String,
-            default: "user",
+            default: 'user',
         },
         cart: {
             type: Array,
             default: [],
         },
         // mảng chứa Id của bảng address (quan hệ trong mysql)
-        address: [{ type: mongoose.Types.ObjectId, ref: "Address" }],
+        address: [{ type: mongoose.Types.ObjectId, ref: 'Address' }],
         // mảng chứa những items mà người dùng thích
-        wishlist: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
+        wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],
         // có khoá tài khoản hay không
         isBlocked: {
             type: Boolean,
@@ -67,17 +68,25 @@ var userSchema = new mongoose.Schema(
 );
 
 // hash password when save
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
     const salt = bcrypt.genSaltSync(10);
     this.password = await bcrypt.hash(this.password, salt);
 });
-// hàm kiểm tra xem pass khi login có đúng trong db hay không
+
 userSchema.methods = {
+    // hàm kiểm tra xem pass khi login có đúng trong db hay không
     isCorrectPassword: async function (password) {
         return await bcrypt.compare(password, this.password);
+    },
+    // reset password
+    createPasswordChangeToken: function () {
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+        this.passwordResetExpires = Date.now() + 15 * 60 * 1000;
+        return resetToken;
     },
 };
 
 //Export the model
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);
