@@ -42,15 +42,16 @@ const login = asyncHandler(async (req, res, next) => {
     if (response && (await response.isCorrectPassword(password))) {
         // ẩn field password and role bằng rest và object literals
         // do moongo không hỗ trợ nên phải toObject() để trở thành plain object
-        const { password, role, ...userData } = response.toObject();
+        const { password, role, refreshToken, ...userData } = response.toObject();
         const accessToken = generateAccessToken(response._id, role);
-        const refreshToken = generateRefreshToken(response._id);
+        const newRefreshToken = generateRefreshToken(response._id);
+        // lưu refresh token vào db
+        await User.findByIdAndUpdate(response._id, { refreshToken: newRefreshToken }, { new: true });
         // Lưu refreshToken vào Cookie (dùng để cấp mới acceccToken)
-        res.cookie('refreshToken', refreshToken, {
+        res.cookie('refreshToken', newRefreshToken, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
-        await User.findByIdAndUpdate(response._id, { refreshToken }, { new: true });
         return res.status(200).json({
             success: true,
             accessToken,
@@ -66,7 +67,7 @@ const getCurrent = asyncHandler(async (req, res, next) => {
     const { _id } = req.user;
     const user = await User.findById(_id).select('-password -role -refreshToken'); // .select để không lấy field "-password -role -refreshToken"
     return res.status(200).json({
-        success: true,
+        success: user ? true : false,
         result: user ? user : 'User not found',
     });
 });
@@ -153,6 +154,49 @@ const resetPassword = asyncHandler(async (req, res) => {
         message: user ? 'Update password successfully!' : 'Something went wrong !',
     });
 });
+//api/user/
+const getUsers = asyncHandler(async (req, res) => {
+    const response = await User.find().select('-password -role -refreshToken'); // .select để không lấy field "-password -role -refreshToken"
+    return res.status(200).json({
+        success: response ? true : false,
+        users: response,
+    });
+});
+//api/user/
+const deleteUser = asyncHandler(async (req, res) => {
+    const { _id } = req.query;
+    if (!_id) throw new Error('Missing Inputs');
+    const response = await User.findByIdAndDelete({ _id });
+    return res.status(200).json({
+        success: response ? true : false,
+        deleteUser: response ? `User with email: '${response.email}' deleted` : 'No user delete',
+    });
+});
+//api/user/currentupdate
+const updateUser = asyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    // Object.keys(req.body).length === 0 'kiểm tra req.body (oject) nếu nó rỗng'
+    if (!_id || Object.keys(req.body).length === 0) throw new Error('Missing Inputs');
+    const response = await User.findByIdAndUpdate(_id, req.body, { new: true }).select(
+        ' -password -role -refreshToken'
+    );
+    return res.status(200).json({
+        success: response ? true : false,
+        updateUser: response ? response : 'Something went wrong',
+    });
+});
+//api/user/
+const updateUserByAdmin = asyncHandler(async (req, res) => {
+    const { uid } = req.params;
+    if (Object.keys(req.body).length === 0) throw new Error('Missing Inputs');
+    const response = await User.findByIdAndUpdate(uid, req.body, { new: true }).select(
+        ' -password -role -refreshToken'
+    );
+    return res.status(200).json({
+        success: response ? true : false,
+        updateUserByAdmin: response ? response : 'Something went wrong',
+    });
+});
 
 module.exports = {
     register,
@@ -162,4 +206,8 @@ module.exports = {
     logout,
     forgotPassword,
     resetPassword,
+    getUsers,
+    deleteUser,
+    updateUser,
+    updateUserByAdmin,
 };
