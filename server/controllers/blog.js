@@ -11,7 +11,7 @@ const createNewBlog = asyncHandler(async (req, res) => {
     });
 });
 
-const getBlog = asyncHandler(async (req, res) => {
+const getBlogs = asyncHandler(async (req, res) => {
     const response = await Blog.find();
     return res.status(200).json({
         success: response ? true : false,
@@ -87,10 +87,33 @@ const dislikeBlog = asyncHandler(async (req, res) => {
     }
 });
 
+const getBlog = asyncHandler(async (req, res) => {
+    const { bid } = req.params; //$inc để update field numberViews
+    const response = await Blog.findByIdAndUpdate(bid, { $inc: { numberViews: 1 } }, { new: true })
+        // .populate để lấy thông tin của id trong mảng like và dislike
+        .populate('likes', 'firstname lastname')
+        .populate('dislikes', 'firstname lastname');
+    return res.status(200).json({
+        success: response ? true : false,
+        result: response,
+    });
+});
+
+const deleteBlog = asyncHandler(async (req, res) => {
+    const { bid } = req.params;
+    const response = await Blog.findByIdAndDelete(bid);
+    res.status(200).json({
+        success: response ? true : false,
+        deleteBlog: response ? response : 'Cannot delete blog',
+    });
+});
+
 module.exports = {
     createNewBlog,
-    getBlog,
+    getBlogs,
     updateBlog,
     likeBlog,
     dislikeBlog,
+    getBlog,
+    deleteBlog,
 };
