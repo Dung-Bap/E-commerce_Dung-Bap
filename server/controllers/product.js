@@ -133,4 +133,17 @@ const ratings = asyncHandler(async (req, res) => {
     });
 });
 
-module.exports = { createProduct, getProduct, getProducts, updatedProduct, deletedProduct, ratings };
+const uploadImagesProduct = asyncHandler(async (req, res) => {
+    console.log(req.file);
+    return res.json('oke');
+});
+
+module.exports = {
+    createProduct,
+    getProduct,
+    getProducts,
+    updatedProduct,
+    deletedProduct,
+    ratings,
+    uploadImagesProduct,
+};
