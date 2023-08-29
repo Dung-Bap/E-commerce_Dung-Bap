@@ -33,12 +33,18 @@ var userSchema = new mongoose.Schema(
             type: String,
             default: 'user',
         },
-        cart: {
-            type: Array,
-            default: [],
-        },
+        cart: [
+            {
+                product: { type: mongoose.Types.ObjectId, ref: 'Product' },
+                quantity: Number,
+                color: String,
+            },
+        ],
         // mảng chứa Id của bảng address (quan hệ trong mysql)
-        address: [{ type: mongoose.Types.ObjectId, ref: 'Address' }],
+        address: {
+            type: Array,
+            defalt: [],
+        },
         // mảng chứa những items mà người dùng thích
         wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],
         // có khoá tài khoản hay không
