@@ -7,7 +7,7 @@ const blogCategoryRouter = require('./blogCategory');
 const blogRouter = require('./blog');
 const brandRouter = require('./brand');
 const couponRouter = require('./coupon');
-const orderRouter = require('./coupon');
+const orderRouter = require('./order');
 const { notFound, errHandler } = require('../middlewares/errHandler');
 
 const initRoutes = app => {
