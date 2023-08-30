@@ -1,4 +1,3 @@
-const { response } = require('express');
 const Product = require('../models/product');
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');

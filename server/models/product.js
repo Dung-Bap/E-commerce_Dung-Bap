@@ -15,7 +15,7 @@ var productSchema = new mongoose.Schema(
             lowercase: true,
         },
         description: {
-            type: String,
+            type: Array,
             required: true,
         },
         brand: {
@@ -27,8 +27,8 @@ var productSchema = new mongoose.Schema(
             required: true,
         },
         category: {
-            type: mongoose.Types.ObjectId,
-            ref: 'Category', // Liên kết với bảng category
+            type: String,
+            required: true,
         },
         quantity: {
             type: Number,
@@ -40,6 +40,10 @@ var productSchema = new mongoose.Schema(
             default: 0,
         },
         images: Array,
+        color: {
+            type: String,
+            required: true,
+        },
         ratings: [
             {
                 star: { type: Number },
