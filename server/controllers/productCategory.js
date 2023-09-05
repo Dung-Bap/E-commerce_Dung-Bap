@@ -9,11 +9,11 @@ const createCategory = asyncHandler(async (req, res) => {
     });
 });
 
-const getCategory = asyncHandler(async (req, res) => {
+const getCategories = asyncHandler(async (req, res) => {
     const response = await ProductCategory.find().select('title _id');
     return res.status(200).json({
         success: response ? true : false,
-        getCategory: response ? response : ' Cannot get category',
+        getCategories: response ? response : ' Cannot get category',
     });
 });
 
@@ -37,7 +37,7 @@ const deleteCategory = asyncHandler(async (req, res) => {
 
 module.exports = {
     createCategory,
-    getCategory,
+    getCategories,
     updateCategory,
     deleteCategory,
 };
