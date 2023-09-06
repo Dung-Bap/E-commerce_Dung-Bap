@@ -9,7 +9,7 @@ const Sidebar = () => {
         <div className="flex flex-col">
             {categories.map(category => (
                 <NavLink
-                    key={category.id}
+                    key={category._id}
                     to={createSlug(category.title)}
                     className={({ isActive }) =>
                         isActive

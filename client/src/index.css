@@ -3,3 +3,30 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:wght@300&display=swap');
+
+button.slick-next {
+    width: 80px;
+    height: 80px;
+    right: 20px;
+    top: 50%;
+}
+
+button.slick-next::before {
+    color: rgb(183, 40, 40);
+    content: '\276F';
+    font-size: 30px;
+}
+
+button.slick-prev {
+    width: 80px;
+    height: 80px;
+    left: 20px;
+    top: 50%;
+    z-index: 1;
+}
+
+button.slick-prev::before {
+    color: rgb(183, 40, 40);
+    content: '\276E';
+    font-size: 30px;
+}
