@@ -5,7 +5,7 @@ import { Home, Login, Public } from './pages/public';
 import path from './ultils/path';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getCategories } from './app/asyncActions';
+import { getCategories } from './store/app/asyncActions';
 
 function App() {
     const dispatch = useDispatch();

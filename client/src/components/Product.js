@@ -40,7 +40,9 @@ const Product = ({ data, isLabel }) => {
                     />
                 </div>
                 <span className=" flex text-[14px] font-light my-[10px] h-[14px] ">
-                    {renderStars(data?.totalRatings, 14)}
+                    {renderStars(data.totalRatings, 14)?.map((el, index) => (
+                        <span key={index}>{el}</span>
+                    ))}
                 </span>
                 <span className="text-[16px] font-light mb-[10px] line-clamp-1 hover:text-main">{data?.title}</span>
                 <span className={`text-[16px] font-light`}>{`${formatMoney(data?.price)}`}</span>
