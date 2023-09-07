@@ -26,7 +26,7 @@ const getProduct = asyncHandler(async (req, res) => {
 const getProducts = asyncHandler(async (req, res) => {
     const queries = { ...req.query };
     // tách các trường đặc biệt ra khỏi query
-    const excludeFields = ['limit', 'sort', 'page', 'fields'];
+    const excludeFields = ['limit', 'sort', 'page', 'fields', 'totalRatings'];
     excludeFields.forEach(el => delete queries[el]);
 
     //format lại các operators cho đúng cú pháp của mongoose

@@ -9,9 +9,8 @@ const DailyDeal = () => {
     const [dailyDeal, setDailyDeal] = useState([]);
 
     const fetchDailyDeal = async () => {
-        const response = await apiGetProducts({ limit: 1, page: 40 });
+        const response = await apiGetProducts({ limit: 1, page: 2, totalRatings: 5 });
         if (response.success) setDailyDeal(response.products[0]);
-        console.log(dailyDeal);
     };
 
     useEffect(() => {
@@ -32,7 +31,7 @@ const DailyDeal = () => {
                 <img
                     className="w-[280px] h-[280px] object-cover mb-[30px] cursor-pointer"
                     alt=""
-                    src={dailyDeal?.images?.length === 0 ? dailyDeal.thumbnail : dailyDeal.images}
+                    src={dailyDeal?.images?.length === 0 ? dailyDeal?.thumbnail : dailyDeal?.images}
                 />
                 <span className=" flex text-[14px] font-light mb-[15px] h-[18px] ">
                     {renderStars(dailyDeal.totalRatings)}
@@ -47,7 +46,7 @@ const DailyDeal = () => {
                 <CountDown unit={'Minutes'} />
                 <CountDown unit={'Seconds'} />
             </div>
-            <button className="w-full flex justify-center items-center p-2 bg-main text-white">
+            <button className="w-full flex justify-center items-center p-2 bg-main text-white hover:bg-[#333]">
                 <span className="mr-3">
                     <AiOutlineMenu />
                 </span>
