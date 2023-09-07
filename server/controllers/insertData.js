@@ -18,6 +18,7 @@ const fn = async product => {
         images: product?.images,
         color: product?.variants?.find(el => el.label === 'Color')?.variants[1],
         thumbnail: product?.thumb,
+        totalRatings: Math.round(Math.random() * 5),
     });
 };
 // Khi add nhiều phần tử trong mảng thì nên làm cách này, promise.all sẽ giúp không bị bất đồng bộ

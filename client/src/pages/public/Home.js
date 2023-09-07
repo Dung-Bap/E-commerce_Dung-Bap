@@ -1,16 +1,16 @@
 /** @format */
 
 import React from 'react';
-import { Banner, BestSeller, Sidebar } from '../../components';
+import { Banner, BestSeller, Sidebar, DailyDeal } from '../../components';
 
 const Home = () => {
     return (
         <div className="w-main mt-[20px] flex">
-            <div className="flex flex-col gap-5 w-[25%] border">
+            <div className="flex flex-col w-[25%] ">
                 <Sidebar />
-                <div className="border">Daily Deal</div>
+                <DailyDeal />
             </div>
-            <div className="flex flex-col gap-5 pl-5 w-[75%] ">
+            <div className="flex flex-col pl-5 w-[75%] ">
                 <Banner />
                 <BestSeller />
             </div>

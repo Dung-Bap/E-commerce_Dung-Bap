@@ -1,13 +1,30 @@
-import React from 'react';
-import { formatMoney } from '../ultils/helpers';
+import React, { useState } from 'react';
+import { formatMoney, renderStars } from '../ultils/helpers';
 import labelnew from '../assets/new.png';
 import labeltrending from '../assets/trending.png';
+import { SelectOption } from './';
+import icons from '../ultils/icons';
+
+const { AiOutlineHeart, AiOutlineMenu, AiFillEye } = icons;
 
 const Product = ({ data, isLabel }) => {
+    const [isSelectOption, setIsSelectOption] = useState(false);
+
     return (
-        <div className=" px-[10px] w-full">
-            <div className="w-full flex flex-col p-[15px] mb-[20px] border h-[384px] ">
-                <div className="relative ">
+        <div className="pr-5">
+            <div className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer ">
+                <div
+                    className="w-full relative "
+                    onMouseEnter={() => setIsSelectOption(true)}
+                    onMouseLeave={() => setIsSelectOption(false)}
+                >
+                    {isSelectOption && (
+                        <div className=" animate-slide-top w-full absolute bottom-0 flex justify-center gap-2">
+                            <SelectOption icon={<AiOutlineHeart />} />
+                            <SelectOption icon={<AiOutlineMenu />} />
+                            <SelectOption icon={<AiFillEye />} />
+                        </div>
+                    )}
                     <img
                         className="w-[243px] h-[243px] object-cover"
                         alt=""
@@ -22,8 +39,11 @@ const Product = ({ data, isLabel }) => {
                         src={isLabel ? labelnew : labeltrending}
                     />
                 </div>
-                <span className="text-[16px] font-light my-[10px] line-clamp-1">{data?.title}</span>
-                <span className={`text-[16px] font-light mb-[10px]`}>{`${formatMoney(data?.price)}`}</span>
+                <span className=" flex text-[14px] font-light my-[10px] h-[14px] ">
+                    {renderStars(data?.totalRatings, 14)}
+                </span>
+                <span className="text-[16px] font-light mb-[10px] line-clamp-1 hover:text-main">{data?.title}</span>
+                <span className={`text-[16px] font-light`}>{`${formatMoney(data?.price)}`}</span>
             </div>
         </div>
     );
