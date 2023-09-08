@@ -24,7 +24,7 @@ const FeaturedProduct = () => {
                     ))}
                 </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between cursor-pointer">
                 <img
                     className="w-[49%] object-cover"
                     alt=""

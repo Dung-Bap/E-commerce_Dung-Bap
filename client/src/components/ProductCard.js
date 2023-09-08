@@ -1,9 +1,14 @@
 import React from 'react';
 import { renderStars, formatMoney } from '../ultils/helpers';
+import { Link } from 'react-router-dom';
+import path from '../ultils/path';
 
 const ProductCard = ({ data }) => {
     return (
-        <div className="flex w-1/3 px-[10px] mb-[20px] cursor-pointer">
+        <Link
+            to={`/${path.DETAIL_PRODUCT}/${data._id}/${data.title}`}
+            className="flex w-1/3 px-[10px] mb-[20px] cursor-pointer"
+        >
             <div className="flex border w-full p-[15px] ">
                 <img className="w-[84px] h-[84px] object-cover mr-5" alt="" src={data.thumbnail} />
                 <div>
@@ -16,7 +21,7 @@ const ProductCard = ({ data }) => {
                     <span className={`text-[12px] font-light`}>{`${formatMoney(data?.price)}`}</span>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 

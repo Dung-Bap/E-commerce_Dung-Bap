@@ -6,6 +6,7 @@ import path from './ultils/path';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getCategories } from './store/app/asyncActions';
+import { Blogs, DetailProduct, FAQs, Products, Services } from './components';
 
 function App() {
     const dispatch = useDispatch();
@@ -18,8 +19,13 @@ function App() {
             <Routes>
                 <Route path={path.PUBLIC} element={<Public />}>
                     <Route path={path.HOME} element={<Home />} />
-                    <Route path={path.LOGIN} element={<Login />} />
+                    <Route path={path.PRODUCTS} element={<Products />} />
+                    <Route path={path.DETAIL_PRODUCT__PID__TITLE} element={<DetailProduct />} />
+                    <Route path={path.OUT_SERVICES} element={<Services />} />
+                    <Route path={path.FAQS} element={<FAQs />} />
+                    <Route path={path.BLOGS} element={<Blogs />} />
                 </Route>
+                <Route path={path.LOGIN} element={<Login />} />
             </Routes>
         </div>
     );

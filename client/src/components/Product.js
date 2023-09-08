@@ -4,6 +4,8 @@ import labelnew from '../assets/new.png';
 import labeltrending from '../assets/trending.png';
 import { SelectOption } from './';
 import icons from '../ultils/icons';
+import { Link } from 'react-router-dom';
+import path from '../ultils/path';
 
 const { AiOutlineHeart, AiOutlineMenu, AiFillEye } = icons;
 
@@ -12,7 +14,10 @@ const Product = ({ data, isLabel }) => {
 
     return (
         <div className="pr-5">
-            <div className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer ">
+            <Link
+                to={`/${path.DETAIL_PRODUCT}/${data._id}/${data.title}`}
+                className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer "
+            >
                 <div
                     className="w-full relative "
                     onMouseEnter={() => setIsSelectOption(true)}
@@ -46,7 +51,7 @@ const Product = ({ data, isLabel }) => {
                 </span>
                 <span className="text-[16px] font-light mb-[10px] line-clamp-1 hover:text-main">{data?.title}</span>
                 <span className={`text-[16px] font-light`}>{`${formatMoney(data?.price)}`}</span>
-            </div>
+            </Link>
         </div>
     );
 };
