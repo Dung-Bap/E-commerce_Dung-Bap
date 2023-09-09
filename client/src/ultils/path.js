@@ -11,6 +11,7 @@ const path = {
     FAQS: 'faqs',
     DETAIL_PRODUCT__PID__TITLE: 'sanpham/:pid/:title',
     DETAIL_PRODUCT: 'sanpham',
+    FINALREGISTER: 'finalregister/:status',
 };
 
 export default path;

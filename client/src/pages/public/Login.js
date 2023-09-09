@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import imageLogin from '../../assets/shopping-trolleys-packets-gift-tags.jpg';
 import { InputFileds } from '../../components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,6 +16,7 @@ const Login = () => {
 
     const hadleShowRegister = () => {
         setShowRegister(!showRegister);
+        reset();
     };
 
     const RegisterSchema = yup.object({
@@ -117,10 +117,14 @@ const Login = () => {
     };
     return (
         <div>
-            <img className="relative w-screen h-screen" alt="" src={imageLogin} />
+            <img
+                className="relative w-screen h-screen"
+                alt=""
+                src="https://img.freepik.com/free-photo/shopping-trolleys-packets-gift-tags_23-2147961963.jpg?w=1800&t=st=1694255869~exp=1694256469~hmac=f2e9b4243d7d926c015c9fc2a5507bc2df923277818aa728f634aad46074da82"
+            />
             <div className="absolute flex justify-center top-0 right-0 bottom-0 left-0 items-center ">
                 <div className="rounded-md bg-main p-[15px]">
-                    <h2 className="mb-[15px]">{showRegister ? 'Register' : 'Login'}</h2>
+                    <h2 className="mb-[15px] text-[20px] font-medium">{showRegister ? 'Register' : 'Login'}</h2>
                     <form method="POST" onSubmit={handleSubmit(onSubmit)}>
                         {showRegister && (
                             <InputFileds
@@ -163,13 +167,25 @@ const Login = () => {
                                 // type={'password'}
                             />
                         )}
-                        <div className="flex justify-between">
-                            <button className="text-white" type="submit">
+                        <div className="flex w-full justify-center">
+                            <button
+                                className="text-white bg-black p-2 rounded-md hover:text-black hover:bg-white w-full mb-[15px]"
+                                type="submit"
+                            >
                                 {showRegister ? 'Create' : 'Sign in'}
                             </button>
-                            <button onClick={hadleShowRegister} type="button" className="text-white">
+                        </div>
+                        <div className="flex justify-between">
+                            {!showRegister && (
+                                <span className="text-black hover:text-white cursor-pointer">Forgot password ???</span>
+                            )}
+                            <span
+                                onClick={hadleShowRegister}
+                                type="button"
+                                className="text-black hover:text-white cursor-pointer "
+                            >
                                 {showRegister ? 'Back' : 'Register'}
-                            </button>
+                            </span>
                         </div>
                     </form>
                 </div>
