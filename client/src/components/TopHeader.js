@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import path from '../ultils/path';
 
 const TopHeader = () => {
     return (
@@ -6,7 +8,9 @@ const TopHeader = () => {
             <div className="w-main">
                 <div className="flex w-main justify-between">
                     <span>ORDER ONLINE OR CALL US (+1800) 000 8808</span>
-                    <span className="cursor-pointer hover:text-black">Sign In or Create Account</span>
+                    <Link to={path.LOGIN}>
+                        <span className="cursor-pointer hover:text-black">Sign In or Create Account</span>
+                    </Link>
                 </div>
             </div>
         </div>

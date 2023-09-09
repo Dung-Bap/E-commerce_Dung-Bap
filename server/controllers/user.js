@@ -24,7 +24,7 @@ const register = asyncHandler(async (req, res) => {
         const newUser = await User.create(req.body);
         return res.status(200).json({
             success: newUser ? true : false,
-            message: newUser ? 'Register user successfully !!!' : 'Something went wrong!!!',
+            message: newUser ? 'Register user successfully, Go Loginnn !!!' : 'Something went wrong!!!',
         });
     }
 });
