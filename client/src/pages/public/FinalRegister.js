@@ -12,7 +12,7 @@ const FinalRegister = () => {
                 navigate(`/${path.LOGIN}`);
             });
         if (status === 'success')
-            Swal.fire('Congratulation!', 'Sign Up Success !', 'success').then(() => {
+            Swal.fire('Congratulation!', 'Sign Up Success ! Go Loginn', 'success').then(() => {
                 navigate(`/${path.LOGIN}`);
             });
     }, [navigate, status]);

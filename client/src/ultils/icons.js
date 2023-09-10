@@ -1,6 +1,6 @@
 import { MdPhone, MdNavigateNext } from 'react-icons/md';
 import { GrMail } from 'react-icons/gr';
-import { AiOutlineHeart, AiFillStar, AiOutlineStar, AiOutlineMenu, AiFillEye } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillStar, AiOutlineStar, AiOutlineMenu, AiFillEye, AiFillHome } from 'react-icons/ai';
 import { FaOpencart } from 'react-icons/fa';
 
 const icons = {
@@ -13,6 +13,7 @@ const icons = {
     AiOutlineMenu,
     AiFillEye,
     MdNavigateNext,
+    AiFillHome,
 };
 
 export default icons;

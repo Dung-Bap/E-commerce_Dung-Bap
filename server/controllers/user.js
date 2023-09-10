@@ -67,8 +67,11 @@ const register = asyncHandler(async (req, res) => {
 const finalRegister = asyncHandler(async (req, res) => {
     const cookie = req.cookies;
     const { token } = req.params;
-    if (!cookie || cookie?.dataregister?.token !== token)
+    if (!cookie || cookie?.dataregister?.token !== token) {
+        res.clearCookie('dataregister');
         return res.redirect(`${process.env.CLIENT_URL}/finalregister/failed`);
+    }
+
     // tao ra document user
     const newUser = await User.create({
         firstname: cookie?.dataregister?.firstname,
@@ -76,6 +79,7 @@ const finalRegister = asyncHandler(async (req, res) => {
         email: cookie?.dataregister?.email,
         password: cookie?.dataregister?.password,
     });
+    res.clearCookie('dataregister');
     if (newUser) return res.redirect(`${process.env.CLIENT_URL}/finalregister/success`);
     else return res.redirect(`${process.env.CLIENT_URL}/finalregister/failed`);
 });
@@ -165,17 +169,17 @@ const logout = asyncHandler(async (req, res) => {
 // Change password
 //api/user/forgotpassord
 const forgotPassword = asyncHandler(async (req, res) => {
-    const { email } = req.query;
-    if (!email) throw new Error('Missing Email');
+    const { email } = req.body;
+    if (!email) throw new Error('Missing Email !');
     const user = await User.findOne({ email });
-    if (!user) throw new Error('User Not Found');
+    if (!user) throw new Error('User Not Found !');
     const resetToken = user.createPasswordChangeToken();
     // khi định nghĩa ra một hàm thì phải save lại
     await user.save();
 
     const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu.
      Link này sẽ hết hạn trong 15 phút kể từ bây giờ !
-    <a href="${process.env.URL_SERVER}/api/user/reset-password/${resetToken}">Click here</a>`;
+    <a href="${process.env.CLIENT_URL}/reset-password/${resetToken}">Click here</a>`;
 
     const data = {
         email,
@@ -185,8 +189,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
     const result = await sendMail(data);
     return res.status(200).json({
-        success: true,
-        result,
+        success: result?.response.includes('OK') ? true : false,
+        message: result?.response.includes('OK')
+            ? 'Please check your email to reset your password !'
+            : 'Something went wrong, Please try again !',
     });
 });
 //api/user/resetpassord
@@ -204,7 +210,7 @@ const resetPassword = asyncHandler(async (req, res) => {
     await user.save();
     return res.status(200).json({
         success: user ? true : false,
-        message: user ? 'Update password successfully!' : 'Something went wrong !',
+        message: user ? 'Update password successfully, Please log in again !!!' : 'Something went wrong !',
     });
 });
 //api/user/
