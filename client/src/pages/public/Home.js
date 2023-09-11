@@ -36,8 +36,8 @@ const Home = () => {
                 <div className="flex flex-wrap mx-[-10px] mt-[20px]">
                     {categories
                         ?.filter(el => el.brand.length > 0)
-                        .map(categorie => (
-                            <div className=" flex w-1/3 px-[10px] mb-[20px] " key={categorie.id}>
+                        .map((categorie, index) => (
+                            <div className=" flex w-1/3 px-[10px] mb-[20px] " key={index}>
                                 <div className="flex w-full border p-[15px] ">
                                     <img
                                         className="pl-[20px] object-contain w-[144px] h-[129px]"

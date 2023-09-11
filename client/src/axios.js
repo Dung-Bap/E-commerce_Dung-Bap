@@ -8,6 +8,9 @@ const instance = axios.create({
 instance.interceptors.request.use(
     function (config) {
         // Do something before request is sent
+        const userlocalStorage = JSON.parse(localStorage.getItem('persist:shop/user'));
+        const userAccessToken = JSON.parse(userlocalStorage.accessToken);
+        config.headers = { Authorization: `Bearer ${userAccessToken}` }; // khi gọi api thì mỗi req đều có key Authorization là token của user
         return config;
     },
     function (error) {

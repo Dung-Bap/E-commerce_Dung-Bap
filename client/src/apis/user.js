@@ -29,3 +29,8 @@ export const aipResetPassword = data =>
         method: 'put',
         data,
     });
+export const aipGetCurrent = () =>
+    axios({
+        url: '/user/current',
+        method: 'get',
+    });
