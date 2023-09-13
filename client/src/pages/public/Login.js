@@ -125,10 +125,8 @@ const Login = () => {
         } else {
             const response = await apiLogin(payload);
             if (response.success) {
-                dispatch(
-                    registerUser({ isLoggedIn: true, userData: response.userData, accessToken: response.accessToken }),
-                );
-                navigate('/');
+                dispatch(registerUser({ isLoggedIn: true, accessToken: response.accessToken }));
+                navigate(`/${path.HOME}`);
             } else Swal.fire('Opps!', response.message, 'error');
         }
     };

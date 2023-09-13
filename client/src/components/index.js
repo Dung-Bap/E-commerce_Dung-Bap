@@ -18,3 +18,7 @@ export { default as Services } from './Services';
 export { default as FAQs } from './FAQs';
 export { default as Blogs } from './Blogs';
 export { default as InputFileds } from './InputFileds';
+export { default as Breadcrumb } from './Breadcrumb';
+export { default as Button } from './Button';
+export { default as ProductExtrainfo } from './ProductExtrainfo';
+export { default as ProductEXtrainfoTabs } from './ProductEXtrainfoTabs';

@@ -9,8 +9,7 @@ const path = {
     BLOGS: 'blogs',
     OUT_SERVICES: 'out_services',
     FAQS: 'faqs',
-    DETAIL_PRODUCT__PID__TITLE: 'sanpham/:pid/:title',
-    DETAIL_PRODUCT: 'sanpham',
+    DETAIL_PRODUCT__CATEGORY__PID__TITLE: ':category/:pid/:title',
     FINALREGISTER: 'finalregister/:status',
     RESET_PASSWORD: 'reset-password/:token',
 };
