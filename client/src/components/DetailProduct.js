@@ -30,7 +30,7 @@ const DetailProduct = () => {
     useEffect(() => {
         fetchDetailProduct();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [category, title, pid]);
 
     return (
         <>

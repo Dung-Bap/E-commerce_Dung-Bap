@@ -6,6 +6,7 @@ import { IoLogOut } from 'react-icons/io5';
 import { PiDotDuotone, PiGiftFill } from 'react-icons/pi';
 import { BsCarFrontFill, BsFillPhoneVibrateFill } from 'react-icons/bs';
 import { GiReturnArrow } from 'react-icons/gi';
+import { BiChevronDown } from 'react-icons/bi';
 
 const icons = {
     MdPhone,
@@ -26,6 +27,7 @@ const icons = {
     PiGiftFill,
     GiReturnArrow,
     BsFillPhoneVibrateFill,
+    BiChevronDown,
 };
 
 export default icons;
