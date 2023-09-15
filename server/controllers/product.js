@@ -33,11 +33,18 @@ const getProducts = asyncHandler(async (req, res) => {
     let queryString = JSON.stringify(queries);
     queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
     const formatedQueries = JSON.parse(queryString);
-
     //Filtering
+    let queryColorObject = {};
     if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' };
     if (queries?.category) formatedQueries.category = { $regex: queries.category, $options: 'i' };
-    let queryCommand = Product.find(formatedQueries);
+    if (queries?.color) {
+        delete formatedQueries.color;
+        const colorArr = queries.color?.split(',');
+        const colorQuery = colorArr.map(el => ({ color: { $regex: el, $options: 'i' } }));
+        queryColorObject = { $or: colorQuery };
+    }
+    const q = { ...queryColorObject, ...formatedQueries };
+    let queryCommand = Product.find(q);
 
     //sorting
     //abc, xyz => [abc,xyz] => abc xyz
@@ -65,7 +72,7 @@ const getProducts = asyncHandler(async (req, res) => {
     //Số lượng thoả điều kiện !== số lượng trả về trong 1 lần gọi API
     queryCommand.exec(async (err, response) => {
         if (err) throw new Error(err.message);
-        const counts = await Product.find(formatedQueries).countDocuments();
+        const counts = await Product.find(q).countDocuments();
         return res.status(200).json({
             success: response ? true : false,
             products: response ? response : 'Cannot get products',

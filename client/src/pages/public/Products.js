@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Breadcrumb, Filter, Product } from '../components';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { Breadcrumb, Filter, Product } from '../../components';
 import Masonry from 'react-masonry-css';
-import { apiGetProducts } from '../apis/getProducts';
+import { apiGetProducts } from '../../apis/getProducts';
 
 const Products = () => {
     const { category } = useParams();
     const [products, setProducts] = useState(null);
     const [activeFilter, setActiveFilter] = useState(null);
+    const [params] = useSearchParams();
 
     const changeActiveFilter = useCallback(
         name => {
@@ -17,15 +18,33 @@ const Products = () => {
         [activeFilter],
     );
 
-    const getProducts = async () => {
-        const response = await apiGetProducts({ category });
+    const fetchGetProducts = async queries => {
+        const response = await apiGetProducts({ ...queries, category });
         if (response.success) setProducts(response.products);
     };
 
     useEffect(() => {
-        getProducts();
+        // filter color
+        let param = [];
+        for (let i of params.entries()) param.push(i);
+        const queries = {};
+        for (let i of params) queries[i[0]] = i[1];
+        // filter price
+        let priceQuery = {};
+        if (queries.from && queries.to) {
+            priceQuery = {
+                $and: [{ price: { gte: queries.from } }, { price: { lte: queries.to } }],
+            };
+            delete queries.price;
+        }
+        if (queries.from) queries.price = { gte: queries.from };
+        if (queries.to) queries.price = { lte: queries.to };
+        delete queries.from;
+        delete queries.to;
+        const q = { ...priceQuery, ...queries };
+        fetchGetProducts(q);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [params]);
 
     const breakpointColumnsObj = {
         default: 4,

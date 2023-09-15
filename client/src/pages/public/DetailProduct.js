@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from '../../components/Breadcrumb';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 
-import { aipGetProduct } from '../apis/getProducts';
-import { renderStars, formatMoney } from '../ultils/helpers';
-import icons from '../ultils/icons';
-import { Button, ProductExtrainfo, ProductEXtrainfoTabs } from '../components';
+import { aipGetProduct } from '../../apis/getProducts';
+import { renderStars, formatMoney } from '../../ultils/helpers';
+import icons from '../../ultils/icons';
+import { Button, ProductExtrainfo, ProductEXtrainfoTabs } from '../../components';
 
 const DetailProduct = () => {
     const { PiDotDuotone } = icons;

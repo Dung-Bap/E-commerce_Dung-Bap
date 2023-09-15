@@ -6,7 +6,7 @@ import path from './ultils/path';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getCategories } from './store/app/asyncActions';
-import { Blogs, DetailProduct, FAQs, Products, Services } from './components';
+import { Products, DetailProduct, Blogs, FAQs, Services } from './pages/public';
 
 function App() {
     const dispatch = useDispatch();
