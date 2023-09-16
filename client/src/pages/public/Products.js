@@ -1,14 +1,32 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { Breadcrumb, Filter, Product } from '../../components';
+import { createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Breadcrumb, Filter, InputSelect, Product } from '../../components';
 import Masonry from 'react-masonry-css';
 import { apiGetProducts } from '../../apis/getProducts';
+import { sorts } from '../../ultils/contants';
 
 const Products = () => {
     const { category } = useParams();
     const [products, setProducts] = useState(null);
     const [activeFilter, setActiveFilter] = useState(null);
     const [params] = useSearchParams();
+    const [sort, setSort] = useState('');
+    const navigate = useNavigate();
+
+    const changeValue = useCallback(
+        value => {
+            setSort(value);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [sort],
+    );
+
+    useEffect(() => {
+        navigate({
+            pathname: `/${category}`,
+            search: createSearchParams({ sort }).toString(),
+        });
+    }, [category, navigate, sort]);
 
     const changeActiveFilter = useCallback(
         name => {
@@ -54,7 +72,7 @@ const Products = () => {
     };
 
     return (
-        <>
+        <div onClick={() => setActiveFilter(null)}>
             <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px]">
                 <h2 className="text-[18px] font-medium mb-10px capitalize">{category}</h2>
                 <Breadcrumb category={category} />
@@ -72,7 +90,10 @@ const Products = () => {
                         <Filter activeFilter={activeFilter} changeActiveFilter={changeActiveFilter} name={'color'} />
                     </div>
                 </div>
-                <div className="w-1/5">Sort</div>
+                <div className="w-1/5 p-2">
+                    <h2 className="text-[14px] font-medium mb-[10px]">Sort By</h2>
+                    <InputSelect options={sorts} value={sort} changeValue={changeValue} />
+                </div>
             </div>
             <div>
                 <Masonry
@@ -85,7 +106,7 @@ const Products = () => {
                     ))}
                 </Masonry>
             </div>
-        </>
+        </div>
     );
 };
 

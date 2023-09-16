@@ -47,3 +47,22 @@ button.slick-prev::before {
 .my-masonry-grid_column > div {
     margin-bottom: 10px;
 }
+
+/* form checkbox  */
+.form-checkbox {
+    color: #ee3131;
+}
+
+.form-checkbox:focus {
+    --tw-ring-shadow: none;
+}
+
+.form-input:focus {
+    --tw-ring-color: #ee3131;
+    --tw-ring-shadow: #ee3131;
+    border-color: #ee3131;
+}
+
+.form-select {
+    border-color: none;
+}

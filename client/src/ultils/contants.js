@@ -99,3 +99,41 @@ export const productEXtrainfoTabs = [
 ];
 
 export const colors = ['black', 'brown', 'gray', 'white', 'pink', 'yellow', 'orange', 'purple', 'green', 'blue'];
+
+export const sorts = [
+    {
+        id: 1,
+        value: '-sold',
+        option: 'Best selling',
+    },
+    {
+        id: 2,
+        value: '-title',
+        option: 'Alphabetically, A-Z',
+    },
+    {
+        id: 3,
+        value: 'title',
+        option: 'Alphabetically, Z-A',
+    },
+    {
+        id: 4,
+        value: '-price',
+        option: 'Price, high to low',
+    },
+    {
+        id: 5,
+        value: 'price',
+        option: 'Price, low to high',
+    },
+    {
+        id: 6,
+        value: '-createdAt',
+        option: 'Date, new to old',
+    },
+    {
+        id: 7,
+        value: 'createdAt',
+        option: 'Price, old to new',
+    },
+];

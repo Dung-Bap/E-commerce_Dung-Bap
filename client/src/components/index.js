@@ -19,3 +19,4 @@ export { default as Button } from './Button';
 export { default as ProductExtrainfo } from './ProductExtrainfo';
 export { default as ProductEXtrainfoTabs } from './ProductEXtrainfoTabs';
 export { default as Filter } from './Filter';
+export { default as InputSelect } from './InputSelect';

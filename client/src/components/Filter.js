@@ -76,17 +76,25 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
     return (
         <div className="relative">
             <div
-                onClick={() => changeActiveFilter(name)}
+                onClick={e => {
+                    changeActiveFilter(name);
+                    e.stopPropagation();
+                }}
                 className="flex items-center justify-between min-w-[100px] p-3 border mr-[10px] cursor-pointer"
             >
                 <span className="text-[12px] font-light capitalize">{name}</span>
-                <span className=" items-center flex justify-center text-white text-[10px] w-[16px] h-[16px] font-light rounded-[50%] bg-main">
-                    {selected.length}
-                </span>
+                {type === 'checkbox' && (
+                    <span className=" items-center flex justify-center text-white text-[10px] w-[14px] h-[14px] font-light rounded-[50%] bg-main">
+                        {selected.length}
+                    </span>
+                )}
                 <BiChevronDown />
             </div>
             {activeFilter === name && (
-                <div className="absolute z-10 top-[calc(100%+4px)] bg-white border min-w-[250px]">
+                <div
+                    onClick={e => e.stopPropagation()}
+                    className="absolute z-10 top-[calc(100%+4px)] bg-white border min-w-[250px]"
+                >
                     {type === 'checkbox' && (
                         <>
                             <div className="text-[14px] border-b font-light flex items-center justify-center py-[10px] px-[20px]">
@@ -96,6 +104,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
                                 {colors.map((el, index) => (
                                     <div key={index} className="flex items-center gap-6">
                                         <input
+                                            className="form-checkbox"
                                             type="checkbox"
                                             name={el}
                                             value={el}
@@ -135,7 +144,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
                                     <input
                                         value={price.form}
                                         onChange={e => setPrice(prev => ({ ...prev, from: e.target.value }))}
-                                        className="border"
+                                        className="border form-input"
                                         id="from"
                                         type="number"
                                     />
@@ -147,7 +156,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
                                     <input
                                         value={price.to}
                                         onChange={e => setPrice(prev => ({ ...prev, to: e.target.value }))}
-                                        className="border"
+                                        className="border form-input"
                                         id="to"
                                         type="number"
                                     />
