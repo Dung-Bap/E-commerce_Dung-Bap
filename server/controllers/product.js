@@ -135,7 +135,7 @@ const ratings = asyncHandler(async (req, res) => {
     await updatedProduct.save();
 
     return res.status(200).json({
-        success: response ? 'Ratings success' : false,
+        success: updatedProduct ? 'Ratings success' : false,
         updatedProduct,
     });
 });

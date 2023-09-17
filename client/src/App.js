@@ -3,10 +3,11 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { FinalRegister, Home, Login, Public, ResetPassword } from './pages/public';
 import path from './ultils/path';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getCategories } from './store/app/asyncActions';
 import { Products, DetailProduct, Blogs, FAQs, Services } from './pages/public';
+import Modal from './components/Modal/Modal';
 
 function App() {
     const dispatch = useDispatch();
@@ -14,8 +15,11 @@ function App() {
         dispatch(getCategories());
     }, [dispatch]);
 
+    const { isShowModal, childrenModal } = useSelector(state => state.app);
+
     return (
-        <div className="min-h-screen font-main ">
+        <div className="font-main relative">
+            {isShowModal && <Modal>{childrenModal}</Modal>}
             <Routes>
                 <Route path={path.PUBLIC} element={<Public />}>
                     <Route path={path.HOME} element={<Home />} />

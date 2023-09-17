@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumb';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
@@ -20,17 +20,41 @@ const DetailProduct = () => {
     };
 
     const { category, title, pid } = useParams();
+    const [currentImage, setCurrentImage] = useState(null);
     const [dataProducts, setDataProducts] = useState(null);
+    const [update, setUpdate] = useState(false);
     // console.log(dataProducts);
     const fetchDetailProduct = async () => {
         const response = await aipGetProduct(pid);
-        if (response.success) setDataProducts(response.productData);
+        if (response.success) {
+            setDataProducts(response.productData);
+            setCurrentImage(response.productData?.images[0] || response.productData?.thumbnail);
+        }
     };
 
     useEffect(() => {
-        fetchDetailProduct();
+        if (pid) fetchDetailProduct();
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, title, pid]);
+
+    useEffect(() => {
+        if (pid) fetchDetailProduct();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [update]);
+
+    const rerender = useCallback(() => {
+        setUpdate(!update);
+    }, [update]);
+
+    const handleClickImage = (e, image) => {
+        e.stopPropagation();
+        setCurrentImage(image);
+    };
 
     return (
         <>
@@ -40,16 +64,17 @@ const DetailProduct = () => {
             </div>
             <div className="flex">
                 <div className="w-2/5 flex flex-col gap-6 ">
-                    <img
-                        className="w-[458px] h-[458px] border object-cover"
-                        alt=""
-                        src={dataProducts?.images[0] || dataProducts?.thumbnail}
-                    />
+                    <img className="w-[458px] h-[458px] border object-cover" alt="" src={currentImage} />
                     <div className="w-[458px] mr-[10px]">
                         <Slider {...settings}>
                             {dataProducts?.images?.map((image, index) => (
                                 <div key={index} className="pr-[10px] ">
-                                    <img className="w-[143px] h-[143px] border object-contain" alt="" src={image} />
+                                    <img
+                                        onClick={e => handleClickImage(e, image)}
+                                        className="w-[143px] h-[143px] border object-contain cursor-pointer"
+                                        alt=""
+                                        src={image}
+                                    />
                                 </div>
                             ))}
                         </Slider>
@@ -88,7 +113,13 @@ const DetailProduct = () => {
                 </div>
             </div>
             <div className="w-full mt-[30px]">
-                <ProductEXtrainfoTabs />
+                <ProductEXtrainfoTabs
+                    userRating={dataProducts?.ratings}
+                    titleProduct={dataProducts?.title}
+                    totalRatings={dataProducts?.totalRatings}
+                    pid={dataProducts?._id}
+                    rerender={rerender}
+                />
             </div>
         </>
     );

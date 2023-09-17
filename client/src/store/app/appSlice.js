@@ -6,13 +6,15 @@ export const appSlice = createSlice({
     initialState: {
         categories: [],
         isLoading: false,
+        isShowModal: false,
+        childrenModal: null,
     },
 
     reducers: {
-        // logout: state => {
-        //     state.currentUser = null;
-        //     state.errorMessage = '';
-        // },
+        showModal: (state, action) => {
+            state.isShowModal = action.payload.isShowModal;
+            state.childrenModal = action.payload.childrenModal;
+        },
     },
 
     extraReducers: builder => {
@@ -32,6 +34,6 @@ export const appSlice = createSlice({
     },
 });
 
-// export const {} = appSlice.actions;
+export const { showModal } = appSlice.actions;
 
 export default appSlice.reducer;

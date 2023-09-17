@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrent } from '../store/user/asyncActions';
 import icons from '../ultils/icons';
 import { logout } from '../store/user/userSlice';
+import Swal from 'sweetalert2';
 
 const TopHeader = () => {
     const { IoLogOut } = icons;
@@ -12,7 +13,19 @@ const TopHeader = () => {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        if (window.confirm('You want to log out ???')) dispatch(logout());
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to log out !',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes !',
+        }).then(rs => {
+            if (rs.isConfirmed) {
+                dispatch(logout());
+            }
+        });
     };
 
     useEffect(() => {

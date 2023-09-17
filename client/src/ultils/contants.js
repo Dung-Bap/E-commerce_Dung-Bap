@@ -137,3 +137,26 @@ export const sorts = [
         option: 'Price, old to new',
     },
 ];
+
+export const voteOptions = [
+    {
+        id: 1,
+        name: 'Terrible',
+    },
+    {
+        id: 2,
+        name: 'Bad',
+    },
+    {
+        id: 3,
+        name: 'Neutral',
+    },
+    {
+        id: 4,
+        name: 'Good',
+    },
+    {
+        id: 5,
+        name: 'Perfect',
+    },
+];
