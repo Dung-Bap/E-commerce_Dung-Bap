@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { createSearchParams, useNavigate, useParams } from 'react-router-dom';
-import icons from '../ultils/icons';
-import { colors } from '../ultils/contants';
-import { apiGetProducts } from '../apis';
-import { formatMoney } from '../ultils/helpers';
-import useDebouce from '../hook/useDebouce';
+import icons from '../../ultils/icons';
+import { colors } from '../../ultils/contants';
+import { apiGetProducts } from '../../apis';
+import { formatMoney } from '../../ultils/helpers';
+import useDebouce from '../../hook/useDebouce';
 
 const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) => {
     const { BiChevronDown } = icons;

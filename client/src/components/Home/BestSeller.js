@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { apiGetProducts } from '../apis/getProducts';
-import { CustomSlider } from './';
+import { apiGetProducts } from '../../apis/getProducts';
+import { CustomSlider } from '..';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../store/products/asyncActions';
+import { getProducts } from '../../store/products/asyncActions';
 
 const BestSeller = () => {
     const dispath = useDispatch();

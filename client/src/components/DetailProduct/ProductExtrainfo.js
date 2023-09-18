@@ -1,5 +1,5 @@
 import React from 'react';
-import { productEXtrainfo } from '../ultils/contants';
+import { productEXtrainfo } from '../../ultils/contants';
 
 const ProductExtrainfo = () => {
     return (

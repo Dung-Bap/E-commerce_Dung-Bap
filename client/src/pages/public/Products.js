@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Breadcrumb, Filter, InputSelect, Product } from '../../components';
+import { Breadcrumb, Filter, Product } from '../../components';
 import Masonry from 'react-masonry-css';
 import { apiGetProducts } from '../../apis/getProducts';
 import { sorts } from '../../ultils/contants';
+import InputSelect from '../../components/Filter/InputSelect';
 
 const Products = () => {
     const { category } = useParams();

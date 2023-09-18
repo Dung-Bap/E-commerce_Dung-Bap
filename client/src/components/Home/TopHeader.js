@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import path from '../ultils/path';
+import path from '../../ultils/path';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrent } from '../store/user/asyncActions';
-import icons from '../ultils/icons';
-import { logout } from '../store/user/userSlice';
+import { getCurrent } from '../../store/user/asyncActions';
+import icons from '../../ultils/icons';
+import { logout } from '../../store/user/userSlice';
 import Swal from 'sweetalert2';
 
 const TopHeader = () => {
@@ -29,7 +29,12 @@ const TopHeader = () => {
     };
 
     useEffect(() => {
-        dispatch(getCurrent());
+        const setTimeLogIn = setTimeout(() => {
+            dispatch(getCurrent());
+        }, 300);
+        return () => {
+            clearTimeout(setTimeLogIn);
+        };
     }, [dispatch, isLoggedIn]);
 
     return (
