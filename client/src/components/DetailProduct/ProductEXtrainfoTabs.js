@@ -10,6 +10,7 @@ import { showModal } from '../../store/app/appSlice';
 import VoteModal from '../Modal/VoteModal';
 import path from '../../ultils/path';
 import VoteBar from '../DetailProduct/VoteBar';
+import Comment from './Comment';
 
 const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rerender }) => {
     const { category } = useParams();
@@ -19,6 +20,7 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
     const [ProductCategories, setProductCategories] = useState(null);
     const { isLoggedIn } = useSelector(state => state.user);
     const navigate = useNavigate();
+    console.log(userRating);
 
     const fetchProductCategory = async () => {
         const response = await apiGetProducts({ category });
@@ -36,7 +38,7 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
             return;
         }
 
-        await apiRatings({ star: score, comment, pid });
+        await apiRatings({ star: score, comment, pid, updatedAt: Date.now() });
         dispatch(showModal({ isShowModal: false, childrenModal: null }));
         document.body.style.overflow = 'overlay';
         rerender();
@@ -123,6 +125,16 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
                         </Button>
                     </div>
                 </div>
+
+                {userRating?.map((el, index) => (
+                    <Comment
+                        key={index}
+                        score={el?.star}
+                        comment={el?.comment}
+                        name={`${el?.postedBy?.firstname} ${el?.postedBy?.lastname}`}
+                        time={el?.updatedAt}
+                    />
+                ))}
             </div>
             <div className="w-full mt-[20px]">
                 <h2 className="w-full font-semibold text-[20px] py-[15px] border-b-2 border-main mb-[20px]">

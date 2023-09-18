@@ -113,7 +113,7 @@ const Login = () => {
         resolver: yupResolver(showRegister ? RegisterSchema : loginSchema),
     });
     const onSubmit = async data => {
-        const { confirmPassword, firstname, lastname, phone, ...payload } = data;
+        const { confirmPassword, firstname, lastname, ...payload } = data;
         if (showRegister) {
             const response = await apiRegister(data);
             if (response.success) {

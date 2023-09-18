@@ -16,7 +16,14 @@ const createProduct = asyncHandler(async (req, res) => {
 //api/product/:pid
 const getProduct = asyncHandler(async (req, res) => {
     const { pid } = req.params;
-    const product = await Product.findById(pid);
+    const product = await Product.findById(pid).populate({
+        // lấy thông tin fistname and lastname cho ratings
+        path: 'ratings',
+        populate: {
+            path: 'postedBy',
+            select: 'firstname lastname',
+        },
+    });
     return res.status(200).json({
         success: product ? true : false,
         productData: product ? product : 'Cannot get product',
@@ -103,7 +110,7 @@ const deletedProduct = asyncHandler(async (req, res) => {
 
 const ratings = asyncHandler(async (req, res) => {
     const { _id } = req.user;
-    const { star, comment, pid } = req.body;
+    const { star, comment, pid, updatedAt } = req.body;
     if (!star || !pid) throw new Error('Missing Inputs');
     const ratingProduct = await Product.findById(pid);
     // find sẽ trả về một object để match với $elemMatch
@@ -115,7 +122,7 @@ const ratings = asyncHandler(async (req, res) => {
                 ratings: { $elemMatch: alreadyRating },
             },
             {
-                $set: { 'ratings.$.star': star, 'ratings.$.comment': comment },
+                $set: { 'ratings.$.star': star, 'ratings.$.comment': comment, 'ratings.$.updatedAt': updatedAt },
             },
             {
                 new: true,
@@ -123,7 +130,11 @@ const ratings = asyncHandler(async (req, res) => {
         );
     } else {
         // add star and comment
-        await Product.findByIdAndUpdate(pid, { $push: { ratings: { star, comment, postedBy: _id } } }, { new: true });
+        await Product.findByIdAndUpdate(
+            pid,
+            { $push: { ratings: { star, comment, postedBy: _id, updatedAt } } },
+            { new: true }
+        );
     }
 
     //sum ratings
