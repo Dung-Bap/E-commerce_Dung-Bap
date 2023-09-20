@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Breadcrumb, Filter, Product } from '../../components';
 import Masonry from 'react-masonry-css';
+
+import { Breadcrumb, Filter, Product } from '../../components';
 import { apiGetProducts } from '../../apis/getProducts';
 import { sorts } from '../../ultils/contants';
 import InputSelect from '../../components/Filter/InputSelect';
+import { Pagination } from '../../components/Pagination';
 
 const Products = () => {
     const { category } = useParams();
@@ -23,10 +25,11 @@ const Products = () => {
     );
 
     useEffect(() => {
-        navigate({
-            pathname: `/${category}`,
-            search: createSearchParams({ sort }).toString(),
-        });
+        if (sort)
+            navigate({
+                pathname: `/${category}`,
+                search: createSearchParams({ sort }).toString(),
+            });
     }, [category, navigate, sort]);
 
     const changeActiveFilter = useCallback(
@@ -38,8 +41,8 @@ const Products = () => {
     );
 
     const fetchGetProducts = async queries => {
-        const response = await apiGetProducts({ ...queries, category });
-        if (response.success) setProducts(response.products);
+        const response = await apiGetProducts({ ...queries, limit: 10 });
+        if (response.success) setProducts(response);
     };
 
     useEffect(() => {
@@ -62,6 +65,11 @@ const Products = () => {
         delete queries.to;
         const q = { ...priceQuery, ...queries };
         fetchGetProducts(q);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);
 
@@ -102,10 +110,13 @@ const Products = () => {
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column"
                 >
-                    {products?.map(product => (
+                    {products?.products?.map(product => (
                         <Product nomal={true} key={product._id} data={product} />
                     ))}
                 </Masonry>
+            </div>
+            <div className="flex">
+                <Pagination totalProduct={products?.counts} />
             </div>
         </div>
     );

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import path from '../../ultils/path';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrent } from '../../store/user/asyncActions';
 import icons from '../../ultils/icons';
-import { logout } from '../../store/user/userSlice';
+import { logout, clearMessage } from '../../store/user/userSlice';
 import Swal from 'sweetalert2';
 
 const TopHeader = () => {
     const { IoLogOut } = icons;
-    const { isLoggedIn, userData } = useSelector(state => state.user);
+    const { isLoggedIn, userData, message } = useSelector(state => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         Swal.fire({
@@ -37,12 +38,34 @@ const TopHeader = () => {
         };
     }, [dispatch, isLoggedIn]);
 
+    useEffect(() => {
+        if (message)
+            Swal.fire({
+                title: 'Login failed',
+                text: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oki',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    navigate(`${path.LOGIN}`);
+                    dispatch(clearMessage());
+                }
+                if (result.dismiss) {
+                    dispatch(clearMessage());
+                }
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [message]);
+
     return (
         <div className="w-full flex justify-center bg-main p-2 text-[12px] text-white">
             <div className="w-main">
                 <div className="flex w-main justify-between">
                     <span>ORDER ONLINE OR CALL US (+1800) 000 8808</span>
-                    {isLoggedIn ? (
+                    {isLoggedIn && userData ? (
                         <div className="flex items-center">
                             <span className="hover:text-black uppercase">{`Welcome to the store, ${userData?.firstname} ${userData?.lastname}`}</span>
                             <span onClick={handleLogout} className="ml-5 hover:text-black cursor-pointer">

@@ -7,6 +7,7 @@ import { PiDotDuotone, PiGiftFill } from 'react-icons/pi';
 import { BsCarFrontFill, BsFillPhoneVibrateFill } from 'react-icons/bs';
 import { GiReturnArrow } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
+import { PiDotsThreeOutlineDuotone } from 'react-icons/pi';
 
 const icons = {
     MdPhone,
@@ -28,6 +29,7 @@ const icons = {
     GiReturnArrow,
     BsFillPhoneVibrateFill,
     BiChevronDown,
+    PiDotsThreeOutlineDuotone,
 };
 
 export default icons;

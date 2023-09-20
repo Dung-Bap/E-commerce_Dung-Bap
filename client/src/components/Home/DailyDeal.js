@@ -11,7 +11,7 @@ const DailyDeal = () => {
 
     const fetchDailyDeal = async () => {
         const response = await apiGetProducts({ limit: 1, page: 6, totalRatings: 5 });
-        if (response.success) setDailyDeal(response.products[0]);
+        if (response?.success) setDailyDeal(response?.products[0]);
     };
 
     useEffect(() => {

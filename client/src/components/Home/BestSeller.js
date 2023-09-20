@@ -25,7 +25,7 @@ const BestSeller = () => {
 
     const getAllProducts = async () => {
         const response = await apiGetProducts({ sort: '-sold', limit: 10 });
-        if (response.success) setBestSellers(response.products);
+        if (response?.success) setBestSellers(response?.products);
     };
 
     useEffect(() => {

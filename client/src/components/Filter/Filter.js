@@ -39,7 +39,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
     }, [deboucePriceFrom, debouceToFrom]);
 
     useEffect(() => {
-        if (price.from > price.to)
+        if (price.from && price.to && price.from > price.to)
             alert(`The 'From: ${price.from}' price must be less than the 'To: ${price.to}' price`);
     }, [price]);
 
