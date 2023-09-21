@@ -1,4 +1,4 @@
-export { default as Header } from './Header';
+export { default as Header } from './Home/Header';
 export { default as Navigation } from './Navigation';
 export { default as Sidebar } from './Home/Sidebar';
 export { default as BestSeller } from './Home/BestSeller';
@@ -16,3 +16,4 @@ export { default as Button } from './Button';
 export { default as ProductExtrainfo } from './DetailProduct/ProductExtrainfo';
 export { default as ProductEXtrainfoTabs } from './DetailProduct/ProductEXtrainfoTabs';
 export { default as Filter } from './Filter/Filter';
+export { default as Loading } from './Loading';

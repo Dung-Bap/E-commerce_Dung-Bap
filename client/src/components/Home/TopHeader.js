@@ -53,7 +53,7 @@ const TopHeader = () => {
                     navigate(`${path.LOGIN}`);
                     dispatch(clearMessage());
                 }
-                if (result.dismiss) {
+                if (result.isDismissed) {
                     dispatch(clearMessage());
                 }
             });

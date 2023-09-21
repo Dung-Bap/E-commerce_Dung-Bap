@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { InputFileds } from '../../components';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { apiForgotPassword, apiLogin, apiRegister } from '../../apis/user';
 import Swal from 'sweetalert2';
-import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../../store/user/userSlice';
-import Button from '../../components/Button';
-import icons from '../../ultils/icons';
-import path from '../../ultils/path';
+
+import { InputFileds, Loading } from 'components';
+import { apiForgotPassword, apiLogin, apiRegister } from 'apis/user';
+import { Link, useNavigate } from 'react-router-dom';
+import { registerUser } from 'store/user/userSlice';
+import Button from 'components/Button';
+import icons from 'ultils/icons';
+import path from 'ultils/path';
+import { showModal } from 'store/app/appSlice';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -115,7 +117,10 @@ const Login = () => {
     const onSubmit = async data => {
         const { confirmPassword, firstname, lastname, ...payload } = data;
         if (showRegister) {
+            dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
             const response = await apiRegister(data);
+            dispatch(showModal({ isShowModal: false, childrenModal: null }));
+            document.body.style.overflow = 'overlay';
             if (response.success) {
                 Swal.fire('Congratulation', response.message, 'success').then(() => {
                     reset();
@@ -124,7 +129,7 @@ const Login = () => {
             } else Swal.fire('Opps!', response.message, 'error').then(reset());
         } else {
             const response = await apiLogin(payload);
-            if (response.success) {
+            if (response?.success) {
                 dispatch(registerUser({ isLoggedIn: true, accessToken: response.accessToken }));
                 navigate(`/${path.HOME}`);
             } else Swal.fire('Opps!', response.message, 'error');

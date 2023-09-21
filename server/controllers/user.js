@@ -121,7 +121,7 @@ const login = asyncHandler(async (req, res, next) => {
 const getCurrent = asyncHandler(async (req, res, next) => {
     // Do khi verify có thêm field user nên lấy nó thành id luôn
     const { _id } = req.user;
-    const user = await User.findById(_id).select('-password -role -refreshToken'); // .select để không lấy field "-password -role -refreshToken"
+    const user = await User.findById(_id).select('-password -refreshToken'); // .select để không lấy field "-password -refreshToken"
     return res.status(200).json({
         success: user ? true : false,
         result: user ? user : 'User not found',

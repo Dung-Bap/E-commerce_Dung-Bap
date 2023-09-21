@@ -31,7 +31,8 @@ var userSchema = new mongoose.Schema(
         // phân quyền, mặc định là user
         role: {
             type: String,
-            default: 'user',
+            enum: [1998, 2001],
+            default: 2001,
         },
         cart: [
             {
