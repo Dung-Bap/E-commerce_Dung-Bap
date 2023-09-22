@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const sendMail = require('../utils/sendMail');
 const crypto = require('crypto');
 const makeToken = require('uniqid');
+const users = require('../utils/contants');
 
 // api/user/register
 // const register = asyncHandler(async (req, res) => {
@@ -215,10 +216,56 @@ const resetPassword = asyncHandler(async (req, res) => {
 });
 //api/user/
 const getUsers = asyncHandler(async (req, res) => {
-    const response = await User.find().select('-password -role -refreshToken'); // .select để không lấy field "-password -role -refreshToken"
-    return res.status(200).json({
-        success: response ? true : false,
-        users: response,
+    // const response = await User.find().select('-password -role -refreshToken'); // .select để không lấy field "-password -role -refreshToken"
+    // return res.status(200).json({
+    //     success: response ? true : false,
+    //     users: response,
+    // });
+
+    const queries = { ...req.query };
+    // tách các trường đặc biệt ra khỏi query
+    const excludeFields = ['limit', 'sort', 'page', 'fields'];
+    excludeFields.forEach(el => delete queries[el]);
+
+    //format lại các operators cho đúng cú pháp của mongoose
+    let queryString = JSON.stringify(queries);
+    queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+    const formatedQueries = JSON.parse(queryString);
+    //Filterin
+    let queryCommand = User.find(formatedQueries);
+
+    //sorting
+    //abc, xyz => [abc,xyz] => abc xyz
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        queryCommand = queryCommand.sort(sortBy);
+    }
+
+    //field limiting
+    if (req.query.fields) {
+        const fields = req.query.fields.split(',').join(' ');
+        queryCommand.select(fields);
+    }
+
+    //Pagination
+    //limit: số object lấy về khi goi api
+    //1 2 3...10 skip = 2 sẽ bỏ 2 object đầu
+    //'1' : 1 = +'1', 'adsfhjkfdh' => NaN
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || process.env.LIMIT_PRODUCT;
+    const skip = (page - 1) * limit;
+    queryCommand.skip(skip).limit(limit);
+
+    //Excute query
+    //Số lượng thoả điều kiện !== số lượng trả về trong 1 lần gọi API
+    queryCommand.exec(async (err, response) => {
+        if (err) throw new Error(err.message);
+        const counts = await User.find(formatedQueries).countDocuments();
+        return res.status(200).json({
+            success: response ? true : false,
+            users: response ? response : 'Cannot get products',
+            counts,
+        });
     });
 });
 //api/user/
@@ -310,6 +357,14 @@ const updateCart = asyncHandler(async (req, res) => {
     }
 });
 
+const insertUsers = asyncHandler(async (req, res) => {
+    const response = await User.create(users);
+    return res.status(200).json({
+        success: response ? true : false,
+        message: response ? 'Done !!!' : 'Something went wrong!!!',
+    });
+});
+
 module.exports = {
     register,
     login,
@@ -325,4 +380,5 @@ module.exports = {
     updateUserAddress,
     updateCart,
     finalRegister,
+    insertUsers,
 };

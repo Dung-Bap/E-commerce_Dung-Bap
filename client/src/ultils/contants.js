@@ -1,7 +1,18 @@
 import path from '../ultils/path';
 import icons from '../ultils/icons';
 
-const { FaShieldAlt, BsCarFrontFill, PiGiftFill, GiReturnArrow, BsFillPhoneVibrateFill } = icons;
+const {
+    FaShieldAlt,
+    BsCarFrontFill,
+    PiGiftFill,
+    GiReturnArrow,
+    BsFillPhoneVibrateFill,
+    LuLayoutDashboard,
+    LiaUsersSolid,
+    LiaProductHunt,
+    LiaJediOrder,
+    BsDash,
+} = icons;
 
 export const navigation = [
     {
@@ -158,5 +169,56 @@ export const voteOptions = [
     {
         id: 5,
         name: 'Perfect',
+    },
+];
+
+export const SIDEBARADMIN = [
+    {
+        id: 1,
+        name: 'Dashboard',
+        icon: <LuLayoutDashboard size={20} />,
+        path: `/${path.ADMIN}/${path.DASHBOARD}`,
+    },
+    {
+        id: 2,
+        name: 'Manage User',
+        icon: <LiaUsersSolid size={20} />,
+        path: `/${path.ADMIN}/${path.MANAGE_USER}`,
+    },
+    {
+        id: 3,
+        name: 'Manage Products',
+        icon: <LiaProductHunt size={20} />,
+        children: [
+            {
+                id: 5,
+                name: 'Create Products',
+                path: `/${path.ADMIN}/${path.CREATE_PRODUCTS}`,
+                icon: <BsDash />,
+            },
+            {
+                id: 6,
+                name: 'Manage Products',
+                path: `/${path.ADMIN}/${path.MANAGE_PRODUCT}`,
+                icon: <BsDash />,
+            },
+        ],
+    },
+    {
+        id: 4,
+        name: 'Manage Orders',
+        icon: <LiaJediOrder size={20} />,
+        path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+    },
+];
+
+export const roles = [
+    {
+        code: 1998,
+        value: 'admin',
+    },
+    {
+        code: 2001,
+        value: 'member',
     },
 ];

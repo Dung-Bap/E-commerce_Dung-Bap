@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Breadcrumb from '../../components/DetailProduct/Breadcrumb';
+import Breadcrumb from '../../components/detailProduct/Breadcrumb';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 

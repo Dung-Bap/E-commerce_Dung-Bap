@@ -4,7 +4,7 @@ import React from 'react';
 import { BestSeller, Sidebar, DailyDeal, FeaturedProduct, CustomSlider } from '../../components';
 import { useSelector } from 'react-redux';
 import icons from '../../ultils/icons';
-import Banner from '../../components/Home/Banner';
+import Banner from '../../components/home/Banner';
 
 const Home = () => {
     const { newArrivals } = useSelector(state => state.products);

@@ -27,7 +27,8 @@ const verifyAccessToken = asyncHandler(async (req, res, next) => {
 const isAdmin = asyncHandler(async (req, res, next) => {
     const { role } = req.user;
     // khi verify xong thì req.user đã bằng decode nên sẽ lấy được role
-    if (+role !== 1998)
+    if (role === 1998)
+        // ảo thật đấy
         return res.status(401).json({
             success: false,
             message: 'REQUIRE ADMIN ROLE @@',

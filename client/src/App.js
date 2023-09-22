@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getCategories } from 'store/app/asyncActions';
 import { Products, DetailProduct, Blogs, FAQs, Services } from 'pages/public';
-import Modal from 'components/Modal/Modal';
+import Modal from 'components/modal/Modal';
 import { AdminLayout, CreateProducts, Dashboard, ManageOrder, ManageProduct, ManageUser } from 'pages/admin';
 import { MemberLayout, Personal } from 'pages/member';
 

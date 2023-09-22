@@ -1,7 +1,7 @@
 import React from 'react';
 import usePagination from '../../hook/usePagination';
-import PaginationItem from './PaginationItem';
 import { useSearchParams } from 'react-router-dom';
+import { PaginationItem } from './index';
 
 const Pagination = ({ totalProduct }) => {
     const pagination = usePagination(totalProduct, 2);

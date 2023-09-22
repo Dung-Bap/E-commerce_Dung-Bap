@@ -7,9 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { renderStars } from '../../ultils/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { showModal } from '../../store/app/appSlice';
-import VoteModal from '../Modal/VoteModal';
+import VoteModal from '../modal/VoteModal';
 import path from '../../ultils/path';
-import VoteBar from '../DetailProduct/VoteBar';
+import VoteBar from './VoteBar';
 import Comment from './Comment';
 
 const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rerender }) => {

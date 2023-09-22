@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showModal } from '../../store/app/appSlice';
 
@@ -21,4 +21,4 @@ const Modal = ({ children }) => {
     );
 };
 
-export default Modal;
+export default memo(Modal);

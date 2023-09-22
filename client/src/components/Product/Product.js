@@ -4,7 +4,7 @@ import labelnew from '../../assets/new.png';
 import labeltrending from '../../assets/trending.png';
 import icons from '../../ultils/icons';
 import { Link } from 'react-router-dom';
-import SelectOption from '../Home/SelectOption';
+import SelectOption from '../home/SelectOption';
 
 const { AiOutlineHeart, AiOutlineMenu, AiFillEye } = icons;
 

@@ -9,7 +9,7 @@ const Header = () => {
     const { userData } = useSelector(state => state.user);
     return (
         <div className="flex justify-between border-b w-main h-[110px] py-[35px]">
-            <Link to={`${path.HOME}`}>
+            <Link to={`/${path.HOME}`}>
                 <img
                     alt=""
                     src="https://digital-world-2.myshopify.com/cdn/shop/files/logo_digital_new_250x.png?v=1613166683"

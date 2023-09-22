@@ -5,8 +5,8 @@ import Masonry from 'react-masonry-css';
 import { Breadcrumb, Filter, Product } from '../../components';
 import { apiGetProducts } from '../../apis/getProducts';
 import { sorts } from '../../ultils/contants';
-import InputSelect from '../../components/Filter/InputSelect';
-import { Pagination } from '../../components/Pagination';
+import InputSelect from '../../components/filter/InputSelect';
+import { Pagination } from '../../components/pagination';
 
 const Products = () => {
     const { category } = useParams();
