@@ -231,8 +231,19 @@ const getUsers = asyncHandler(async (req, res) => {
     let queryString = JSON.stringify(queries);
     queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
     const formatedQueries = JSON.parse(queryString);
+
+    if (req.query.q) {
+        delete formatedQueries.q;
+        formatedQueries['$or'] = [
+            { firstname: { $regex: req.query.q, $options: 'i' } },
+            { lastname: { $regex: req.query.q, $options: 'i' } },
+            { email: { $regex: req.query.q, $options: 'i' } },
+        ];
+    }
+
     //Filterin
     let queryCommand = User.find(formatedQueries);
+    if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' };
 
     //sorting
     //abc, xyz => [abc,xyz] => abc xyz

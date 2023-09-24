@@ -2,25 +2,19 @@ const users = [
     {
         firstname: 'ong',
         lastname: 'ong',
-        email: 'ongong@gmail.com',
+        email: 'kk@gmail.com',
         password: 'Ong1234@',
     },
     {
         firstname: 'na',
         lastname: 'na',
-        email: 'nana@gmail.com',
+        email: 'll@gmail.com',
         password: 'Ong1234@',
     },
     {
         firstname: 'my',
         lastname: 'duyen',
-        email: 'myduyen@gmail.com',
-        password: 'Ong1234@',
-    },
-    {
-        firstname: 'ngo',
-        lastname: 'bap',
-        email: 'ngobap@gmail.com',
+        email: 'pp@gmail.com',
         password: 'Ong1234@',
     },
 ];

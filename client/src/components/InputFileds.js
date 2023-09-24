@@ -1,15 +1,23 @@
 import React from 'react';
 
-const InputFileds = ({ placeholder, registername, errorName, type }) => {
+const InputFileds = ({ placeholder, registername, errorName, type, withFull }) => {
     return (
-        <div className="mb-[15px]">
+        <div className={` ${withFull ? '' : 'mb-[15px]'} flex flex-col`}>
             <input
-                className="w-[400px] px-[10px] py-[8px] placeholder:text-[14px] bg-[#f6f6f6] text-[#1c1d1d] placeholder:border-none"
+                className={`form-input ${
+                    withFull ? 'w-full' : 'w-[400px]'
+                } px-[10px] py-[8px] placeholder:text-[14px] bg-[#f6f6f6] text-[#1c1d1d] placeholder:border-none`}
                 {...registername}
                 placeholder={placeholder}
                 type={type ? type : 'text'}
             />
-            <p className="w-[400px] text-sm text-white">{errorName}</p>
+            <span
+                className={`${withFull ? 'w-full' : 'w-[400px]'} ${
+                    withFull ? 'text-[10px]' : 'text-sm'
+                } font-light  text-white`}
+            >
+                {errorName}
+            </span>
         </div>
     );
 };

@@ -5,7 +5,7 @@ import icons from '../ultils/icons';
 const usePagination = (totalProduct, currentPage, sibling = 1) => {
     const { PiDotsThreeOutlineDuotone } = icons;
     const paginationArr = useMemo(() => {
-        const pageSize = process.env.REACT_APP_LIMIT_PRODUCT_PAGE || 10;
+        const pageSize = process.env.REACT_APP_PAGE_SIZE;
         const paginationCount = Math.ceil(totalProduct / pageSize);
         const totalPaginationItem = sibling + 5;
 
@@ -32,7 +32,7 @@ const usePagination = (totalProduct, currentPage, sibling = 1) => {
             const middleRange = generateRange(siblingLeft, siblingRight);
             return [1, <PiDotsThreeOutlineDuotone />, ...middleRange, <PiDotsThreeOutlineDuotone />, paginationCount];
         }
-    }, [totalProduct, currentPage, sibling]);
+    }, [totalProduct, sibling, currentPage]);
 
     return paginationArr;
 };
