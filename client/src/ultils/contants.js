@@ -215,10 +215,21 @@ export const SIDEBARADMIN = [
 export const roles = [
     {
         code: 1998,
-        value: 'admin',
+        value: 'Admin',
     },
     {
         code: 2001,
-        value: 'member',
+        value: 'Member',
+    },
+];
+
+export const isBlocked = [
+    {
+        code: false,
+        value: 'Actived',
+    },
+    {
+        code: true,
+        value: 'Blocked',
     },
 ];

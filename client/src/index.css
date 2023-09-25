@@ -66,3 +66,9 @@ button.slick-prev::before {
 .form-select {
     border-color: none;
 }
+
+.form-select:focus {
+    --tw-ring-color: #ee3131;
+    --tw-ring-shadow: #ee3131;
+    border-color: #ee3131;
+}

@@ -1,25 +1,54 @@
-import { apiGetUsers } from 'apis';
-import { Pagination } from 'components/pagination';
-import useDebouce from 'hook/useDebouce';
+import Swal from 'sweetalert2';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { roles } from 'ultils/contants';
 import { useSearchParams } from 'react-router-dom';
-import { InputFileds } from 'components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
+import { apiDeleteUser, apiGetUsers, apiUpdateUsers } from 'apis';
+import { Pagination } from 'components/pagination';
+import useDebouce from 'hook/useDebouce';
+import { roles, isBlocked } from 'ultils/contants';
+import { InputFileds, SelectFileds } from 'components';
 
 const ManageUser = () => {
     const [allUsers, setAllUsers] = useState(null);
     const [valueInput, setValueInput] = useState('');
     const [params] = useSearchParams();
     const [editUser, setEditUser] = useState(null);
+    const [updated, setUpdated] = useState(false);
     const debouceValue = useDebouce(valueInput, 400);
 
     const fetchGetUsers = async params => {
         const response = await apiGetUsers({ ...params, limit: process.env.REACT_APP_PAGE_SIZE });
         if (response?.success) setAllUsers(response);
+    };
+
+    const handleDeleteUser = (uid, mail) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `User with email: '${mail}' delete ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then(async result => {
+            if (result.isConfirmed) {
+                const response = await apiDeleteUser(uid);
+                console.log(response);
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    setUpdated(!updated);
+                }
+            }
+        });
     };
 
     useEffect(() => {
@@ -31,26 +60,42 @@ const ManageUser = () => {
             left: 0,
             behavior: 'smooth',
         });
-    }, [debouceValue, params]);
+    }, [debouceValue, params, updated]);
 
     const editUserSchema = yup.object({
         firstname: yup.string().required('Please enter "First Name"'),
         lastname: yup.string().required('Please enter "Last Name"'),
         email: yup.string().required('Please enter "Email"').email('Invalid email !'),
+
+        role: yup.string().required('Please select your use case !'),
+        isBlocked: yup.string().required('Please select your use case !'),
     });
 
     const {
         register,
+        setValue,
         handleSubmit,
         reset,
         formState: { errors },
     } = useForm({
+        mode: 'onChange',
         resolver: yupResolver(editUserSchema),
     });
 
-    const onSubmit = data => {
-        reset();
+    const onSubmit = async data => {
         console.log(data);
+        reset();
+        setUpdated(!updated);
+        setEditUser(null);
+        const response = await apiUpdateUsers(data, editUser._id);
+        if (response.success) {
+            Swal.fire({
+                icon: 'success',
+                title: response.message,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
     };
 
     return (
@@ -69,28 +114,28 @@ const ManageUser = () => {
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     #
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     First Name
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     Last Name
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     Email Adress
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     Role
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     Status
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     Date Created
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="px-2 py-3">
                                     Actions
                                 </th>
                             </tr>
@@ -101,26 +146,26 @@ const ManageUser = () => {
                                     key={index}
                                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                 >
-                                    <th scope="row" className="px-6 py-4">
+                                    <th scope="row" className="px-2 py-4">
                                         {index + 1}
                                     </th>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {editUser?._id === user?._id ? (
                                             <InputFileds
                                                 withFull
-                                                placeholder={editUser.firstname}
                                                 registername={register('firstname')}
                                                 errorName={errors.firstname?.message}
+                                                defaultValue={editUser.firstname}
                                             />
                                         ) : (
                                             user.firstname
                                         )}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {editUser?._id === user?._id ? (
                                             <InputFileds
                                                 withFull
-                                                placeholder={editUser.lastname}
+                                                defaultValue={editUser.lastname}
                                                 registername={register('lastname')}
                                                 errorName={errors.lastname?.message}
                                             />
@@ -128,11 +173,11 @@ const ManageUser = () => {
                                             user.lastname
                                         )}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-2 py-4">
                                         {editUser?._id === user?._id ? (
                                             <InputFileds
                                                 withFull
-                                                placeholder={editUser.email}
+                                                defaultValue={editUser.email}
                                                 registername={register('email')}
                                                 errorName={errors.email?.message}
                                             />
@@ -140,10 +185,42 @@ const ManageUser = () => {
                                             user.email
                                         )}
                                     </td>
-                                    <td className="px-6 py-4">{roles.find(role => +role.code === +user.role).value}</td>
-                                    <td className="px-6 py-4">{user.isBlocked ? 'Blocked' : 'Actived'}</td>
-                                    <td className="px-6 py-4">{moment(user.updatedAt).format('DD/MM/YYYY')}</td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-2 py-4">
+                                        {editUser?._id === user?._id ? (
+                                            <SelectFileds
+                                                registername={register('role')}
+                                                errorName={errors.select?.message}
+                                                onChange={e =>
+                                                    setValue('role', e.target.value, { shouldValidate: true })
+                                                }
+                                                withFull
+                                                defaultValue={user.role}
+                                                options={roles}
+                                            />
+                                        ) : (
+                                            roles.find(role => +role.code === +user.role).value
+                                        )}
+                                    </td>
+                                    <td className="px-2 py-4">
+                                        {editUser?._id === user?._id ? (
+                                            <SelectFileds
+                                                registername={register('isBlocked')}
+                                                errorName={errors.select?.message}
+                                                onChange={e =>
+                                                    setValue('isBlocked', e.target.value, { shouldValidate: true })
+                                                }
+                                                withFull
+                                                defaultValue={user.isBlocked}
+                                                options={isBlocked}
+                                            />
+                                        ) : user.isBlocked ? (
+                                            'Blocked'
+                                        ) : (
+                                            'Actived'
+                                        )}
+                                    </td>
+                                    <td className="px-2 py-4">{moment(user.updatedAt).format('DD/MM/YYYY')}</td>
+                                    <td className="px-2 py-4">
                                         {!(editUser?._id === user?._id) ? (
                                             <>
                                                 <span
@@ -155,7 +232,10 @@ const ManageUser = () => {
                                                 >
                                                     Edit
                                                 </span>
-                                                <span className="text-red-500 cursor-pointer hover:underline">
+                                                <span
+                                                    onClick={() => handleDeleteUser(user?._id, user?.email)}
+                                                    className="text-red-500 cursor-pointer hover:underline"
+                                                >
                                                     Delete
                                                 </span>
                                             </>

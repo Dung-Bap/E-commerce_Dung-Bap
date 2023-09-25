@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputFileds = ({ placeholder, registername, errorName, type, withFull }) => {
+const InputFileds = ({ placeholder, registername, errorName, type, withFull, defaultValue }) => {
     return (
         <div className={` ${withFull ? '' : 'mb-[15px]'} flex flex-col`}>
             <input
@@ -10,6 +10,7 @@ const InputFileds = ({ placeholder, registername, errorName, type, withFull }) =
                 {...registername}
                 placeholder={placeholder}
                 type={type ? type : 'text'}
+                defaultValue={defaultValue}
             />
             <span
                 className={`${withFull ? 'w-full' : 'w-[400px]'} ${

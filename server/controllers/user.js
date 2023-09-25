@@ -281,12 +281,11 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 //api/user/
 const deleteUser = asyncHandler(async (req, res) => {
-    const { _id } = req.query;
-    if (!_id) throw new Error('Missing Inputs');
-    const response = await User.findByIdAndDelete({ _id });
+    const { uid } = req.params;
+    const response = await User.findByIdAndDelete(uid);
     return res.status(200).json({
         success: response ? true : false,
-        deleteUser: response ? `User with email: '${response.email}' deleted` : 'No user delete',
+        message: response ? `User with email: '${response.email}' deleted` : 'No user delete',
     });
 });
 //api/user/currentupdate
@@ -311,7 +310,7 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
     );
     return res.status(200).json({
         success: response ? true : false,
-        updateUserByAdmin: response ? response : 'Something went wrong',
+        message: response ? 'Update successful' : 'Something went wrong',
     });
 });
 
