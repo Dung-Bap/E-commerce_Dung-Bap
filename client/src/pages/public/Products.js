@@ -3,7 +3,7 @@ import { createSearchParams, useNavigate, useParams, useSearchParams } from 'rea
 import Masonry from 'react-masonry-css';
 
 import { Breadcrumb, Filter, Product } from '../../components';
-import { apiGetProducts } from '../../apis/getProducts';
+import { apiGetProducts } from '../../apis/products';
 import { sorts } from '../../ultils/contants';
 import InputSelect from '../../components/filter/InputSelect';
 import { Pagination } from '../../components/pagination';

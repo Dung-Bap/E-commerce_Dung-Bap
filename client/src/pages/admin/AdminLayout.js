@@ -10,7 +10,7 @@ const AdminLayout = () => {
     return (
         <div className="relative">
             <SidebarAdmin />
-            <div className="pl-[300px] bg-gray-800 h-screen">
+            <div className="pl-[300px] bg-gray-800 h-full">
                 <Outlet />
             </div>
         </div>

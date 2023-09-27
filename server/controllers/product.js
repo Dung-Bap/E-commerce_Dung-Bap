@@ -4,13 +4,17 @@ const slugify = require('slugify');
 
 //api/product/
 const createProduct = asyncHandler(async (req, res) => {
-    if (Object.keys(req.body).length === 0) throw new Error('Missing Inputs');
-    if (req.body && req.body.title) req.body.slug = slugify(req.body.title);
-
+    const { title, price, quantity, color, category, brand, description } = req.body;
+    const thumbnail = req?.files?.thumbnail[0].path;
+    const images = req?.files?.images?.map(el => el.path);
+    if (!(title && price && quantity && color && category && brand && description)) throw new Error('Missing Inputs');
+    req.body.slug = slugify(title);
+    if (thumbnail) req.body.thumbnail = thumbnail;
+    if (images) req.body.images = images;
     const newProduct = await Product.create(req.body);
     return res.status(200).json({
         success: newProduct ? true : false,
-        CreateNewProduct: newProduct ? newProduct : 'Cannot create new product',
+        message: newProduct ? 'Create Products Successfully !!!' : 'Cannot create new product',
     });
 });
 //api/product/:pid

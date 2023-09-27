@@ -83,7 +83,6 @@ const ManageUser = () => {
     });
 
     const onSubmit = async data => {
-        console.log(data);
         reset();
         setUpdated(!updated);
         setEditUser(null);

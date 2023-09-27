@@ -3,10 +3,11 @@ import Breadcrumb from '../../components/detailProduct/Breadcrumb';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 
-import { aipGetProduct } from '../../apis/getProducts';
+import { aipGetProduct } from '../../apis/products';
 import { renderStars, formatMoney } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
 import { Button, ProductExtrainfo, ProductEXtrainfoTabs } from '../../components';
+import DOMPurify from 'dompurify';
 
 const DetailProduct = () => {
     const { PiDotDuotone } = icons;
@@ -91,16 +92,23 @@ const DetailProduct = () => {
                         <div className="text-[14px] text-main italic ml-[10px]">{`(Sold: ${dataProducts?.sold})`}</div>
                     </div>
                     <ul className="mb-[20px]">
-                        {dataProducts?.description?.map((des, index) => (
-                            <li className="text-[14px] font-light" key={index}>
-                                <div className="flex items-center">
-                                    <span className="pr-[14px]">
-                                        <PiDotDuotone />
-                                    </span>
-                                    {des}
-                                </div>
-                            </li>
-                        ))}
+                        {dataProducts?.description?.length > 1 &&
+                            dataProducts?.description?.map((des, index) => (
+                                <li className="text-[14px] font-light" key={index}>
+                                    <div className="flex items-center">
+                                        <span className="pr-[14px]">
+                                            <PiDotDuotone />
+                                        </span>
+                                        {des}
+                                    </div>
+                                </li>
+                            ))}
+                        {dataProducts?.description?.length === 1 && (
+                            <div
+                                className="text-[14px] font-light pr-[14px] line-clamp-[10]"
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(dataProducts?.description[0]) }}
+                            ></div>
+                        )}
                     </ul>
                     <Button
                         styles={'w-full text-white bg-main p-2  hover:bg-[#333333] mr-[10px] px-4 py-2 min-w-[88px]'}

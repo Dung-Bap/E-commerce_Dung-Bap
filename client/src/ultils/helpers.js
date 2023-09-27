@@ -23,3 +23,29 @@ export const generateRange = (start, end) => {
     const length = end + 1 - start;
     return Array.from({ length }, (_, index) => start + index);
 };
+
+export const validate = (payload, setInvalidFields) => {
+    let invalids = 0;
+    const formatPayload = Object.entries(payload);
+    for (let arr of formatPayload) {
+        if (arr[1].trim() === '') {
+            invalids++;
+            setInvalidFields(prev => [...prev, { name: arr[0], message: 'Require this field !' }]);
+        }
+    }
+    return invalids;
+};
+
+export const convertToBase64 = file => {
+    if (!file) return '';
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result);
+        };
+        fileReader.onerror = error => {
+            reject(error);
+        };
+    });
+};

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import icons from '../../ultils/icons';
-import { apiGetProducts } from '../../apis/getProducts';
+import { apiGetProducts } from '../../apis/products';
 import { renderStars, formatMoney } from '../../ultils/helpers';
 import { Link } from 'react-router-dom';
 import CountDown from './CountDown';

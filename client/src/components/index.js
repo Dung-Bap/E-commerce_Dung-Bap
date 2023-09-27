@@ -12,6 +12,7 @@ export { default as Footer } from './Footer';
 export { default as Blogs } from '../pages/public/Blogs';
 export { default as InputFileds } from './inputs/InputFileds';
 export { default as SelectFileds } from './inputs/SelectFileds';
+export { default as MarkDownEditor } from './inputs/MarkDownEditor';
 export { default as Breadcrumb } from './detailProduct/Breadcrumb';
 export { default as Button } from './Button';
 export { default as ProductExtrainfo } from './detailProduct/ProductExtrainfo';

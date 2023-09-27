@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { apiGetProducts } from '../../apis/getProducts';
+import { apiGetProducts } from '../../apis/products';
 import { CustomSlider } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../store/products/asyncActions';

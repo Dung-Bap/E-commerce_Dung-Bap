@@ -9,6 +9,7 @@ function Button({
     rightIcon = false,
     children,
     styles,
+    type,
     ...passProps
 }) {
     let Comp = 'button';
