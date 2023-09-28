@@ -20,3 +20,4 @@ export { default as ProductEXtrainfoTabs } from './detailProduct/ProductEXtrainf
 export { default as Filter } from './filter/Filter';
 export { default as Loading } from './Loading';
 export { default as SidebarAdmin } from './admin/SidebarAdmin';
+export { default as UpdateProduct } from '../pages/admin/UpdateProduct';

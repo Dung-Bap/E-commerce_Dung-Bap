@@ -17,7 +17,7 @@ const InputFileds = ({
             <input
                 className={`form-input ${
                     withFull ? 'w-full' : 'w-[400px]'
-                } px-[10px] py-[8px] placeholder:text-[14px] bg-[#f6f6f6] text-[#1c1d1d] placeholder:border-none`}
+                } px-[6px] text-[14px] py-[4px] placeholder:text-[14px] bg-[#f6f6f6] text-[#1c1d1d] placeholder:border-none`}
                 {...registername}
                 placeholder={placeholder}
                 type={type ? type : 'text'}

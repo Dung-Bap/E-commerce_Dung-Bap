@@ -17,12 +17,12 @@ const usePagination = (totalProduct, currentPage, sibling = 1) => {
         if (isShowLeft && !isShowRight) {
             const rightStart = paginationCount - 4;
             const rightRange = generateRange(rightStart, paginationCount);
-            return [1, <PiDotsThreeOutlineDuotone />, ...rightRange];
+            return [1, <PiDotsThreeOutlineDuotone color={'red'} />, ...rightRange];
         }
 
         if (!isShowLeft && isShowRight) {
             const leftRange = generateRange(1, 5);
-            return [...leftRange, <PiDotsThreeOutlineDuotone />, paginationCount];
+            return [...leftRange, <PiDotsThreeOutlineDuotone color={'red'} />, paginationCount];
         }
 
         const siblingLeft = Math.max(currentPage - sibling, 1);
@@ -30,7 +30,13 @@ const usePagination = (totalProduct, currentPage, sibling = 1) => {
 
         if (isShowLeft && isShowRight) {
             const middleRange = generateRange(siblingLeft, siblingRight);
-            return [1, <PiDotsThreeOutlineDuotone />, ...middleRange, <PiDotsThreeOutlineDuotone />, paginationCount];
+            return [
+                1,
+                <PiDotsThreeOutlineDuotone color={'red'} />,
+                ...middleRange,
+                <PiDotsThreeOutlineDuotone color={'red'} />,
+                paginationCount,
+            ];
         }
     }, [totalProduct, sibling, currentPage]);
 

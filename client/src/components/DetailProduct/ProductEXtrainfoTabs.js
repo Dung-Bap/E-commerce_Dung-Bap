@@ -20,7 +20,6 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
     const [ProductCategories, setProductCategories] = useState(null);
     const { isLoggedIn } = useSelector(state => state.user);
     const navigate = useNavigate();
-    console.log(userRating);
 
     const fetchProductCategory = async () => {
         const response = await apiGetProducts({ category });

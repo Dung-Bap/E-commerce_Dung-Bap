@@ -8,9 +8,9 @@ const AdminLayout = () => {
     const { isLoggedIn, userData } = useSelector(state => state.user);
     if (!isLoggedIn || !userData || !+userData?.role === 1998) return <Navigate to={`${path.LOGIN}`} replace={true} />;
     return (
-        <div className="relative">
+        <div className="relative bg-gray-800 min-h-screen">
             <SidebarAdmin />
-            <div className="pl-[300px] bg-gray-800 h-full">
+            <div className="pl-[300px]">
                 <Outlet />
             </div>
         </div>

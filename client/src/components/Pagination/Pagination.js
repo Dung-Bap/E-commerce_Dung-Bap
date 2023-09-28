@@ -5,12 +5,12 @@ import { PaginationItem } from './index';
 
 const Pagination = ({ totalProduct, textWhite }) => {
     const [params] = useSearchParams();
-    const currentPage = params.get('page');
-    const pagination = usePagination(totalProduct, 2); // 2 mặc định, để currentpage thì lỗi
+    const currentPage = +params.get('page') || 1;
+    const pagination = usePagination(totalProduct, currentPage || 1);
     const pageSize = process.env.REACT_APP_PAGE_SIZE;
 
     const range = () => {
-        const start = (currentPage - 1) * pageSize + 1;
+        const start = Math.min((currentPage - 1) * pageSize + 1, totalProduct);
         const end = Math.min(currentPage * pageSize, totalProduct);
         return `${start} - ${end}`;
     };

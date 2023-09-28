@@ -54,8 +54,23 @@ const getProducts = asyncHandler(async (req, res) => {
         const colorQuery = colorArr.map(el => ({ color: { $regex: el, $options: 'i' } }));
         queryColorObject = { $or: colorQuery };
     }
-    const q = { ...queryColorObject, ...formatedQueries };
-    let queryCommand = Product.find(q);
+
+    let objectQuery = {};
+    if (queries?.q) {
+        delete formatedQueries.q;
+        objectQuery = {
+            $or: [
+                { color: { $regex: queries.q, $options: 'i' } },
+                { title: { $regex: queries.q, $options: 'i' } },
+                { brand: { $regex: queries.q, $options: 'i' } },
+                { description: { $regex: queries.q, $options: 'i' } },
+                { category: { $regex: queries.q, $options: 'i' } },
+            ],
+        };
+    }
+
+    const qr = { ...queryColorObject, ...formatedQueries, ...objectQuery };
+    let queryCommand = Product.find(qr);
 
     //sorting
     //abc, xyz => [abc,xyz] => abc xyz
@@ -83,7 +98,7 @@ const getProducts = asyncHandler(async (req, res) => {
     //Số lượng thoả điều kiện !== số lượng trả về trong 1 lần gọi API
     queryCommand.exec(async (err, response) => {
         if (err) throw new Error(err.message);
-        const counts = await Product.find(q).countDocuments();
+        const counts = await Product.find(qr).countDocuments();
         return res.status(200).json({
             success: response ? true : false,
             products: response ? response : 'Cannot get products',
@@ -95,20 +110,23 @@ const getProducts = asyncHandler(async (req, res) => {
 //api/product/
 const updatedProduct = asyncHandler(async (req, res) => {
     const { pid } = req.params;
+    const files = req?.files;
+    if (files?.thumbnail) req.body.thumbnail = files?.thumbnail[0].path;
+    if (files?.images) req.body.images = files?.images?.map(el => el.path);
     if (req.body && req.body.title) req.body.slug = slugify(req.body.title);
     const updatedProduct = await Product.findByIdAndUpdate(pid, req.body, { new: true });
     return res.status(200).json({
         success: updatedProduct ? true : false,
-        updatedProduct: updatedProduct ? updatedProduct : 'Cannot update product',
+        message: updatedProduct ? 'Update Successfully' : 'Cannot update product',
     });
 });
 
 const deletedProduct = asyncHandler(async (req, res) => {
     const { pid } = req.params;
-    const deletedProduct = await Product.findByIdAndDelete(pid, req.body, { new: true });
+    const deletedProduct = await Product.findByIdAndDelete(pid);
     return res.status(200).json({
         success: deletedProduct ? true : false,
-        deletedProduct: deletedProduct ? deletedProduct : 'Cannot delete product',
+        message: deletedProduct ? 'Delete Successfully !' : 'Cannot delete product',
     });
 });
 

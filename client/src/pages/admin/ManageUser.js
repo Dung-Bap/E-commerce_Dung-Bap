@@ -19,6 +19,7 @@ const ManageUser = () => {
     const [editUser, setEditUser] = useState(null);
     const [updated, setUpdated] = useState(false);
     const debouceValue = useDebouce(valueInput, 400);
+    const currentPage = +params.get('page') || 1;
 
     const fetchGetUsers = async params => {
         const response = await apiGetUsers({ ...params, limit: process.env.REACT_APP_PAGE_SIZE });
@@ -37,7 +38,6 @@ const ManageUser = () => {
         }).then(async result => {
             if (result.isConfirmed) {
                 const response = await apiDeleteUser(uid);
-                console.log(response);
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
@@ -98,7 +98,7 @@ const ManageUser = () => {
     };
 
     return (
-        <div className="h-full">
+        <div className="p-4">
             <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">Manage Users</div>
             <div className="flex justify-end p-5">
                 <input
@@ -146,7 +146,7 @@ const ManageUser = () => {
                                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                 >
                                     <th scope="row" className="px-2 py-4">
-                                        {index + 1}
+                                        {(currentPage - 1) * process.env.REACT_APP_PAGE_SIZE + index + 1}
                                     </th>
                                     <td className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {editUser?._id === user?._id ? (

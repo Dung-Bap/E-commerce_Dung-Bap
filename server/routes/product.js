@@ -17,7 +17,15 @@ router.put('/ratings', verifyAccessToken, ctrls.ratings);
 //Lưu ý params để sau cùng
 router.delete('/:pid', [verifyAccessToken, isAdmin], ctrls.deletedProduct);
 router.put('/uploadimage/:pid', [verifyAccessToken, isAdmin], uploader.array('images', 10), ctrls.uploadImagesProduct);
-router.put('/:pid', [verifyAccessToken, isAdmin], ctrls.updatedProduct);
+router.put(
+    '/:pid',
+    [verifyAccessToken, isAdmin],
+    uploader.fields([
+        { name: 'thumbnail', maxCount: 1 },
+        { name: 'images', maxCount: 10 },
+    ]),
+    ctrls.updatedProduct
+);
 router.get('/:pid', ctrls.getProduct);
 
 module.exports = router;

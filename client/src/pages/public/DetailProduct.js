@@ -24,7 +24,7 @@ const DetailProduct = () => {
     const [currentImage, setCurrentImage] = useState(null);
     const [dataProducts, setDataProducts] = useState(null);
     const [update, setUpdate] = useState(false);
-    // console.log(dataProducts);
+    console.log(dataProducts);
     const fetchDetailProduct = async () => {
         const response = await aipGetProduct(pid);
         if (response.success) {

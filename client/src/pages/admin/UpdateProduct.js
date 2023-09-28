@@ -1,21 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { Button, InputFileds, Loading, SelectFileds } from 'components';
 import { MarkDownEditor } from 'components/inputs/MarkDownEditor';
 import { validate, convertToBase64 } from 'ultils/helpers';
-import { apiCreateProducts } from 'apis';
+import { apiUpdateProduct } from 'apis';
 import { showModal } from 'store/app/appSlice';
-import path from 'ultils/path';
 
-const CreateProducts = () => {
+const UpdateProduct = ({ setEditProduct, editProduct, setUpdated, updated }) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { categories } = useSelector(state => state.app);
     const [invalidFields, setInvalidFields] = useState([]);
     const [payload, setPayload] = useState({
@@ -26,7 +23,7 @@ const CreateProducts = () => {
         images: [],
     });
 
-    const createProductsSchema = yup.object({
+    const updateProductSchema = yup.object({
         title: yup.string().required('Please enter name product'),
         price: yup.number().required('Please enter price product'),
         quantity: yup.number().required('Please enter quantity product'),
@@ -34,19 +31,6 @@ const CreateProducts = () => {
 
         category: yup.string().required('Please select your use case !'),
         brand: yup.string().required('Please select your use case !'),
-
-        thumbnail: yup.mixed().test('file', 'You need to provide a file', value => {
-            if (value.length > 0) {
-                return true;
-            }
-            return false;
-        }),
-        images: yup.mixed().test('file', 'You need to provide a file', value => {
-            if (value.length > 0) {
-                return true;
-            }
-            return false;
-        }),
     });
 
     const {
@@ -58,8 +42,26 @@ const CreateProducts = () => {
         formState: { errors },
     } = useForm({
         mode: 'onChange',
-        resolver: yupResolver(createProductsSchema),
+        resolver: yupResolver(updateProductSchema),
     });
+
+    useEffect(() => {
+        reset({
+            category: editProduct?.category || '',
+            brand: editProduct?.brand?.toLowerCase() || '',
+        });
+        setPayload({
+            description:
+                typeof editProduct.description === 'object'
+                    ? editProduct.description.join(',')
+                    : editProduct.description,
+        });
+        setPreviewImage({
+            thumbnail: editProduct?.thumbnail,
+            images: editProduct?.images,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editProduct]);
 
     const changeValue = useCallback(e => {
         setPayload(e);
@@ -84,29 +86,32 @@ const CreateProducts = () => {
     };
 
     useEffect(() => {
-        handleReviewThumb(watch('thumbnail')[0]);
+        if (watch('thumbnail') instanceof FileList && watch('thumbnail').length > 0)
+            handleReviewThumb(watch('thumbnail')[0]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watch('thumbnail')]);
     useEffect(() => {
-        handleReviewImages(watch('images'));
+        if (watch('images')?.length > 0) handleReviewImages(watch('images'));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watch('images')]);
 
     const onSubmit = async data => {
         const invalid = validate(payload, setInvalidFields);
         if (invalid === 0) {
-            if (data) data.category = categories?.find(category => category._id === data.category)?.title;
+            if (data) data.category = categories?.find(category => category.title === data.category)?.title;
             const finalPayload = { ...data, ...payload };
+
+            finalPayload.thumbnail = data.thumbnail.length === 0 ? previewImage.thumbnail : data.thumbnail[0];
             const formData = new FormData();
             for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1]);
-            if (finalPayload.thumbnail) formData.append('thumbnail', finalPayload.thumbnail[0]);
-            if (finalPayload.images) {
-                for (let image of finalPayload.images) formData.append('images', image);
-            }
+            finalPayload.images = data.images.length === 0 ? previewImage.images : data.images;
+            for (let image of finalPayload.images) formData.append('images', image);
+
             dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
-            const response = await apiCreateProducts(formData);
+            const response = await apiUpdateProduct(formData, editProduct._id);
             dispatch(showModal({ isShowModal: false, childrenModal: null }));
             document.body.style.overflow = 'overlay';
+
             if (response.success) {
                 Swal.fire({
                     title: 'Congratulation !',
@@ -115,27 +120,32 @@ const CreateProducts = () => {
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Go Home',
+                    confirmButtonText: 'Go Manage Products',
                 }).then(result => {
                     if (result.isConfirmed) {
-                        navigate(`/${path.HOME}`);
+                        setEditProduct(false);
+                        setUpdated(!updated);
                     }
                 });
             } else Swal.fire('Opps!', response.message, 'error');
         }
-        reset();
     };
     return (
         <div className="p-4">
-            <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">Create Products</div>
+            <div className="flex justify-between items-center">
+                <div className=" font-semibold text-white text-lg py-2 uppercase ">Update Product</div>
+                <span onClick={() => setEditProduct(false)} className="text-red-500 cursor-pointer hover:underline">
+                    Back
+                </span>
+            </div>
             <form method="POST" onSubmit={handleSubmit(onSubmit)}>
                 <InputFileds
                     withFull
                     label={'Name Product'}
                     registername={register('title')}
                     errorName={errors.title?.message}
-                    placeholder={'Name product'}
                     invalidRed
+                    defaultValue={editProduct.title}
                 />
                 <div className="flex items-center justify-between mt-4">
                     <div className="flex-1 mr-4">
@@ -144,8 +154,8 @@ const CreateProducts = () => {
                             label={'Price Product'}
                             registername={register('price')}
                             errorName={errors.price?.message}
-                            placeholder={'Price'}
                             invalidRed
+                            defaultValue={editProduct.price}
                         />
                     </div>
                     <div className="flex-1 mr-4">
@@ -154,8 +164,8 @@ const CreateProducts = () => {
                             label={'Quantity Product'}
                             registername={register('quantity')}
                             errorName={errors.quantity?.message}
-                            placeholder={'Quantity'}
                             invalidRed
+                            defaultValue={editProduct.quantity}
                         />
                     </div>
                     <div className="flex-1">
@@ -164,8 +174,8 @@ const CreateProducts = () => {
                             label={'Color Product'}
                             registername={register('color')}
                             errorName={errors.color?.message}
-                            placeholder={'Color'}
                             invalidRed
+                            defaultValue={editProduct.color}
                         />
                     </div>
                 </div>
@@ -177,7 +187,7 @@ const CreateProducts = () => {
                             errorName={errors.category?.message}
                             onChange={e => setValue('category', e.target.value, { shouldValidate: true })}
                             withFull
-                            options={categories?.map(category => ({ code: category._id, value: category.title }))}
+                            options={categories?.map(category => ({ code: category.title, value: category.title }))}
                             invalidRed
                         />
                     </div>
@@ -189,8 +199,8 @@ const CreateProducts = () => {
                             onChange={e => setValue('brand', e.target.value, { shouldValidate: true })}
                             withFull
                             options={categories
-                                ?.find(category => category._id === watch('category'))
-                                ?.brand?.map(el => ({ code: el, value: el }))}
+                                ?.find(category => category?.title === watch('category'))
+                                ?.brand?.map(el => ({ code: el?.toLowerCase(), value: el }))}
                             invalidRed
                         />
                     </div>
@@ -201,6 +211,7 @@ const CreateProducts = () => {
                     changeValue={changeValue}
                     invalidFields={invalidFields}
                     setInvalidFields={setInvalidFields}
+                    value={payload.description}
                 />
                 <div className="flex justify-between mt-4 items-start">
                     <div className="w-1/2 mr-4">
@@ -232,18 +243,23 @@ const CreateProducts = () => {
                         </div>
                         <div className="flex flex-wrap">
                             {previewImage?.images?.map((image, index) => (
-                                <img key={index} src={image} alt="" className="w-1/2 h-[200px] object-contain"></img>
+                                <img
+                                    key={index}
+                                    src={image}
+                                    alt=""
+                                    className="w-1/2 h-[200px] mb-[20px] object-contain"
+                                ></img>
                             ))}
                         </div>
                     </div>
                 </div>
 
                 <Button className="text-white bg-main p-2 rounded-md mr-[10px] px-4 py-2 min-w-[88px] mt-4">
-                    Create New Product
+                    Update
                 </Button>
             </form>
         </div>
     );
 };
 
-export default CreateProducts;
+export default memo(UpdateProduct);
