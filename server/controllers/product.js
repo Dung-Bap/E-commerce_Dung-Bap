@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');
+const makeSku = require('uniqid');
 
 //api/product/
 const createProduct = asyncHandler(async (req, res) => {
@@ -187,6 +188,23 @@ const uploadImagesProduct = asyncHandler(async (req, res) => {
     });
 });
 
+const addVarriants = asyncHandler(async (req, res) => {
+    const { pid } = req.params;
+    const { title, color, price } = req.body;
+    const thumbnail = req.files.thumbnail[0].path;
+    const images = req.files.images.map(el => el.path);
+    if (!title || !color || !price) throw new Error('Missing inputs');
+    const response = await Product.findByIdAndUpdate(
+        pid,
+        { $push: { varriants: { title, color, price, thumbnail, images, sku: makeSku().toUpperCase() } } },
+        { new: true }
+    );
+    return res.status(200).json({
+        success: response ? true : false,
+        message: response ? 'Update Varriants Successfully !' : 'Something went wrong !',
+    });
+});
+
 module.exports = {
     createProduct,
     getProduct,
@@ -195,4 +213,5 @@ module.exports = {
     deletedProduct,
     ratings,
     uploadImagesProduct,
+    addVarriants,
 };

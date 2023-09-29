@@ -30,7 +30,7 @@ const Product = ({ data, isLabel, nomal }) => {
                         </div>
                     )}
                     <img
-                        className="w-[243px] h-[243px] object-cover"
+                        className="h-[243px] object-contain w-full"
                         alt=""
                         src={
                             data?.thumbnail ||

@@ -7,11 +7,13 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { formatMoney } from 'ultils/helpers';
+import CustomizeVarriants from './CustomizeVarriants';
 
 const ManageProduct = () => {
     const [valueInput, setValueInput] = useState('');
     const [totalProducts, setTotalProducts] = useState(null);
     const [editProduct, setEditProduct] = useState(false);
+    const [varriants, setVarriants] = useState(null);
     const [updated, setUpdated] = useState(false);
     const [params] = useSearchParams();
     const currentPage = +params.get('page') || 1;
@@ -60,7 +62,7 @@ const ManageProduct = () => {
 
     return (
         <>
-            {!editProduct && (
+            {!editProduct && !varriants && (
                 <div className="p-4">
                     <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">
                         Manage Products
@@ -77,40 +79,40 @@ const ManageProduct = () => {
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         #
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Thumbnail
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
-                                        Title
+                                    <th scope="col" className="px-2 py-3 text-center">
+                                        Name Product
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Brand
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Category
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Price
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Quantity
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Sold
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Color
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Ratings
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Date Created
                                     </th>
-                                    <th scope="col" className="px-2 py-3">
+                                    <th scope="col" className="px-2 py-3 text-center">
                                         Actions
                                     </th>
                                 </tr>
@@ -121,35 +123,43 @@ const ManageProduct = () => {
                                         key={index}
                                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                     >
-                                        <th scope="row" className="px-2 py-4">
+                                        <th scope="row" className="px-3 py-4 text-center">
                                             {(currentPage - 1) * process.env.REACT_APP_PAGE_SIZE + index + 1}
                                         </th>
-                                        <td className="px-2 py-4">
+                                        <td className="px-3 py-4 text-center">
                                             <img
                                                 className="w-[50px] h-[50px] object-contain"
                                                 alt=""
                                                 src={product.thumbnail}
                                             />
                                         </td>
-                                        <td className="px-2 py-4 ">{product.title}</td>
-                                        <td className="px-2 py-4 ">{product.brand}</td>
-                                        <td className="px-2 py-4 ">{product.category}</td>
-                                        <td className="px-2 py-4 ">{formatMoney(product.price)}</td>
-                                        <td className="px-2 py-4 ">{product.quantity}</td>
-                                        <td className="px-2 py-4 ">{product.sold}</td>
-                                        <td className="px-2 py-4 ">{product.color}</td>
-                                        <td className="px-2 py-4 ">{product.totalRatings}</td>
-                                        <td className="px-2 py-4 ">{moment(product.updatedAt).format('DD/MM/YYYY')}</td>
-                                        <td className="px-2 py-4 ">
+                                        <td className="px-3 py-4 text-center ">{product.title}</td>
+                                        <td className="px-3 py-4 text-center ">{product.brand}</td>
+                                        <td className="px-3 py-4 text-center ">{product.category}</td>
+                                        <td className="px-3 py-4 text-center ">{formatMoney(product.price)}</td>
+                                        <td className="px-3 py-4 text-center ">{product.quantity}</td>
+                                        <td className="px-3 py-4 text-center ">{product.sold}</td>
+                                        <td className="px-3 py-4 text-center ">{product.color}</td>
+                                        <td className="px-3 py-4 text-center ">{product.totalRatings}</td>
+                                        <td className="px-3 py-4 text-center ">
+                                            {moment(product.updatedAt).format('DD/MM/YYYY')}
+                                        </td>
+                                        <td className="px-3 py-4 text-center flex flex-col">
                                             {
                                                 <>
                                                     <span
                                                         onClick={() => {
                                                             setEditProduct(product);
                                                         }}
-                                                        className="text-blue-500 mr-[10px] cursor-pointer hover:underline"
+                                                        className="text-blue-500 mb-[10px] cursor-pointer hover:underline"
                                                     >
                                                         Edit
+                                                    </span>
+                                                    <span
+                                                        onClick={() => setVarriants(product)}
+                                                        className="text-green-500 mb-[10px]  cursor-pointer hover:underline"
+                                                    >
+                                                        Varriants
                                                     </span>
                                                     <span
                                                         onClick={() => handleDeleteProduct(product._id, product.title)}
@@ -174,6 +184,14 @@ const ManageProduct = () => {
                 <UpdateProduct
                     setEditProduct={setEditProduct}
                     editProduct={editProduct}
+                    setUpdated={setUpdated}
+                    updated={updated}
+                />
+            )}
+            {varriants && (
+                <CustomizeVarriants
+                    setVarriants={setVarriants}
+                    varriants={varriants}
                     setUpdated={setUpdated}
                     updated={updated}
                 />

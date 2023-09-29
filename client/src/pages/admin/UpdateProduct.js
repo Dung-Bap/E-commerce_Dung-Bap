@@ -76,7 +76,7 @@ const UpdateProduct = ({ setEditProduct, editProduct, setUpdated, updated }) => 
         const reviewImages = [];
         for (let file of files) {
             if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-                return;
+                Swal.fire('Something went wrong', 'Please choose image with type: jpg or png !', 'error');
             } else {
                 const response = await convertToBase64(file);
                 reviewImages.push(response);
@@ -100,12 +100,15 @@ const UpdateProduct = ({ setEditProduct, editProduct, setUpdated, updated }) => 
         if (invalid === 0) {
             if (data) data.category = categories?.find(category => category.title === data.category)?.title;
             const finalPayload = { ...data, ...payload };
+            const formData = new FormData();
 
             finalPayload.thumbnail = data.thumbnail.length === 0 ? previewImage.thumbnail : data.thumbnail[0];
-            const formData = new FormData();
-            for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1]);
             finalPayload.images = data.images.length === 0 ? previewImage.images : data.images;
-            for (let image of finalPayload.images) formData.append('images', image);
+            // check xem data có length thì mới push không formdata sẽ bị duplicate field images á
+            for (let image of finalPayload.images) if (finalPayload.images.length > 0) formData.append('images', image);
+            delete finalPayload.images;
+
+            for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1]);
 
             dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
             const response = await apiUpdateProduct(formData, editProduct._id);

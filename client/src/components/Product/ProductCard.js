@@ -9,7 +9,7 @@ const ProductCard = ({ data }) => {
             className="flex w-1/3 px-[10px] mb-[20px] cursor-pointer"
         >
             <div className="flex border w-full p-[15px] ">
-                <img className="w-[84px] h-[84px] object-cover mr-5" alt="" src={data?.thumbnail} />
+                <img className="w-[84px] h-[84px] object-contain mr-5" alt="" src={data?.thumbnail} />
                 <div>
                     <span className=" flex text-[14px] font-light mb-[10px] h-[14px] ">
                         {renderStars(data?.totalRatings, 14)?.map((el, index) => (
