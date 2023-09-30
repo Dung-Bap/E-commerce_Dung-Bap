@@ -1,4 +1,11 @@
-import { MdPhone, MdNavigateNext, MdOutlineNavigateNext, MdOutlineProductionQuantityLimits } from 'react-icons/md';
+import {
+    MdPhone,
+    MdNavigateNext,
+    MdOutlineNavigateNext,
+    MdOutlineProductionQuantityLimits,
+    MdOutlineAdminPanelSettings,
+    MdOutlineHistoryToggleOff,
+} from 'react-icons/md';
 import { GrMail } from 'react-icons/gr';
 import {
     AiOutlineHeart,
@@ -12,13 +19,14 @@ import {
 } from 'react-icons/ai';
 import { FaOpencart, FaShieldAlt } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
-import { PiDotDuotone, PiGiftFill, PiDotOutlineBold } from 'react-icons/pi';
-import { BsCarFrontFill, BsFillPhoneVibrateFill, BsDash } from 'react-icons/bs';
+import { PiDotDuotone, PiGiftFill, PiDotOutlineBold, PiHeartHalfDuotone } from 'react-icons/pi';
+import { BsCarFrontFill, BsFillPhoneVibrateFill, BsDash, BsFillCameraFill } from 'react-icons/bs';
 import { GiReturnArrow } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { PiDotsThreeOutlineDuotone } from 'react-icons/pi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { LiaUsersSolid, LiaJediOrder, LiaProductHunt } from 'react-icons/lia';
+import { CgProfile } from 'react-icons/cg';
 
 const icons = {
     MdPhone,
@@ -50,6 +58,11 @@ const icons = {
     AiFillCaretRight,
     AiFillCaretDown,
     BsDash,
+    CgProfile,
+    MdOutlineAdminPanelSettings,
+    PiHeartHalfDuotone,
+    MdOutlineHistoryToggleOff,
+    BsFillCameraFill,
 };
 
 export default icons;

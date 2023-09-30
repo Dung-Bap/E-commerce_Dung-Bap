@@ -291,14 +291,14 @@ const deleteUser = asyncHandler(async (req, res) => {
 //api/user/currentupdate
 const updateUser = asyncHandler(async (req, res) => {
     const { _id } = req.user;
-    // Object.keys(req.body).length === 0 'kiểm tra req.body (oject) nếu nó rỗng'
-    if (!_id || Object.keys(req.body).length === 0) throw new Error('Missing Inputs');
-    const response = await User.findByIdAndUpdate(_id, req.body, { new: true }).select(
-        ' -password -role -refreshToken'
-    );
+    const { firstname, lastname, email } = req.body;
+    const data = { firstname, lastname, email };
+    if (req.file) data.avatar = req.file.path;
+    if (!_id || Object.keys(req.body) === 0) throw new Error('Missing inputs');
+    const response = await User.findByIdAndUpdate(_id, data, { new: true }).select(' -password -role -refreshToken');
     return res.status(200).json({
         success: response ? true : false,
-        updateUser: response ? response : 'Something went wrong',
+        message: response ? 'Update Successfully !' : 'Something went wrong',
     });
 });
 //api/user/

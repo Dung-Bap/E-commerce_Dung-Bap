@@ -26,7 +26,7 @@ const getProduct = asyncHandler(async (req, res) => {
         path: 'ratings',
         populate: {
             path: 'postedBy',
-            select: 'firstname lastname',
+            select: 'firstname lastname avatar',
         },
     });
     return res.status(200).json({

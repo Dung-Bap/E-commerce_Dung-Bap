@@ -89,11 +89,7 @@ const DetailProduct = () => {
             </div>
             <div className="flex">
                 <div className="w-2/5 flex flex-col gap-6 ">
-                    <img
-                        className="w-[458px] h-[458px] border object-contain"
-                        alt=""
-                        src={currentProduct?.thumbnail || currentImage}
-                    />
+                    <img className="w-[458px] h-[458px] border object-contain" alt="" src={currentImage} />
                     <div className="w-[458px] mr-[10px]">
                         <Slider {...settings}>
                             {currentProduct?.images?.length === 0 &&

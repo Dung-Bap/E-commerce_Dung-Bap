@@ -75,7 +75,9 @@ const CustomizeVarriants = ({ varriants, setVarriants, setUpdated, updated }) =>
     };
 
     useEffect(() => {
-        if (watch('thumbnail')) handleReviewThumb(watch('thumbnail')[0]);
+        if (watch('thumbnail')) {
+            handleReviewThumb(watch('thumbnail')[0]);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watch('thumbnail')]);
     useEffect(() => {

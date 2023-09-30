@@ -12,7 +12,7 @@ const InputFileds = ({
     multiple,
 }) => {
     return (
-        <div className={` ${withFull ? '' : 'mb-[15px]'} flex flex-col`}>
+        <div className={` ${withFull ? '' : 'mb-[15px]'} flex flex-col `}>
             <label className="text-white">{label}</label>
             <input
                 className={`form-input ${

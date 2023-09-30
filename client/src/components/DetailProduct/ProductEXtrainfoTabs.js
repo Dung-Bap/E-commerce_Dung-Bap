@@ -132,6 +132,7 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
                         comment={el?.comment}
                         name={`${el?.postedBy?.firstname} ${el?.postedBy?.lastname}`}
                         time={el?.updatedAt}
+                        avatar={el?.postedBy?.avatar}
                     />
                 ))}
             </div>

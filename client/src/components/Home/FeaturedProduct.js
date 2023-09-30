@@ -6,7 +6,7 @@ const FeaturedProduct = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
 
     const fetchFeaturedProduct = async () => {
-        const response = await apiGetProducts({ limit: 9, totalRatings: 5 });
+        const response = await apiGetProducts({ limit: 9, sort: '-totalRatings' });
         if (response?.success) setFeaturedProducts(response?.products);
     };
 

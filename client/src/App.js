@@ -9,7 +9,7 @@ import { getCategories } from 'store/app/asyncActions';
 import { Products, DetailProduct, Blogs, FAQs, Services } from 'pages/public';
 import Modal from 'components/modal/Modal';
 import { AdminLayout, CreateProducts, Dashboard, ManageOrder, ManageProduct, ManageUser } from 'pages/admin';
-import { MemberLayout, Personal } from 'pages/member';
+import { BuyHistory, MemberLayout, MyCart, Personal, Wishlist } from 'pages/member';
 
 function App() {
     const dispatch = useDispatch();
@@ -40,6 +40,9 @@ function App() {
                 </Route>
                 <Route path={path.MEMBER} element={<MemberLayout />}>
                     <Route path={path.PERSONAL} element={<Personal />} />
+                    <Route path={path.MY_CART} element={<MyCart />} />
+                    <Route path={path.WHISHLIST} element={<Wishlist />} />
+                    <Route path={path.BUY_HISTORY} element={<BuyHistory />} />
                 </Route>
                 <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
                 <Route path={path.LOGIN} element={<Login />} />

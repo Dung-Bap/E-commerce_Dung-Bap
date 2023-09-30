@@ -12,6 +12,10 @@ const {
     LiaProductHunt,
     LiaJediOrder,
     BsDash,
+    CgProfile,
+    FaOpencart,
+    MdOutlineHistoryToggleOff,
+    PiHeartHalfDuotone,
 } = icons;
 
 export const navigation = [
@@ -209,6 +213,33 @@ export const SIDEBARADMIN = [
         name: 'Manage Orders',
         icon: <LiaJediOrder size={20} />,
         path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+    },
+];
+
+export const SIDEBARMEMBER = [
+    {
+        id: 1,
+        name: 'Personal',
+        icon: <CgProfile size={20} />,
+        path: `/${path.MEMBER}/${path.PERSONAL}`,
+    },
+    {
+        id: 2,
+        name: 'Buy History',
+        icon: <MdOutlineHistoryToggleOff size={20} />,
+        path: `/${path.MEMBER}/${path.BUY_HISTORY}`,
+    },
+    {
+        id: 3,
+        name: 'Wishlist',
+        icon: <PiHeartHalfDuotone size={20} />,
+        path: `/${path.MEMBER}/${path.WHISHLIST}`,
+    },
+    {
+        id: 4,
+        name: 'My Cart',
+        icon: <FaOpencart size={20} />,
+        path: `/${path.MEMBER}/${path.MY_CART}`,
     },
 ];
 
