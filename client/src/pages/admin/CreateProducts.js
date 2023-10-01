@@ -106,7 +106,6 @@ const CreateProducts = () => {
             dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
             const response = await apiCreateProducts(formData);
             dispatch(showModal({ isShowModal: false, childrenModal: null }));
-            document.body.style.overflow = 'overlay';
             if (response.success) {
                 Swal.fire({
                     title: 'Congratulation !',

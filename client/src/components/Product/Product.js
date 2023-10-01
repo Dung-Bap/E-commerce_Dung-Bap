@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { formatMoney, renderStars } from '../../ultils/helpers';
 import labelnew from '../../assets/new.png';
 import labeltrending from '../../assets/trending.png';
 import icons from '../../ultils/icons';
-import { Link } from 'react-router-dom';
 import SelectOption from '../home/SelectOption';
+import withBaseComponent from 'hocs/withBaseComponent';
+import { DetailProduct } from 'pages/public';
+import { showModal } from 'store/app/appSlice';
 
 const { AiOutlineHeart, AiOutlineMenu, AiFillEye } = icons;
 
-const Product = ({ data, isLabel, nomal }) => {
+const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
     const [isSelectOption, setIsSelectOption] = useState(false);
+
+    const handleClickOptions = (e, options) => {
+        e.stopPropagation();
+        if (options === 'DETAIL') navigate(`/${data?.category?.toLowerCase()}/${data._id}/${data.title}`);
+        if (options === 'WISHLIST') console.log('WISHLIST');
+        if (options === 'QUICK_VIEW') {
+            dispatch(
+                showModal({
+                    isShowModal: true,
+                    childrenModal: <DetailProduct isShowQuickView category={data?.category} pid={data?._id} />,
+                }),
+            );
+        }
+    };
 
     return (
         <div className="pr-5">
-            <Link
-                to={`/${data?.category?.toLowerCase()}/${data._id}/${data.title}`}
+            <div
+                onClick={() => {
+                    navigate(`/${data?.category?.toLowerCase()}/${data._id}/${data.title}`);
+                }}
                 className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer "
             >
                 <div
@@ -24,9 +42,15 @@ const Product = ({ data, isLabel, nomal }) => {
                 >
                     {isSelectOption && (
                         <div className=" animate-slide-top w-full absolute bottom-0 flex justify-center gap-2">
-                            <SelectOption icon={<AiOutlineHeart />} />
-                            <SelectOption icon={<AiOutlineMenu />} />
-                            <SelectOption icon={<AiFillEye />} />
+                            <span onClick={e => handleClickOptions(e, 'WISHLIST')}>
+                                <SelectOption icon={<AiOutlineHeart />} />
+                            </span>
+                            <span onClick={e => handleClickOptions(e, 'DETAIL')}>
+                                <SelectOption icon={<AiOutlineMenu />} />
+                            </span>
+                            <span onClick={e => handleClickOptions(e, 'QUICK_VIEW')}>
+                                <SelectOption icon={<AiFillEye />} />
+                            </span>
                         </div>
                     )}
                     <img
@@ -52,9 +76,9 @@ const Product = ({ data, isLabel, nomal }) => {
                 </span>
                 <span className="text-[16px] font-light mb-[10px] line-clamp-1 hover:text-main">{data?.title}</span>
                 <span className={`text-[16px] font-light`}>{`${formatMoney(data?.price)}`}</span>
-            </Link>
+            </div>
         </div>
     );
 };
 
-export default Product;
+export default withBaseComponent(memo(Product));

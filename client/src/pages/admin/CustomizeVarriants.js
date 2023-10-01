@@ -97,7 +97,6 @@ const CustomizeVarriants = ({ varriants, setVarriants, setUpdated, updated }) =>
         dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
         const response = await apiAddVarriants(formData, varriants._id);
         dispatch(showModal({ isShowModal: false, childrenModal: null }));
-        document.body.style.overflow = 'overlay';
 
         if (response.success) {
             Swal.fire({

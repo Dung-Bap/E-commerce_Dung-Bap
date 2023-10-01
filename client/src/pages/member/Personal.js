@@ -89,7 +89,6 @@ const Personal = ({ ...props }) => {
         props.dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
         const response = await apiUpdateUser(formData);
         props.dispatch(showModal({ isShowModal: false, childrenModal: null }));
-        document.body.style.overflow = 'overlay';
 
         if (response.success) {
             Swal.fire({

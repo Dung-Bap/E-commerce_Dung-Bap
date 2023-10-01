@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Breadcrumb from '../../components/detailProduct/Breadcrumb';
-import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 
 import { aipGetProduct } from '../../apis/products';
@@ -8,9 +7,12 @@ import { renderStars, formatMoney } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
 import { Button, ProductExtrainfo, ProductEXtrainfoTabs } from '../../components';
 import DOMPurify from 'dompurify';
+import clsx from 'clsx';
+import { useParams } from 'react-router-dom';
 
-const DetailProduct = () => {
+const DetailProduct = ({ isShowQuickView, category, pid }) => {
     const { PiDotDuotone } = icons;
+    const params = useParams();
 
     const settings = {
         dots: false,
@@ -20,7 +22,6 @@ const DetailProduct = () => {
         slidesToScroll: 1,
     };
 
-    const { category, pid } = useParams();
     const [currentImage, setCurrentImage] = useState(null);
     const [dataProducts, setDataProducts] = useState(null);
     const [update, setUpdate] = useState(false);
@@ -34,7 +35,7 @@ const DetailProduct = () => {
     });
 
     const fetchDetailProduct = async () => {
-        const response = await aipGetProduct(pid);
+        const response = await aipGetProduct(params.pid || pid);
         if (response.success) {
             setDataProducts(response.productData);
             setCurrentImage(response.productData?.thumbnail || response.productData?.images[0]);
@@ -55,18 +56,17 @@ const DetailProduct = () => {
     }, [varriants]);
 
     useEffect(() => {
-        if (pid) fetchDetailProduct();
+        if (params.pid || pid) fetchDetailProduct();
         window.scrollTo({
             top: 0,
             left: 0,
             behavior: 'smooth',
         });
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, pid]);
 
     useEffect(() => {
-        if (pid) fetchDetailProduct();
+        if (params.pid || pid) fetchDetailProduct();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [update]);
 
@@ -81,23 +81,45 @@ const DetailProduct = () => {
 
     return (
         <>
-            <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px]">
-                <h2 className="text-[18px] font-medium mb-10px uppercase">
-                    {currentProduct?.title || dataProducts?.title}
-                </h2>
-                <Breadcrumb title={currentProduct?.title || dataProducts?.title} category={category} />
-            </div>
-            <div className="flex">
-                <div className="w-2/5 flex flex-col gap-6 ">
-                    <img className="w-[458px] h-[458px] border object-contain" alt="" src={currentImage} />
-                    <div className="w-[458px] mr-[10px]">
+            {!isShowQuickView && (
+                <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px]">
+                    <h2 className="text-[18px] font-medium mb-10px uppercase">
+                        {currentProduct?.title || dataProducts?.title}
+                    </h2>
+                    <Breadcrumb
+                        title={currentProduct?.title || dataProducts?.title}
+                        category={params.category || category}
+                    />
+                </div>
+            )}
+            <div
+                onClick={e => e.stopPropagation()}
+                className={clsx(
+                    'flex bg-white',
+                    isShowQuickView &&
+                        'rounded-md overflow-hidden gap-6 p-4 max-w-[700px] max-h-[600px] overflow-y-auto',
+                )}
+            >
+                <div className={`${isShowQuickView ? 'w-1/2' : 'w-2/5'} flex flex-col gap-6`}>
+                    <img
+                        className={clsx(
+                            'w-[448px] h-[448px] border object-contain',
+                            isShowQuickView && 'max-w-[310px] h-[320px]',
+                        )}
+                        alt=""
+                        src={currentImage}
+                    />
+                    <div className={clsx(!isShowQuickView && 'w-[458px]', 'w-[320px] mr-[10px]')}>
                         <Slider {...settings}>
                             {currentProduct?.images?.length === 0 &&
                                 dataProducts?.images?.map((image, index) => (
                                     <div key={index} className="pr-[10px] ">
                                         <img
                                             onClick={e => handleClickImage(e, image)}
-                                            className="w-[143px] h-[143px] border object-contain cursor-pointer"
+                                            className={clsx(
+                                                'w-[143px] h-[143px] border object-contain cursor-pointer',
+                                                isShowQuickView && 'w-[100px] h-[100px]',
+                                            )}
                                             alt=""
                                             src={image}
                                         />
@@ -108,7 +130,10 @@ const DetailProduct = () => {
                                     <div key={index} className="pr-[10px] ">
                                         <img
                                             onClick={e => handleClickImage(e, image)}
-                                            className="w-[143px] h-[143px] border object-contain cursor-pointer"
+                                            className={clsx(
+                                                !isShowQuickView && 'w-[143px] h-[143px]',
+                                                'w-[100px] h-[100px] border object-contain cursor-pointer',
+                                            )}
                                             alt=""
                                             src={image}
                                         />
@@ -117,7 +142,7 @@ const DetailProduct = () => {
                         </Slider>
                     </div>
                 </div>
-                <div className="w-2/5 ">
+                <div className={`${isShowQuickView ? 'w-1/2' : 'w-2/5'}`}>
                     <span className={`text-[30px] font-medium`}>{`${formatMoney(
                         currentProduct?.price || dataProducts?.price,
                     )}`}</span>
@@ -202,19 +227,23 @@ const DetailProduct = () => {
                         ADD TO CART
                     </Button>
                 </div>
-                <div className="w-1/5 pl-[20px] ">
-                    <ProductExtrainfo />
+                {!isShowQuickView && (
+                    <div className="w-1/5 pl-[20px] ">
+                        <ProductExtrainfo />
+                    </div>
+                )}
+            </div>
+            {!isShowQuickView && (
+                <div className="w-full mt-[30px]">
+                    <ProductEXtrainfoTabs
+                        userRating={dataProducts?.ratings}
+                        titleProduct={dataProducts?.title}
+                        totalRatings={dataProducts?.totalRatings}
+                        pid={dataProducts?._id}
+                        rerender={rerender}
+                    />
                 </div>
-            </div>
-            <div className="w-full mt-[30px]">
-                <ProductEXtrainfoTabs
-                    userRating={dataProducts?.ratings}
-                    titleProduct={dataProducts?.title}
-                    totalRatings={dataProducts?.totalRatings}
-                    pid={dataProducts?._id}
-                    rerender={rerender}
-                />
-            </div>
+            )}
         </>
     );
 };

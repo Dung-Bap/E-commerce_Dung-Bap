@@ -39,7 +39,6 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
 
         await apiRatings({ star: score, comment, pid, updatedAt: Date.now() });
         dispatch(showModal({ isShowModal: false, childrenModal: null }));
-        document.body.style.overflow = 'overlay';
         rerender();
     };
 

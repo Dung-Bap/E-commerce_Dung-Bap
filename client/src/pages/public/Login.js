@@ -120,7 +120,6 @@ const Login = () => {
             dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
             const response = await apiRegister(data);
             dispatch(showModal({ isShowModal: false, childrenModal: null }));
-            document.body.style.overflow = 'overlay';
             if (response.success) {
                 Swal.fire('Congratulation', response.message, 'success').then(() => {
                     reset();

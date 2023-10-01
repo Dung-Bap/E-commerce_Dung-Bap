@@ -113,7 +113,6 @@ const UpdateProduct = ({ setEditProduct, editProduct, setUpdated, updated }) => 
             dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
             const response = await apiUpdateProduct(formData, editProduct._id);
             dispatch(showModal({ isShowModal: false, childrenModal: null }));
-            document.body.style.overflow = 'overlay';
 
             if (response.success) {
                 Swal.fire({

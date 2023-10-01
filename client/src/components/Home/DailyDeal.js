@@ -28,7 +28,7 @@ const DailyDeal = () => {
                 <span className="flex-1"></span>
             </div>
             <div className="flex flex-col items-center mb-[15px]">
-                <Link to={`/${dailyDeal?.category?.toLowerCase()}/${dailyDeal._id}/${dailyDeal.title}`}>
+                <Link to={`/${dailyDeal?.category?.toLowerCase()}/${dailyDeal?._id}/${dailyDeal?.title}`}>
                     <img
                         className="w-[280px] h-[280px] object-cover mb-[30px] cursor-pointer"
                         alt=""
@@ -36,16 +36,16 @@ const DailyDeal = () => {
                     />
                 </Link>
                 <span className=" flex text-[14px] font-light mb-[15px] h-[18px] ">
-                    {renderStars(dailyDeal.totalRatings)?.map((el, index) => (
+                    {renderStars(dailyDeal?.totalRatings)?.map((el, index) => (
                         <span key={index}>{el}</span>
                     ))}
                 </span>
-                <Link to={`/${dailyDeal?.category?.toLowerCase()}/${dailyDeal._id}/${dailyDeal.title}`}>
+                <Link to={`/${dailyDeal?.category?.toLowerCase()}/${dailyDeal?._id}/${dailyDeal?.title}`}>
                     <span className="text-[16px] font-light mb-[15px] line-clamp-1 hover:text-main cursor-pointer">
-                        {dailyDeal.title}
+                        {dailyDeal?.title}
                     </span>
                 </Link>
-                <span className={`text-[16px] font-light`}>{`${formatMoney(dailyDeal.price)}`}</span>
+                <span className={`text-[16px] font-light`}>{`${formatMoney(dailyDeal?.price)}`}</span>
             </div>
             <div className="flex w-full items-center justify-between">
                 <CountDown unit={'Hours'} />
