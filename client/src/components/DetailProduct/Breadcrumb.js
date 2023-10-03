@@ -18,7 +18,7 @@ const Breadcrumb = ({ title, category }) => {
                 .filter(el => el?.match?.route)
                 .map(({ match, breadcrumb }, index, self) => (
                     <Link key={match.pathname} to={match.pathname}>
-                        <span className="flex items-center text-[14px] hover:text-main">
+                        <span className="flex items-center text-[14px] hover:text-main capitalize">
                             {breadcrumb} {index !== self.length - 1 && <MdOutlineNavigateNext />}
                         </span>
                     </Link>

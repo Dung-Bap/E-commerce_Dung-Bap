@@ -5,6 +5,7 @@ import path from '../../ultils/path';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { logout } from 'store/user/userSlice';
+import { showCart } from 'store/app/appSlice';
 
 const Header = () => {
     const { MdPhone, GrMail, FaOpencart, IoLogOut, CgProfile, MdOutlineAdminPanelSettings } = icons;
@@ -78,12 +79,17 @@ const Header = () => {
                 </div>
                 {userData && (
                     <>
-                        <div className="px-5 border-r-2 leading-[37.5px]">
-                            <span className="text-[13px] font-medium flex items-center">
-                                <span className="text-[20px] mr-2 text-main">
+                        <div className="px-5 border-r-2 h-[37.5px] flex items-center">
+                            <span
+                                onClick={() => dispatch(showCart())}
+                                className="text-[13px] font-medium flex items-center cursor-pointer relative"
+                            >
+                                <div className="text-[20px] mr-2 text-main">
                                     <FaOpencart />
-                                </span>
-                                0 item
+                                    <span className="absolute flex justify-center items-center rounded-full border top-[-15px] right-[-5px] w-[20px] h-[20px] bg-slate-100 text-[10px]">
+                                        {userData?.cart?.length}
+                                    </span>
+                                </div>
                             </span>
                         </div>
                         <div

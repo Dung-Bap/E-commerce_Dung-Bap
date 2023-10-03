@@ -12,6 +12,7 @@ const path = {
     DETAIL_PRODUCT__CATEGORY__PID__TITLE: ':category/:pid/:title',
     FINALREGISTER: 'finalregister/:status',
     RESET_PASSWORD: 'reset-password/:token',
+    CART_DETAIL: 'cart-detail',
 
     // admin
     ADMIN: 'admin',

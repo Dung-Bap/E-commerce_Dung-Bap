@@ -1,26 +1,35 @@
 /** @format */
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { FinalRegister, Home, Login, Public, ResetPassword } from 'pages/public';
-import path from 'ultils/path';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Cart, CartDetail, FinalRegister, Home, Login, Public, ResetPassword } from 'pages/public';
+import path from 'ultils/path';
 import { useEffect } from 'react';
 import { getCategories } from 'store/app/asyncActions';
 import { Products, DetailProduct, Blogs, FAQs, Services } from 'pages/public';
 import Modal from 'components/modal/Modal';
 import { AdminLayout, CreateProducts, Dashboard, ManageOrder, ManageProduct, ManageUser } from 'pages/admin';
 import { BuyHistory, MemberLayout, MyCart, Personal, Wishlist } from 'pages/member';
+import { showCart } from 'store/app/appSlice';
 
 function App() {
+    const { isShowModal, childrenModal, isShowCart } = useSelector(state => state.app);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCategories());
     }, [dispatch]);
 
-    const { isShowModal, childrenModal } = useSelector(state => state.app);
-
     return (
-        <div className="font-main h-screen">
+        <div className="font-main h-screen relative">
+            {isShowCart && (
+                <div
+                    onClick={() => dispatch(showCart())}
+                    className="absolute z-50 inset-0 bg-[rgba(0,0,0,0.5)] flex flex-row-reverse"
+                >
+                    <Cart />
+                </div>
+            )}
             {isShowModal && <Modal>{childrenModal}</Modal>}
             <Routes>
                 <Route path={path.PUBLIC} element={<Public />}>
@@ -30,6 +39,7 @@ function App() {
                     <Route path={path.OUT_SERVICES} element={<Services />} />
                     <Route path={path.FAQS} element={<FAQs />} />
                     <Route path={path.BLOGS} element={<Blogs />} />
+                    <Route path={path.CART_DETAIL} element={<CartDetail />} />
                 </Route>
                 <Route path={path.ADMIN} element={<AdminLayout />}>
                     <Route path={path.CREATE_PRODUCTS} element={<CreateProducts />} />

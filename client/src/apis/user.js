@@ -36,7 +36,6 @@ export const aipGetCurrent = () =>
     });
 
 // Admin
-
 export const apiGetUsers = params =>
     axios({
         url: '/user',
@@ -56,10 +55,23 @@ export const apiDeleteUser = uid =>
         url: '/user/' + uid,
         method: 'delete',
     });
-
+// Member and Admin
 export const apiUpdateUser = data =>
     axios({
         url: '/user/currentupdate/',
         method: 'put',
         data,
+    });
+// Cart
+export const apiUpdateCart = data =>
+    axios({
+        url: '/user/cart/',
+        method: 'put',
+        data,
+    });
+
+export const apiDeleteProductInCart = pid =>
+    axios({
+        url: '/user/delete-product-incart/' + pid,
+        method: 'delete',
     });

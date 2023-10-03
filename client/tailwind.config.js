@@ -19,6 +19,13 @@ module.exports = {
             colors: {
                 main: '#ee3131',
             },
+            gridTemplateRows: {
+                10: 'repeat(10, minmax(0, 1fr))',
+                layout: '200px minmax(900px, 1fr) 100px',
+            },
+            gridRow: {
+                'span-7': 'span 7 / span 8',
+            },
         },
         keyframes: {
             'slide-top': {
@@ -31,9 +38,35 @@ module.exports = {
                     transform: 'translateY(0);',
                 },
             },
+            'slide-left': {
+                '0%': {
+                    '-webkit-transform': 'translateX(400px);',
+                    opacity: 0,
+                    transform: 'translateX(400px);',
+                },
+                '100%': {
+                    '-webkit-transform': ' translateX(0);',
+                    opacity: 1,
+                    transform: ' translateX(0);',
+                },
+            },
+            'slide-right': {
+                '0%': {
+                    '-webkit-transform': ' translateX(0);',
+                    opacity: 1,
+                    transform: ' translateX(0);',
+                },
+                '100%': {
+                    '-webkit-transform': 'translateX(400px);',
+                    opacity: 0,
+                    transform: 'translateX(400px);',
+                },
+            },
         },
         animation: {
             'slide-top': 'slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+            'slide-left': 'slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
+            'slide-right': 'slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         },
     },
     plugins: [

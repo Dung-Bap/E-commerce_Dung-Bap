@@ -16,11 +16,12 @@ import {
     AiFillHome,
     AiFillCaretRight,
     AiFillCaretDown,
+    AiOutlineCloseCircle,
 } from 'react-icons/ai';
 import { FaOpencart, FaShieldAlt } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
 import { PiDotDuotone, PiGiftFill, PiDotOutlineBold, PiHeartHalfDuotone } from 'react-icons/pi';
-import { BsCarFrontFill, BsFillPhoneVibrateFill, BsDash, BsFillCameraFill } from 'react-icons/bs';
+import { BsCarFrontFill, BsFillPhoneVibrateFill, BsDash, BsFillCameraFill, BsArrowRight } from 'react-icons/bs';
 import { GiReturnArrow } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { PiDotsThreeOutlineDuotone } from 'react-icons/pi';
@@ -63,6 +64,8 @@ const icons = {
     PiHeartHalfDuotone,
     MdOutlineHistoryToggleOff,
     BsFillCameraFill,
+    AiOutlineCloseCircle,
+    BsArrowRight,
 };
 
 export default icons;

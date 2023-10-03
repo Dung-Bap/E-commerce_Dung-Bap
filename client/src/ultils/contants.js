@@ -78,16 +78,16 @@ export const productEXtrainfoTabs = [
     {
         id: 1,
         name: 'DESCRIPTION',
-        des: `Technology: GSM / HSPA / LTE
-        Dimensions: 144.6 x 69.2 x 7.3 mm
-        Weight: 129 g
-        Display: IPS LCD 5.15 inches
-        Resolution: 1080 x 1920
-        OS: Android OS, v6.0 (Marshmallow)
-        Chipset: Snapdragon 820
-        CPU: Quad-core
-        Internal: 32GB/64GB/128GB
-        Camera: 16 MP, f/2.0 - 4 MP, f/2.0`,
+        // des: `Technology: GSM / HSPA / LTE
+        // Dimensions: 144.6 x 69.2 x 7.3 mm
+        // Weight: 129 g
+        // Display: IPS LCD 5.15 inches
+        // Resolution: 1080 x 1920
+        // OS: Android OS, v6.0 (Marshmallow)
+        // Chipset: Snapdragon 820
+        // CPU: Quad-core
+        // Internal: 32GB/64GB/128GB
+        // Camera: 16 MP, f/2.0 - 4 MP, f/2.0`,
     },
     {
         id: 2,

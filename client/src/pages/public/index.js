@@ -10,3 +10,5 @@ export { default as DetailProduct } from './DetailProduct';
 export { default as Services } from './Services';
 export { default as FAQs } from './FAQs';
 export { default as Blogs } from './Blogs';
+export { default as Cart } from './Cart';
+export { default as CartDetail } from './CartDetail';

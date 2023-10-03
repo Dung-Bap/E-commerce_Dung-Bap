@@ -11,8 +11,10 @@ import VoteModal from '../modal/VoteModal';
 import path from '../../ultils/path';
 import VoteBar from './VoteBar';
 import Comment from './Comment';
+import { PiDotDuotone } from 'react-icons/pi';
+import DOMPurify from 'dompurify';
 
-const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rerender }) => {
+const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rerender, description }) => {
     const { category } = useParams();
     const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState(1);
@@ -66,7 +68,7 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
     return (
         <div className="mb-[30px]">
             <div>
-                <div className="relative bottom-2">
+                <div className="relative bottom-2 ">
                     {productEXtrainfoTabs.map(el => (
                         <span
                             onClick={() => setActiveTab(el.id)}
@@ -80,6 +82,30 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
                     ))}
                 </div>
                 <div className="border p-5">
+                    {productDes.map(
+                        (el, index) =>
+                            el.id === 1 && (
+                                <ul key={index} className="mb-[20px]">
+                                    {description?.length > 1 &&
+                                        description.map((des, index) => (
+                                            <li className="text-[14px] font-light" key={index}>
+                                                <div className="flex items-center">
+                                                    <span className="pr-[14px]">
+                                                        <PiDotDuotone />
+                                                    </span>
+                                                    {des}
+                                                </div>
+                                            </li>
+                                        ))}
+                                    {description?.length === 1 && (
+                                        <div
+                                            className="text-[14px] font-light pr-[14px] "
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description[0]) }}
+                                        ></div>
+                                    )}
+                                </ul>
+                            ),
+                    )}
                     {productDes.map((el, index) => (
                         <span key={index} className="text-[14px] font-light">
                             {el.des}

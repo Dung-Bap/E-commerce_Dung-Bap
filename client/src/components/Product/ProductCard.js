@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ProductCard = ({ data }) => {
     return (
         <Link
-            to={`/${data?.category?.toLowerCase()}/${data._id}/${data.title}`}
+            to={`/${data?.category?.toLowerCase()}/${data?._id}/${data?.title}`}
             className="flex w-1/3 px-[10px] mb-[20px] cursor-pointer"
         >
             <div className="flex border w-full p-[15px] ">

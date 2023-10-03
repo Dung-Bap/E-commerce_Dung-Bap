@@ -8,6 +8,7 @@ const uploader = require('../config/cloudinary.config');
 // de du lieu k bi lộ, gui qua post, put
 router.put('/updateaddress', verifyAccessToken, ctrls.updateUserAddress);
 router.put('/cart', verifyAccessToken, ctrls.updateCart);
+router.delete('/delete-product-incart/:pid', verifyAccessToken, ctrls.deleteProductInCart);
 router.post('/register', ctrls.register);
 router.post('/insertUsers', ctrls.insertUsers);
 router.get('/finalregister/:token', ctrls.finalRegister);

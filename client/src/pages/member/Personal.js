@@ -16,7 +16,6 @@ import withBaseComponent from 'hocs/withBaseComponent';
 
 const Personal = ({ ...props }) => {
     const { userData } = useSelector(state => state.user);
-    console.log(userData);
     const [previewAvatar, setPreviewAvatar] = useState({
         avatar: null,
     });

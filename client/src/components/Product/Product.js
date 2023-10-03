@@ -7,15 +7,57 @@ import SelectOption from '../home/SelectOption';
 import withBaseComponent from 'hocs/withBaseComponent';
 import { DetailProduct } from 'pages/public';
 import { showModal } from 'store/app/appSlice';
+import { apiUpdateCart } from 'apis';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import path from 'ultils/path';
+import { getCurrent } from 'store/user/asyncActions';
+import Tippy from '@tippyjs/react';
 
-const { AiOutlineHeart, AiOutlineMenu, AiFillEye } = icons;
-
+const { AiOutlineHeart, FaOpencart, AiFillEye } = icons;
 const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
     const [isSelectOption, setIsSelectOption] = useState(false);
-
-    const handleClickOptions = (e, options) => {
+    const { userData } = useSelector(state => state.user);
+    const handleClickOptions = async (e, options) => {
         e.stopPropagation();
-        if (options === 'DETAIL') navigate(`/${data?.category?.toLowerCase()}/${data._id}/${data.title}`);
+        if (options === 'CART') {
+            if (!userData)
+                Swal.fire({
+                    title: 'Please log in first !',
+                    confirmButtonText: 'Oki',
+                    showCancelButton: true,
+                    icon: 'error',
+                }).then(rs => {
+                    if (rs.isConfirmed) {
+                        navigate(`/${path.LOGIN}`);
+                    }
+                });
+            const response = await apiUpdateCart({ pid: data?._id, color: data?.color });
+            dispatch(getCurrent());
+            if (response.success) {
+                Swal.fire({
+                    title: 'Add to cart successfully !',
+                    text: `Move to shopping cart ?`,
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Oki',
+                }).then(async result => {
+                    if (result.isConfirmed) {
+                        navigate(`/${path.CART_DETAIL}`);
+                        dispatch(getCurrent());
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: response.message,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        }
         if (options === 'WISHLIST') console.log('WISHLIST');
         if (options === 'QUICK_VIEW') {
             dispatch(
@@ -42,15 +84,29 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
                 >
                     {isSelectOption && (
                         <div className=" animate-slide-top w-full absolute bottom-0 flex justify-center gap-2">
-                            <span onClick={e => handleClickOptions(e, 'WISHLIST')}>
-                                <SelectOption icon={<AiOutlineHeart />} />
-                            </span>
-                            <span onClick={e => handleClickOptions(e, 'DETAIL')}>
-                                <SelectOption icon={<AiOutlineMenu />} />
-                            </span>
-                            <span onClick={e => handleClickOptions(e, 'QUICK_VIEW')}>
-                                <SelectOption icon={<AiFillEye />} />
-                            </span>
+                            <Tippy content="Add wishlist" placement="bottom">
+                                <span onClick={e => handleClickOptions(e, 'WISHLIST')}>
+                                    <SelectOption icon={<AiOutlineHeart />} />
+                                </span>
+                            </Tippy>
+                            {userData?.cart.some(el => el.product._id === data?._id) ? (
+                                <Tippy content="Add Cart" placement="bottom">
+                                    <span onClick={e => e.stopPropagation()}>
+                                        <SelectOption border icon={<FaOpencart color="red" />} />
+                                    </span>
+                                </Tippy>
+                            ) : (
+                                <Tippy content="Add Cart" placement="bottom">
+                                    <span onClick={e => handleClickOptions(e, 'CART')}>
+                                        <SelectOption icon={<FaOpencart />} />
+                                    </span>
+                                </Tippy>
+                            )}
+                            <Tippy content="Quick View" placement="bottom">
+                                <span onClick={e => handleClickOptions(e, 'QUICK_VIEW')}>
+                                    <SelectOption icon={<AiFillEye />} />
+                                </span>
+                            </Tippy>
                         </div>
                     )}
                     <img

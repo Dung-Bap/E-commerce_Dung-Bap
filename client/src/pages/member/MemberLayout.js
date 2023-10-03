@@ -9,7 +9,7 @@ const MemberLayout = () => {
     if (!isLoggedIn || !userData) return <Navigate to={`${path.LOGIN}`} replace={true} />;
 
     return (
-        <div className="relative bg-gray-800 min-h-screen">
+        <div className="relative max-h-screen overflow-y-auto bg-gray-800 min-h-screen">
             <SidebarMember />
             <div className="pl-[300px]">
                 <Outlet />
