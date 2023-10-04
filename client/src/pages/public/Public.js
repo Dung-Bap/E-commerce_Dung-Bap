@@ -3,7 +3,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 // Outlet sẽ chuyển tới trang con của public trùng với đường dẫn trên url
-import { Footer, Header, Navigation, TopHeader } from '../../components';
+import { Footer, Header, Navigation } from '../../components';
+import TopHeader from './TopHeader';
 
 const Public = () => {
     return (

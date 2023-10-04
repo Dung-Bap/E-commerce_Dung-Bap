@@ -6,13 +6,13 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
-import { Button, InputFileds, Loading } from 'components';
-import icons from 'ultils/icons';
-import { convertToBase64 } from 'ultils/helpers';
-import { showModal } from 'store/app/appSlice';
-import { apiUpdateUser } from 'apis';
-import { getCurrent } from 'store/user/asyncActions';
-import withBaseComponent from 'hocs/withBaseComponent';
+import { Button, InputFileds, Loading } from '../../components';
+import icons from '../../ultils/icons';
+import { convertToBase64 } from '../../ultils/helpers';
+import { showModal } from '../../store/app/appSlice';
+import { apiUpdateUser } from '../../apis';
+import { getCurrent } from '../../store/user/asyncActions';
+import withBaseComponent from '../../hocs/withBaseComponent';
 
 const Personal = ({ ...props }) => {
     const { userData } = useSelector(state => state.user);
@@ -94,7 +94,7 @@ const Personal = ({ ...props }) => {
                 icon: 'success',
                 title: response.message,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 1000,
             });
             setUpdated(!updated);
         } else Swal.fire('Opps!', response.message, 'error');

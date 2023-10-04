@@ -2,16 +2,16 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { Cart, CartDetail, FinalRegister, Home, Login, Public, ResetPassword } from 'pages/public';
-import path from 'ultils/path';
 import { useEffect } from 'react';
-import { getCategories } from 'store/app/asyncActions';
-import { Products, DetailProduct, Blogs, FAQs, Services } from 'pages/public';
-import Modal from 'components/modal/Modal';
-import { AdminLayout, CreateProducts, Dashboard, ManageOrder, ManageProduct, ManageUser } from 'pages/admin';
-import { BuyHistory, MemberLayout, MyCart, Personal, Wishlist } from 'pages/member';
-import { showCart } from 'store/app/appSlice';
+
+import { Cart, CartDetail, FinalRegister, Home, Login, Public, ResetPassword } from './pages/public';
+import path from './ultils/path';
+import { getCategories } from './store/app/asyncActions';
+import { Products, DetailProduct, Blogs, FAQs, Services } from './pages/public';
+import Modal from './components/modal/Modal';
+import { AdminLayout, CreateProducts, Dashboard, ManageOrder, ManageProduct, ManageUser } from './pages/admin';
+import { BuyHistory, MemberLayout, MyCart, Personal, Wishlist } from './pages/member';
+import { showCart } from './store/app/appSlice';
 
 function App() {
     const { isShowModal, childrenModal, isShowCart } = useSelector(state => state.app);

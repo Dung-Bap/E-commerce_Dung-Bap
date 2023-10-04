@@ -1,10 +1,11 @@
 /** @format */
 
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import appSlice from './app/appSlice';
 import productsSlice from './products/productsSlice';
-import storage from 'redux-persist/lib/storage';
-import { persistStore, persistReducer } from 'redux-persist';
 
 import userSlice from './user/userSlice';
 

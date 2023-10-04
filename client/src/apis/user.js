@@ -70,8 +70,8 @@ export const apiUpdateCart = data =>
         data,
     });
 
-export const apiDeleteProductInCart = pid =>
+export const apiDeleteProductInCart = (pid, color) =>
     axios({
-        url: '/user/delete-product-incart/' + pid,
+        url: `/user/delete-product-incart/${pid}/${color}`,
         method: 'delete',
     });

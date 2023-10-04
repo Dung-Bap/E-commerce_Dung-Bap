@@ -4,15 +4,15 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { InputFileds, Loading } from 'components';
-import { apiForgotPassword, apiLogin, apiRegister } from 'apis/user';
-import { Link, useNavigate } from 'react-router-dom';
-import { registerUser } from 'store/user/userSlice';
-import Button from 'components/Button';
-import icons from 'ultils/icons';
-import path from 'ultils/path';
-import { showModal } from 'store/app/appSlice';
+import { InputFileds, Loading } from '../../components';
+import { apiForgotPassword, apiLogin, apiRegister } from '../../apis/user';
+import { registerUser } from '../../store/user/userSlice';
+import Button from '../../components/Button';
+import icons from '../../ultils/icons';
+import path from '../../ultils/path';
+import { showModal } from '../../store/app/appSlice';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -20,6 +20,7 @@ const Login = () => {
     const [showRegister, setShowRegister] = useState(false);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
     const [email, setEmail] = useState('');
+    const [searchParams] = useSearchParams();
 
     const handleForgotPassword = async () => {
         const response = await apiForgotPassword({ email });
@@ -130,7 +131,7 @@ const Login = () => {
             const response = await apiLogin(payload);
             if (response?.success) {
                 dispatch(registerUser({ isLoggedIn: true, accessToken: response.accessToken }));
-                navigate(`/${path.HOME}`);
+                searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.HOME}`);
             } else Swal.fire('Opps!', response.message, 'error');
         }
     };

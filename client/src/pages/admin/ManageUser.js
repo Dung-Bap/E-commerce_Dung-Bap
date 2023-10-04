@@ -6,11 +6,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { apiDeleteUser, apiGetUsers, apiUpdateUsers } from 'apis';
-import { Pagination } from 'components/pagination';
-import useDebouce from 'hook/useDebouce';
-import { roles, isBlocked } from 'ultils/contants';
-import { InputFileds, SelectFileds } from 'components';
+import { apiDeleteUser, apiGetUsers, apiUpdateUsers } from '../../apis';
+import { Pagination } from '../../components/pagination';
+import useDebouce from '../../hook/useDebouce';
+import { roles, isBlocked } from '../../ultils/contants';
+import { InputFileds, SelectFileds } from '../../components';
 
 const ManageUser = () => {
     const [allUsers, setAllUsers] = useState(null);
@@ -43,7 +43,7 @@ const ManageUser = () => {
                         icon: 'success',
                         title: response.message,
                         showConfirmButton: false,
-                        timer: 1500,
+                        timer: 1000,
                     });
                     setUpdated(!updated);
                 }
@@ -92,7 +92,7 @@ const ManageUser = () => {
                 icon: 'success',
                 title: response.message,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 1000,
             });
         }
     };

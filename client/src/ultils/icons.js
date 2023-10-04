@@ -17,6 +17,8 @@ import {
     AiFillCaretRight,
     AiFillCaretDown,
     AiOutlineCloseCircle,
+    AiOutlineMinus,
+    AiOutlinePlus,
 } from 'react-icons/ai';
 import { FaOpencart, FaShieldAlt } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
@@ -66,6 +68,8 @@ const icons = {
     BsFillCameraFill,
     AiOutlineCloseCircle,
     BsArrowRight,
+    AiOutlineMinus,
+    AiOutlinePlus,
 };
 
 export default icons;

@@ -5,11 +5,11 @@ import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, InputFileds, Loading, SelectFileds } from 'components';
-import { MarkDownEditor } from 'components/inputs/MarkDownEditor';
-import { validate, convertToBase64 } from 'ultils/helpers';
-import { apiUpdateProduct } from 'apis';
-import { showModal } from 'store/app/appSlice';
+import { Button, InputFileds, Loading, SelectFileds } from '../../components';
+import { MarkDownEditor } from '../../components/inputs/MarkDownEditor';
+import { validate, convertToBase64 } from '../../ultils/helpers';
+import { apiUpdateProduct } from '../../apis';
+import { showModal } from '../../store/app/appSlice';
 
 const UpdateProduct = ({ setEditProduct, editProduct, setUpdated, updated }) => {
     const dispatch = useDispatch();

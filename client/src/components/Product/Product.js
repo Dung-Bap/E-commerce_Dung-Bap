@@ -1,36 +1,40 @@
 import React, { memo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import Tippy from '@tippyjs/react';
+import { createSearchParams } from 'react-router-dom';
+
 import { formatMoney, renderStars } from '../../ultils/helpers';
 import labelnew from '../../assets/new.png';
 import labeltrending from '../../assets/trending.png';
 import icons from '../../ultils/icons';
 import SelectOption from '../home/SelectOption';
-import withBaseComponent from 'hocs/withBaseComponent';
-import { DetailProduct } from 'pages/public';
-import { showModal } from 'store/app/appSlice';
-import { apiUpdateCart } from 'apis';
-import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
-import path from 'ultils/path';
-import { getCurrent } from 'store/user/asyncActions';
-import Tippy from '@tippyjs/react';
+import withBaseComponent from '../../hocs/withBaseComponent';
+import { DetailProduct } from '../../pages/public';
+import { showModal } from '../../store/app/appSlice';
+import { apiUpdateCart } from '../../apis';
+import path from '../../ultils/path';
+import { getCurrent } from '../../store/user/asyncActions';
 
 const { AiOutlineHeart, FaOpencart, AiFillEye } = icons;
-const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
+const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
     const [isSelectOption, setIsSelectOption] = useState(false);
     const { userData } = useSelector(state => state.user);
     const handleClickOptions = async (e, options) => {
         e.stopPropagation();
         if (options === 'CART') {
             if (!userData)
-                Swal.fire({
+                return Swal.fire({
                     title: 'Please log in first !',
                     confirmButtonText: 'Oki',
                     showCancelButton: true,
                     icon: 'error',
                 }).then(rs => {
-                    if (rs.isConfirmed) {
-                        navigate(`/${path.LOGIN}`);
-                    }
+                    if (rs.isConfirmed)
+                        navigate({
+                            pathname: `/${path.LOGIN}`,
+                            search: createSearchParams({ redirect: location.pathname }).toString(),
+                        });
                 });
             const response = await apiUpdateCart({ pid: data?._id, color: data?.color });
             dispatch(getCurrent());
@@ -54,7 +58,7 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
                     icon: 'error',
                     title: response.message,
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 1000,
                 });
             }
         }
@@ -63,7 +67,9 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
             dispatch(
                 showModal({
                     isShowModal: true,
-                    childrenModal: <DetailProduct isShowQuickView category={data?.category} pid={data?._id} />,
+                    childrenModal: (
+                        <DetailProduct isShowQuickView category={data?.category} pid={data?._id} color={data?.color} />
+                    ),
                 }),
             );
         }
@@ -73,7 +79,7 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
         <div className="pr-5">
             <div
                 onClick={() => {
-                    navigate(`/${data?.category?.toLowerCase()}/${data._id}/${data.title}`);
+                    navigate(`/${data?.category?.toLowerCase()}/${data?._id}/${data.title}`);
                 }}
                 className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer "
             >
@@ -89,7 +95,7 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch }) => {
                                     <SelectOption icon={<AiOutlineHeart />} />
                                 </span>
                             </Tippy>
-                            {userData?.cart.some(el => el.product._id === data?._id) ? (
+                            {userData?.cart.some(el => el.product?._id === data?._id) ? (
                                 <Tippy content="Add Cart" placement="bottom">
                                     <span onClick={e => e.stopPropagation()}>
                                         <SelectOption border icon={<FaOpencart color="red" />} />

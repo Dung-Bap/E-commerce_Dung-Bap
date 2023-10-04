@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { SIDEBARMEMBER } from 'ultils/contants';
-
-import icons from 'ultils/icons';
 import { useSelector } from 'react-redux';
-import path from 'ultils/path';
+
+import { SIDEBARMEMBER } from '../../ultils/contants';
+import icons from '../../ultils/icons';
+import path from '../../ultils/path';
 
 const SidebarMember = () => {
     const { AiFillHome } = icons;

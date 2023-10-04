@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { SIDEBARADMIN } from 'ultils/contants';
-import path from 'ultils/path';
-import icons from 'ultils/icons';
+
+import { SIDEBARADMIN } from '../../ultils/contants';
+import path from '../../ultils/path';
+import icons from '../../ultils/icons';
 
 const SidebarAdmin = () => {
     const { AiFillCaretRight, AiFillCaretDown } = icons;

@@ -1,19 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import Breadcrumb from '../../components/detailProduct/Breadcrumb';
 import Slider from 'react-slick';
+import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
+import { createSearchParams, useParams } from 'react-router-dom';
+import clsx from 'clsx';
+import DOMPurify from 'dompurify';
 
 import { aipGetProduct } from '../../apis/products';
 import { renderStars, formatMoney } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
 import { Button, ProductExtrainfo, ProductEXtrainfoTabs } from '../../components';
-import DOMPurify from 'dompurify';
-import clsx from 'clsx';
-import { useParams } from 'react-router-dom';
+import withBaseComponent from '../../hocs/withBaseComponent';
+import path from '../../ultils/path';
+import { apiUpdateCart } from '../../apis';
+import { getCurrent } from '../../store/user/asyncActions';
 
-const DetailProduct = ({ isShowQuickView, category, pid }) => {
+const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, location }) => {
     const { PiDotDuotone } = icons;
     const params = useParams();
-
+    const { userData } = useSelector(state => state.user);
+    console.log(userData);
     const settings = {
         dots: false,
         infinite: true,
@@ -32,6 +39,7 @@ const DetailProduct = ({ isShowQuickView, category, pid }) => {
         images: [],
         price: '',
         color: '',
+        _id: '',
     });
 
     const fetchDetailProduct = async () => {
@@ -50,6 +58,7 @@ const DetailProduct = ({ isShowQuickView, category, pid }) => {
                 images: dataProducts?.varriants.find(el => el.sku === varriants)?.images,
                 price: dataProducts?.varriants.find(el => el.sku === varriants)?.price,
                 color: dataProducts?.varriants.find(el => el.sku === varriants)?.color,
+                _id: dataProducts?.varriants.find(el => el.sku === varriants)?._id,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,6 +88,52 @@ const DetailProduct = ({ isShowQuickView, category, pid }) => {
         setCurrentImage(image);
     };
 
+    const handleAddToCart = async () => {
+        if (!userData)
+            return Swal.fire({
+                title: 'Please log in first !',
+                confirmButtonText: 'Oki',
+                showCancelButton: true,
+                icon: 'error',
+            }).then(rs => {
+                if (rs.isConfirmed)
+                    navigate({
+                        pathname: `/${path.LOGIN}`,
+                        search: createSearchParams({ redirect: location.pathname }).toString(),
+                    });
+            });
+        const response = await apiUpdateCart({
+            pid: params?.pid || pid,
+            color: currentProduct?.color || dataProducts.color,
+            price: currentProduct?.price || dataProducts.price,
+            thumbnail: currentProduct?.thumbnail || dataProducts.thumbnail,
+            title: currentProduct?.title || dataProducts.title,
+        });
+        dispatch(getCurrent());
+        if (response.success) {
+            Swal.fire({
+                title: 'Add to cart successfully !',
+                text: `Move to shopping cart ?`,
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oki',
+            }).then(async result => {
+                if (result.isConfirmed) {
+                    navigate(`/${path.CART_DETAIL}`);
+                    dispatch(getCurrent());
+                }
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: response.message,
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        }
+    };
     return (
         <>
             {!isShowQuickView && (
@@ -235,6 +290,7 @@ const DetailProduct = ({ isShowQuickView, category, pid }) => {
                                 </div>
                             </div>
                             <Button
+                                onClick={handleAddToCart}
                                 styles={
                                     'w-full text-white bg-main p-2  hover:bg-[#333333] mr-[10px] px-4 py-2 min-w-[88px]'
                                 }
@@ -266,4 +322,4 @@ const DetailProduct = ({ isShowQuickView, category, pid }) => {
     );
 };
 
-export default DetailProduct;
+export default withBaseComponent(memo(DetailProduct));

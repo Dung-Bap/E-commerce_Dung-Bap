@@ -12,3 +12,4 @@ export { default as FAQs } from './FAQs';
 export { default as Blogs } from './Blogs';
 export { default as Cart } from './Cart';
 export { default as CartDetail } from './CartDetail';
+export { default as TopHeader } from './TopHeader';

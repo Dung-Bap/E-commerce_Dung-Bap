@@ -1,7 +1,8 @@
 /** @format */
 
 import React from 'react';
-import { BestSeller, Sidebar, DailyDeal, FeaturedProduct, CustomSlider } from '../../components';
+import { BestSeller, DailyDeal, FeaturedProduct, CustomSlider } from '../../components';
+import Sidebar from '../../components/home/Sidebar';
 import { useSelector } from 'react-redux';
 import icons from '../../ultils/icons';
 import Banner from '../../components/home/Banner';

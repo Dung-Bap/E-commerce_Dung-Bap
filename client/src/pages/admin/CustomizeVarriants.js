@@ -5,10 +5,10 @@ import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 
-import { Button, InputFileds, Loading } from 'components';
-import { convertToBase64 } from 'ultils/helpers';
-import { apiAddVarriants } from 'apis';
-import { showModal } from 'store/app/appSlice';
+import { Button, InputFileds, Loading } from '../../components';
+import { convertToBase64 } from '../../ultils/helpers';
+import { apiAddVarriants } from '../../apis';
+import { showModal } from '../../store/app/appSlice';
 
 const CustomizeVarriants = ({ varriants, setVarriants, setUpdated, updated }) => {
     const dispatch = useDispatch();

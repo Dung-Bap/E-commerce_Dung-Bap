@@ -1,8 +1,9 @@
-import { SidebarAdmin } from 'components';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import path from 'ultils/path';
+
+import { SidebarAdmin } from '../../components';
+import path from '../../ultils/path';
 
 const AdminLayout = () => {
     const { isLoggedIn, userData } = useSelector(state => state.user);

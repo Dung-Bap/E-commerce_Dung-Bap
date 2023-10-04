@@ -1,12 +1,13 @@
-import { apiDeleteProduct, apiGetProducts } from 'apis';
-import { UpdateProduct } from 'components';
-import { Pagination } from 'components/pagination';
-import useDebouce from 'hook/useDebouce';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import moment from 'moment';
 import Swal from 'sweetalert2';
-import { formatMoney } from 'ultils/helpers';
+
+import { apiDeleteProduct, apiGetProducts } from '../../apis';
+import { UpdateProduct } from '../../components';
+import { Pagination } from '../../components/pagination';
+import useDebouce from '../../hook/useDebouce';
+import { formatMoney } from '../../ultils/helpers';
 import CustomizeVarriants from './CustomizeVarriants';
 
 const ManageProduct = () => {
@@ -52,7 +53,7 @@ const ManageProduct = () => {
                         icon: 'success',
                         title: response.message,
                         showConfirmButton: false,
-                        timer: 1500,
+                        timer: 1000,
                     });
                     setUpdated(!updated);
                 }

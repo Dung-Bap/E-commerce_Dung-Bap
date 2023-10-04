@@ -6,12 +6,12 @@ import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, InputFileds, Loading, SelectFileds } from 'components';
-import { MarkDownEditor } from 'components/inputs/MarkDownEditor';
-import { validate, convertToBase64 } from 'ultils/helpers';
-import { apiCreateProducts } from 'apis';
-import { showModal } from 'store/app/appSlice';
-import path from 'ultils/path';
+import { Button, InputFileds, Loading, SelectFileds } from '../../components';
+import { MarkDownEditor } from '../../components/inputs/MarkDownEditor';
+import { validate, convertToBase64 } from '../../ultils/helpers';
+import { apiCreateProducts } from '../../apis';
+import { showModal } from '../../store/app/appSlice';
+import path from '../../ultils/path';
 
 const CreateProducts = () => {
     const dispatch = useDispatch();

@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { memo } from 'react';
+import DOMPurify from 'dompurify';
+import { createSearchParams, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { PiDotDuotone } from 'react-icons/pi';
+
 import { productEXtrainfoTabs } from '../../ultils/contants';
 import { Button, CustomSlider } from '..';
 import { apiGetProducts, apiRatings } from '../../apis';
-import { useNavigate, useParams } from 'react-router-dom';
 import { renderStars } from '../../ultils/helpers';
-import { useDispatch, useSelector } from 'react-redux';
 import { showModal } from '../../store/app/appSlice';
 import VoteModal from '../modal/VoteModal';
 import path from '../../ultils/path';
 import VoteBar from './VoteBar';
 import Comment from './Comment';
-import { PiDotDuotone } from 'react-icons/pi';
-import DOMPurify from 'dompurify';
+import withBaseComponent from '../../hocs/withBaseComponent';
 
-const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rerender, description }) => {
+const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rerender, description, location }) => {
     const { category } = useParams();
     const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState(1);
@@ -60,7 +63,10 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
                 icon: 'error',
             }).then(rs => {
                 if (rs.isConfirmed) {
-                    navigate(`/${path.LOGIN}`);
+                    navigate({
+                        pathname: `/${path.LOGIN}`,
+                        search: createSearchParams({ redirect: location.pathname }).toString(),
+                    });
                 }
             });
         }
@@ -171,4 +177,4 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
     );
 };
 
-export default ProductEXtrainfoTabs;
+export default withBaseComponent(memo(ProductEXtrainfoTabs));

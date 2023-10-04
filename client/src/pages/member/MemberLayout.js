@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import path from 'ultils/path';
+
+import path from '../../ultils/path';
 import SidebarMember from './SidebarMember';
 
 const MemberLayout = () => {

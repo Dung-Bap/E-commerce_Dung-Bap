@@ -1,28 +1,30 @@
-import { apiDeleteProductInCart } from 'apis';
-
-import { Button } from 'components';
-import withBaseComponent from 'hocs/withBaseComponent';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { showCart } from 'store/app/appSlice';
-import { getCurrent } from 'store/user/asyncActions';
 import Swal from 'sweetalert2';
-import { formatMoney } from 'ultils/helpers';
-import icons from 'ultils/icons';
-import path from 'ultils/path';
+
+import { apiDeleteProductInCart } from '../../apis';
+import { Button } from '../../components';
+import withBaseComponent from '../../hocs/withBaseComponent';
+import { showCart } from '../../store/app/appSlice';
+import { getCurrent } from '../../store/user/asyncActions';
+import { formatMoney } from '../../ultils/helpers';
+import icons from '../../ultils/icons';
+import path from '../../ultils/path';
 
 const Cart = ({ dispatch, navigate }) => {
     const { userData } = useSelector(state => state.user);
     const { AiOutlineCloseCircle } = icons;
+    console.log(userData);
 
-    const handleDeleteProductInCart = async pid => {
-        const response = await apiDeleteProductInCart(pid);
+    const handleDeleteProductInCart = async (pid, color) => {
+        const response = await apiDeleteProductInCart(pid, color);
+        dispatch(getCurrent());
         if (response.success) {
             Swal.fire({
                 icon: 'success',
                 title: response.message,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 1000,
             });
             dispatch(getCurrent());
         } else {
@@ -30,7 +32,7 @@ const Cart = ({ dispatch, navigate }) => {
                 icon: 'error',
                 title: response.message,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 1000,
             });
         }
     };
@@ -53,13 +55,13 @@ const Cart = ({ dispatch, navigate }) => {
                             className="flex justify-between items-center border border-[#343535] my-3 relative "
                         >
                             <div className="flex gap-4 ">
-                                <img className="w-[85px] h-[85px] object-cover" alt="" src={el.product.thumbnail} />
+                                <img className="w-[85px] h-[85px] object-cover" alt="" src={el.thumbnail} />
                                 <div className="flex flex-col gap-2 max-w-[230px]">
-                                    <span className="line-clamp-1 text-[14px]">{el.product.title}</span>
-                                    <span>{formatMoney(el.product.price)}</span>
+                                    <span className="line-clamp-1 text-[14px]">{el.title}</span>
+                                    <span>{formatMoney(el.price)}</span>
                                 </div>
                                 <span
-                                    onClick={() => handleDeleteProductInCart(el.product._id)}
+                                    onClick={() => handleDeleteProductInCart(el.product._id, el.color)}
                                     className="absolute top-[10px] right-[10px] hover:text-main cursor-pointer"
                                 >
                                     <AiOutlineCloseCircle />
@@ -77,7 +79,7 @@ const Cart = ({ dispatch, navigate }) => {
             <div className="row-span-2 h-full pt-6">
                 <div className="flex items-center gap-6">
                     <span className="uppercase ">Subtotal : </span>
-                    <span>{formatMoney(userData?.cart?.reduce((sum, el) => sum + el.product.price, 0))}</span>
+                    <span>{formatMoney(userData?.cart?.reduce((sum, el) => sum + el.price, 0))}</span>
                 </div>
                 <span className="flex justify-center text-center text-[14px] text-gray-500 p-2">
                     Shipping, taxes, and discounts calculated at checkout.

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import icons from '../../ultils/icons';
 import { Link } from 'react-router-dom';
-import path from '../../ultils/path';
 import { useDispatch, useSelector } from 'react-redux';
+
+import icons from '../../ultils/icons';
+import path from '../../ultils/path';
 import Swal from 'sweetalert2';
-import { logout } from 'store/user/userSlice';
-import { showCart } from 'store/app/appSlice';
+import { logout } from '../../store/user/userSlice';
+import { showCart } from '../../store/app/appSlice';
 
 const Header = () => {
     const { MdPhone, GrMail, FaOpencart, IoLogOut, CgProfile, MdOutlineAdminPanelSettings } = icons;
