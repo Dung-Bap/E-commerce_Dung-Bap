@@ -235,12 +235,12 @@ export const SIDEBARMEMBER = [
         icon: <PiHeartHalfDuotone size={20} />,
         path: `/${path.MEMBER}/${path.WHISHLIST}`,
     },
-    {
-        id: 4,
-        name: 'My Cart',
-        icon: <FaOpencart size={20} />,
-        path: `/${path.MEMBER}/${path.MY_CART}`,
-    },
+    // {
+    //     id: 4,
+    //     name: 'My Cart',
+    //     icon: <FaOpencart size={20} />,
+    //     path: `/${path.MEMBER}/${path.MY_CART}`,
+    // },
 ];
 
 export const roles = [

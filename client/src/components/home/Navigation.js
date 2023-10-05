@@ -1,8 +1,9 @@
-import React from 'react';
-import { navigation } from '../ultils/contants';
+import React, { useState } from 'react';
+import { navigation } from '../../ultils/contants';
 import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
+    const [valueInput, setValueInput] = useState('');
     return (
         <div className="w-main flex justify-between border-b h-[48px] py-2 items-center">
             <div className="text-[14px]">
@@ -18,7 +19,14 @@ const Navigation = () => {
                     </NavLink>
                 ))}
             </div>
-            <div>phai</div>
+            <div className="flex justify-end">
+                <input
+                    className="form-input min-w-[500px] placeholder:italic placeholder:text-sm"
+                    placeholder="Search everything..."
+                    value={valueInput}
+                    onChange={e => setValueInput(e.target.value)}
+                />
+            </div>
         </div>
     );
 };

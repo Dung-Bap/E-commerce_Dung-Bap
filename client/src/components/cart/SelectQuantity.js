@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import icons from '../ultils/icons';
+import icons from '../../ultils/icons';
 
 const SelectQuantity = ({ quantity, handleQuantity, handleChangeQuantity }) => {
     const { AiOutlinePlus, AiOutlineMinus } = icons;

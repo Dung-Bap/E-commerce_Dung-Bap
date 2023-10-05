@@ -22,12 +22,7 @@ const SidebarMember = () => {
             const isChildren = !!item.children;
             return isChildren ? (
                 <div key={item.id}>
-                    <NavLink
-                        className={classNoneActive}
-                        onClick={() => handleClick(isChildren)}
-                        to={item.path}
-                        key={item.id}
-                    >
+                    <NavLink className={classNoneActive} onClick={() => handleClick(isChildren)} to={item.path}>
                         <span className="mr-[10px]">{item.icon}</span>
                         <div className="flex w-full items-center justify-between">
                             <span className="text-[16px]">{item.name}</span>

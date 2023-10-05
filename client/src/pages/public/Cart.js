@@ -12,9 +12,8 @@ import icons from '../../ultils/icons';
 import path from '../../ultils/path';
 
 const Cart = ({ dispatch, navigate }) => {
-    const { userData } = useSelector(state => state.user);
+    const { currentCart } = useSelector(state => state.user);
     const { AiOutlineCloseCircle } = icons;
-    console.log(userData);
 
     const handleDeleteProductInCart = async (pid, color) => {
         const response = await apiDeleteProductInCart(pid, color);
@@ -47,9 +46,9 @@ const Cart = ({ dispatch, navigate }) => {
                     X
                 </span>
             </div>
-            {userData?.cart?.length > 0 && (
+            {currentCart.length > 0 && (
                 <div className="row-span-7 h-full overflow-y-auto overflow-hidden">
-                    {userData?.cart?.map(el => (
+                    {currentCart.map(el => (
                         <div
                             key={el._id}
                             className="flex justify-between items-center border border-[#343535] my-3 relative "
@@ -59,6 +58,10 @@ const Cart = ({ dispatch, navigate }) => {
                                 <div className="flex flex-col gap-2 max-w-[230px]">
                                     <span className="line-clamp-1 text-[14px]">{el.title}</span>
                                     <span>{formatMoney(el.price)}</span>
+                                    <div className="flex items-center text-[14px] text-gray-500">
+                                        <span>Quantity: </span>
+                                        <span className="ml-[5px]">{el.quantity}</span>
+                                    </div>
                                 </div>
                                 <span
                                     onClick={() => handleDeleteProductInCart(el.product._id, el.color)}
@@ -71,7 +74,7 @@ const Cart = ({ dispatch, navigate }) => {
                     ))}
                 </div>
             )}
-            {userData?.cart?.length === 0 && (
+            {currentCart.length === 0 && (
                 <div className="flex items-center justify-center row-span-7 h-full overflow-y-auto">
                     <span>Your cart is empty, please purchase !</span>
                 </div>
@@ -79,7 +82,7 @@ const Cart = ({ dispatch, navigate }) => {
             <div className="row-span-2 h-full pt-6">
                 <div className="flex items-center gap-6">
                     <span className="uppercase ">Subtotal : </span>
-                    <span>{formatMoney(userData?.cart?.reduce((sum, el) => sum + el.price, 0))}</span>
+                    <span>{formatMoney(currentCart.reduce((sum, el) => sum + el.price * el.quantity, 0))}</span>
                 </div>
                 <span className="flex justify-center text-center text-[14px] text-gray-500 p-2">
                     Shipping, taxes, and discounts calculated at checkout.

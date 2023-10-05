@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -18,6 +18,7 @@ const ManageProduct = () => {
     const [updated, setUpdated] = useState(false);
     const [params] = useSearchParams();
     const currentPage = +params.get('page') || 1;
+    const refForm = useRef();
 
     const fetchApiGetProducts = async queries => {
         const response = await apiGetProducts({ ...queries, limit: process.env.REACT_APP_PAGE_SIZE });
@@ -29,11 +30,7 @@ const ManageProduct = () => {
         const queries = Object.fromEntries([...params]);
         queries.q = debouceValue;
         fetchApiGetProducts(queries);
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
+        refForm.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     }, [debouceValue, params, updated]);
 
     const handleDeleteProduct = (pid, title) => {
@@ -65,7 +62,7 @@ const ManageProduct = () => {
         <>
             {!editProduct && !varriants && (
                 <div className="p-4">
-                    <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">
+                    <div ref={refForm} className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">
                         Manage Products
                     </div>
                     <div className="flex justify-end p-5">

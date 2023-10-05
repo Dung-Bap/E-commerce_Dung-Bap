@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -20,6 +20,7 @@ const ManageUser = () => {
     const [updated, setUpdated] = useState(false);
     const debouceValue = useDebouce(valueInput, 400);
     const currentPage = +params.get('page') || 1;
+    const refForm = useRef();
 
     const fetchGetUsers = async params => {
         const response = await apiGetUsers({ ...params, limit: process.env.REACT_APP_PAGE_SIZE });
@@ -55,11 +56,7 @@ const ManageUser = () => {
         const queries = Object.fromEntries([...params]);
         queries.q = debouceValue;
         fetchGetUsers(queries);
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
+        refForm.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     }, [debouceValue, params, updated]);
 
     const editUserSchema = yup.object({
@@ -99,7 +96,9 @@ const ManageUser = () => {
 
     return (
         <div className="p-4">
-            <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">Manage Users</div>
+            <div ref={refForm} className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">
+                Manage Users
+            </div>
             <div className="flex justify-end p-5">
                 <input
                     className="form-input min-w-[500px] placeholder:italic placeholder:text-sm"

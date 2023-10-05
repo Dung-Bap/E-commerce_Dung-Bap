@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import Breadcrumb from '../../components/detailProduct/Breadcrumb';
 import Slider from 'react-slick';
 import Swal from 'sweetalert2';
@@ -10,7 +10,7 @@ import DOMPurify from 'dompurify';
 import { aipGetProduct } from '../../apis/products';
 import { renderStars, formatMoney } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
-import { Button, ProductExtrainfo, ProductEXtrainfoTabs } from '../../components';
+import { Button, ProductExtrainfo, ProductEXtrainfoTabs, SelectQuantity } from '../../components';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import path from '../../ultils/path';
 import { apiUpdateCart } from '../../apis';
@@ -20,7 +20,23 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
     const { PiDotDuotone } = icons;
     const params = useParams();
     const { userData } = useSelector(state => state.user);
+    const titleRef = useRef();
     console.log(userData);
+
+    // Select quantity
+    const [quantity, setQuantity] = useState(1);
+
+    const handleQuantity = value => {
+        if (!+value || +value < 1) return;
+        else setQuantity(value);
+    };
+
+    const handleChangeQuantity = flag => {
+        if (flag === 'minus' && quantity === 1) return;
+        if (flag === 'minus') setQuantity(prev => +prev - 1);
+        if (flag === 'plus') setQuantity(prev => +prev + 1);
+    };
+
     const settings = {
         dots: false,
         infinite: true,
@@ -66,11 +82,8 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
 
     useEffect(() => {
         if (params.pid || pid) fetchDetailProduct();
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
+        if (!isShowQuickView)
+            titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, pid, params.pid]);
 
@@ -108,6 +121,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
             price: currentProduct?.price || dataProducts.price,
             thumbnail: currentProduct?.thumbnail || dataProducts.thumbnail,
             title: currentProduct?.title || dataProducts.title,
+            quantity,
         });
         dispatch(getCurrent());
         if (response.success) {
@@ -138,7 +152,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
         <>
             {!isShowQuickView && (
                 <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px] w-full flex justify-center">
-                    <div className="w-main">
+                    <div ref={titleRef} className="w-main">
                         <h2 className="text-[18px] font-medium mb-10px uppercase">
                             {currentProduct?.title || dataProducts?.title}
                         </h2>
@@ -289,10 +303,18 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                     ))}
                                 </div>
                             </div>
+                            <div className="flex items-center mb-[20px] text-[14px]">
+                                <span className="mr-[20px]">Quantity:</span>
+                                <SelectQuantity
+                                    handleQuantity={handleQuantity}
+                                    handleChangeQuantity={handleChangeQuantity}
+                                    quantity={quantity}
+                                />
+                            </div>
                             <Button
                                 onClick={handleAddToCart}
                                 styles={
-                                    'w-full text-white bg-main p-2  hover:bg-[#333333] mr-[10px] px-4 py-2 min-w-[88px]'
+                                    'w-full text-white bg-main p-2  hover:bg-[#333333] mr-[10px] px-4 py-2 min-w-[88px] select-none'
                                 }
                             >
                                 ADD TO CART

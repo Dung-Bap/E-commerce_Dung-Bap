@@ -8,13 +8,13 @@ import { formatMoney, renderStars } from '../../ultils/helpers';
 import labelnew from '../../assets/new.png';
 import labeltrending from '../../assets/trending.png';
 import icons from '../../ultils/icons';
-import SelectOption from '../home/SelectOption';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { DetailProduct } from '../../pages/public';
 import { showModal } from '../../store/app/appSlice';
 import { apiUpdateCart } from '../../apis';
 import path from '../../ultils/path';
 import { getCurrent } from '../../store/user/asyncActions';
+import SelectOption from '../SelectOption';
 
 const { AiOutlineHeart, FaOpencart, AiFillEye } = icons;
 const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
@@ -36,7 +36,14 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
                             search: createSearchParams({ redirect: location.pathname }).toString(),
                         });
                 });
-            const response = await apiUpdateCart({ pid: data?._id, color: data?.color });
+            const response = await apiUpdateCart({
+                pid: data._id,
+                color: data.color,
+                price: data.price,
+                thumbnail: data.thumbnail,
+                title: data.title,
+                quantity: 1,
+            });
             dispatch(getCurrent());
             if (response.success) {
                 Swal.fire({

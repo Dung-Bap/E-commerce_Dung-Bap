@@ -1,10 +1,4 @@
-export { default as Header } from './home/Header';
-export { default as Navigation } from './Navigation';
-export { default as Sidebar } from './home/Sidebar';
-export { default as BestSeller } from './home/BestSeller';
 export { default as Product } from './product/Product';
-export { default as DailyDeal } from './home/DailyDeal';
-export { default as FeaturedProduct } from './home/FeaturedProduct';
 export { default as ProductCard } from './product/ProductCard';
 export { default as CustomSlider } from './CustomSlider';
 export { default as Footer } from './Footer';
@@ -20,4 +14,5 @@ export { default as Filter } from './filter/Filter';
 export { default as Loading } from './Loading';
 export { default as SidebarAdmin } from './admin/SidebarAdmin';
 export { default as UpdateProduct } from '../pages/admin/UpdateProduct';
-export { default as SelectQuantity } from './SelectQuantity';
+export { default as SelectQuantity } from './cart/SelectQuantity';
+export { default as CartItem } from './cart/CartItem';
