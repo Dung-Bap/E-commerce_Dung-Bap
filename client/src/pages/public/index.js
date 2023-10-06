@@ -13,3 +13,4 @@ export { default as Blogs } from './Blogs';
 export { default as Cart } from './Cart';
 export { default as CartDetail } from './CartDetail';
 export { default as TopHeader } from './TopHeader';
+export { default as CheckOut } from './CheckOut';

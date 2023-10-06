@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { Cart, CartDetail, FinalRegister, Home, Login, Public, ResetPassword } from './pages/public';
+import { Cart, CartDetail, CheckOut, FinalRegister, Home, Login, Public, ResetPassword } from './pages/public';
 import path from './ultils/path';
 import { getCategories } from './store/app/asyncActions';
 import { Products, DetailProduct, Blogs, FAQs, Services } from './pages/public';
@@ -21,7 +21,7 @@ function App() {
     }, [dispatch]);
 
     return (
-        <div className="font-main h-screen relative">
+        <div className="font-main h-full min-h-screen relative">
             {isShowCart && (
                 <div
                     onClick={() => dispatch(showCart())}
@@ -32,9 +32,10 @@ function App() {
             )}
             {isShowModal && <Modal>{childrenModal}</Modal>}
             <Routes>
+                <Route path={path.CHECKOUT} element={<CheckOut />} />
                 <Route path={path.PUBLIC} element={<Public />}>
                     <Route path={path.HOME} element={<Home />} />
-                    <Route path={path.PRODUCTS} element={<Products />} />
+                    <Route path={path.CATEGORY} element={<Products />} />
                     <Route path={path.DETAIL_PRODUCT__CATEGORY__PID__TITLE} element={<DetailProduct />} />
                     <Route path={path.OUT_SERVICES} element={<Services />} />
                     <Route path={path.FAQS} element={<FAQs />} />

@@ -6,6 +6,7 @@ import { Breadcrumb, CartItem } from '../../components';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { formatMoney } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
+import path from '../../ultils/path';
 
 const CartDetail = ({ location, dispatch }) => {
     const titleCart = location.pathname.slice(1).split('-').join(' ');
@@ -42,8 +43,9 @@ const CartDetail = ({ location, dispatch }) => {
                                 <span className="text-[14px] text-gray-500 select-none">
                                     Shipping, taxes, and discounts calculated at checkout.
                                 </span>
-                                <span
-                                    to={'/'}
+                                <Link
+                                    target="_blank"
+                                    to={`/${path.CHECKOUT}`}
                                     className={
                                         'text-white bg-main p-2 rounded-md m-[10px] px-4 py-2 min-w-[150px] flex items-center justify-between cursor-pointer select-none'
                                     }
@@ -52,7 +54,7 @@ const CartDetail = ({ location, dispatch }) => {
                                     <span>
                                         <BsArrowRight />
                                     </span>
-                                </span>
+                                </Link>
                             </div>
                         </div>
                     </div>

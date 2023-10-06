@@ -16,7 +16,7 @@ const persistConfig = {
 
 const userConfig = {
     ...persistConfig,
-    whitelist: ['isLoggedIn', 'accessToken', 'userData'],
+    whitelist: ['isLoggedIn', 'accessToken', 'userData', 'currentCart'],
 };
 
 export const store = configureStore({
