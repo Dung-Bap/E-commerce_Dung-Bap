@@ -21,7 +21,6 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
     const params = useParams();
     const { userData } = useSelector(state => state.user);
     const titleRef = useRef();
-    console.log(userData);
 
     // Select quantity
     const [quantity, setQuantity] = useState(1);

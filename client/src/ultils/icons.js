@@ -22,6 +22,7 @@ import {
 } from 'react-icons/ai';
 import { FaOpencart, FaShieldAlt } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
+import { IoIosClose } from 'react-icons/io';
 import { PiDotDuotone, PiGiftFill, PiDotOutlineBold, PiHeartHalfDuotone } from 'react-icons/pi';
 import { BsCarFrontFill, BsFillPhoneVibrateFill, BsDash, BsFillCameraFill, BsArrowRight } from 'react-icons/bs';
 import { GiReturnArrow } from 'react-icons/gi';
@@ -70,6 +71,7 @@ const icons = {
     BsArrowRight,
     AiOutlineMinus,
     AiOutlinePlus,
+    IoIosClose,
 };
 
 export default icons;
