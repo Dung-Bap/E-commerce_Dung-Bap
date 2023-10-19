@@ -62,11 +62,29 @@ module.exports = {
                     transform: 'translateX(400px);',
                 },
             },
+            spin: {
+                from: {
+                    transform: 'rotate(0deg);',
+                },
+                to: {
+                    transform: 'rotate(360deg);',
+                },
+            },
+            pulse: {
+                '0%, 100%': {
+                    opacity: '1;',
+                },
+                '50%': {
+                    ' opacity ': '.5;',
+                },
+            },
         },
         animation: {
             'slide-top': 'slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
             'slide-left': 'slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
             'slide-right': 'slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
+            spin: 'spin 1s linear infinite;',
+            pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;',
         },
     },
     plugins: [

@@ -88,7 +88,7 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
                 onClick={() => {
                     navigate(`/${data?.category?.toLowerCase()}/${data?._id}/${data.title}`);
                 }}
-                className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer "
+                className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer"
             >
                 <div
                     className="w-full relative "

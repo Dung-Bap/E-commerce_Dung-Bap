@@ -12,14 +12,15 @@ const Navigation = ({ navigate }) => {
     const [valueInput, setValueInput] = useState('');
     const [showResult, setShowResult] = useState(false);
     const [products, setProducts] = useState(null);
+    const [loading, setLoading] = useState(false);
     const debouceValue = useDebouce(valueInput, 800);
     const inputRef = useRef();
-    const { IoIosClose } = icons;
-
-    console.log(products);
+    const { IoIosClose, ImSpinner10 } = icons;
 
     const fetchGetProducts = async debouceValue => {
+        setLoading(true);
         const response = await apiGetProducts({ q: debouceValue, limit: 5 });
+        setLoading(false);
         if (response.success) setProducts(response.products);
     };
 
@@ -66,34 +67,23 @@ const Navigation = ({ navigate }) => {
                                 className="w-[300px] bg-white shadow-xl rounded-md overflow-hidden border"
                             >
                                 {products?.map(product => (
-                                    <div key={product._id} className="flex items-center p-[10px] border-b-2">
+                                    <div
+                                        onClick={() => {
+                                            navigate(
+                                                `/${product.category?.toLowerCase()}/${product._id}/${product.title}`,
+                                            );
+                                            setShowResult(false);
+                                        }}
+                                        key={product._id}
+                                        className="flex items-center p-[10px] border-b-2 cursor-pointer"
+                                    >
                                         <img
-                                            onClick={() => {
-                                                navigate(
-                                                    `/${product.category?.toLowerCase()}/${product._id}/${
-                                                        product.title
-                                                    }`,
-                                                );
-                                                setShowResult(false);
-                                            }}
-                                            className="w-[60px] h-[60px] object-cover mr-[20px] cursor-pointer"
+                                            className="w-[60px] h-[60px] object-cover mr-[20px]"
                                             alt=""
                                             src={product.thumbnail}
                                         />
                                         <div className="flex flex-col">
-                                            <span
-                                                onClick={() => {
-                                                    navigate(
-                                                        `/${product.category?.toLowerCase()}/${product._id}/${
-                                                            product.title
-                                                        }`,
-                                                    );
-                                                    setShowResult(false);
-                                                }}
-                                                className="line-clamp-1 cursor-pointer"
-                                            >
-                                                {product.title}
-                                            </span>
+                                            <span className="line-clamp-1">{product.title}</span>
                                             <span className="text-main text-sm font-medium">
                                                 {formatMoney(product.price)}
                                             </span>
@@ -122,9 +112,13 @@ const Navigation = ({ navigate }) => {
                             />
                             <span
                                 onClick={handleClear}
-                                className="h-[43px] bg-red-100 p-[10px] rounded-r-lg flex items-center cursor-pointer"
+                                className="h-[43px] bg-red-100 p-[10px] rounded-r-lg flex items-center cursor-pointer "
                             >
-                                {valueInput && <IoIosClose size={20} />}
+                                {loading ? (
+                                    <ImSpinner10 className="animate-spin" size={20} />
+                                ) : (
+                                    valueInput && <IoIosClose size={20} />
+                                )}
                             </span>
                         </div>
                     </HeadlessTippy>

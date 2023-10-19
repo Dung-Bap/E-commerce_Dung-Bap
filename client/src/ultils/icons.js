@@ -31,6 +31,7 @@ import { PiDotsThreeOutlineDuotone } from 'react-icons/pi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { LiaUsersSolid, LiaJediOrder, LiaProductHunt } from 'react-icons/lia';
 import { CgProfile } from 'react-icons/cg';
+import { ImSpinner10 } from 'react-icons/im';
 
 const icons = {
     MdPhone,
@@ -72,6 +73,7 @@ const icons = {
     AiOutlineMinus,
     AiOutlinePlus,
     IoIosClose,
+    ImSpinner10,
 };
 
 export default icons;
