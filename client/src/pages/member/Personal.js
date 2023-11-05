@@ -13,6 +13,7 @@ import { showModal } from '../../store/app/appSlice';
 import { apiUpdateUser } from '../../apis';
 import { getCurrent } from '../../store/user/asyncActions';
 import withBaseComponent from '../../hocs/withBaseComponent';
+import { useSearchParams } from 'react-router-dom';
 
 const Personal = ({ ...props }) => {
     const { userData } = useSelector(state => state.user);
@@ -21,6 +22,7 @@ const Personal = ({ ...props }) => {
     });
     const [updated, setUpdated] = useState(false);
     const { BsFillCameraFill } = icons;
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         const setTimeLogIn = setTimeout(() => {
@@ -36,6 +38,7 @@ const Personal = ({ ...props }) => {
         firstname: yup.string().required('Please enter firstname'),
         lastname: yup.string().required('Please enter lastname'),
         email: yup.string().required('Please enter email').email('Invalid email !'),
+        address: yup.string(),
     });
 
     const {
@@ -51,9 +54,10 @@ const Personal = ({ ...props }) => {
     useEffect(() => {
         reset(
             {
-                firstname: userData.firstname,
-                lastname: userData.lastname,
-                email: userData.email,
+                firstname: userData?.firstname,
+                lastname: userData?.lastname,
+                email: userData?.email,
+                address: userData?.address,
             },
             setPreviewAvatar({
                 avatar: null,
@@ -97,6 +101,7 @@ const Personal = ({ ...props }) => {
                 timer: 1000,
             });
             setUpdated(!updated);
+            if (searchParams.get('redirect')) props.navigate(searchParams.get('redirect'));
         } else Swal.fire('Opps!', response.message, 'error');
     };
     return (
@@ -159,6 +164,15 @@ const Personal = ({ ...props }) => {
                                 label={'Email:'}
                                 registername={register('email')}
                                 errorName={errors.email?.message}
+                                invalidRed
+                            />
+                        </div>
+                        <div className="mb-[30px]">
+                            <InputFileds
+                                withFull
+                                label={'Address:'}
+                                registername={register('address')}
+                                errorName={errors.address?.message}
                                 invalidRed
                             />
                         </div>

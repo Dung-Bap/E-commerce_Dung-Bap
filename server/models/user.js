@@ -47,10 +47,8 @@ var userSchema = new mongoose.Schema(
                 title: String,
             },
         ],
-        // mảng chứa Id của bảng address (quan hệ trong mysql)
         address: {
-            type: Array,
-            defalt: [],
+            type: String,
         },
         // mảng chứa những items mà người dùng thích
         wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],

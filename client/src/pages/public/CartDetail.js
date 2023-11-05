@@ -1,17 +1,37 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams } from 'react-router-dom';
 import React from 'react';
 
-import { Breadcrumb, CartItem } from '../../components';
+import { Breadcrumb, Button, CartItem } from '../../components';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { formatMoney } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
+import Swal from 'sweetalert2';
 import path from '../../ultils/path';
 
-const CartDetail = ({ location, dispatch }) => {
+const CartDetail = ({ location, navigate }) => {
     const titleCart = location.pathname.slice(1).split('-').join(' ');
-    const { currentCart } = useSelector(state => state.user);
+    const { currentCart, userData } = useSelector(state => state.user);
     const { BsArrowRight } = icons;
+
+    const handleCheckout = () => {
+        if (!userData?.address) {
+            Swal.fire({
+                title: 'Please update your address before payment !',
+                confirmButtonText: 'Oki',
+                showCancelButton: true,
+                icon: 'error',
+            }).then(rs => {
+                if (rs.isConfirmed)
+                    navigate({
+                        pathname: `/${path.MEMBER}/${path.PERSONAL}`,
+                        search: createSearchParams({ redirect: location.pathname }).toString(),
+                    });
+            });
+        } else {
+            window.open(`/${path.CHECKOUT}`, '_blank');
+        }
+    };
 
     return (
         <>
@@ -43,18 +63,15 @@ const CartDetail = ({ location, dispatch }) => {
                                 <span className="text-[14px] text-gray-500 select-none">
                                     Shipping, taxes, and discounts calculated at checkout.
                                 </span>
-                                <Link
-                                    target="_blank"
-                                    to={`/${path.CHECKOUT}`}
+                                <Button
+                                    onClick={handleCheckout}
+                                    rightIcon={<BsArrowRight />}
                                     className={
                                         'text-white bg-main p-2 rounded-md m-[10px] px-4 py-2 min-w-[150px] flex items-center justify-between cursor-pointer select-none'
                                     }
                                 >
                                     Check out
-                                    <span>
-                                        <BsArrowRight />
-                                    </span>
-                                </Link>
+                                </Button>
                             </div>
                         </div>
                     </div>

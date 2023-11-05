@@ -41,7 +41,9 @@ const Products = () => {
     );
 
     const fetchGetProducts = async queries => {
-        const response = await apiGetProducts({ ...queries, limit: process.env.REACT_APP_PAGE_SIZE, category });
+        if (category && category !== 'products') queries.category = category;
+
+        const response = await apiGetProducts({ ...queries, limit: process.env.REACT_APP_PAGE_SIZE });
         if (response.success) setProducts(response);
     };
 
@@ -81,7 +83,7 @@ const Products = () => {
         <div onClick={() => setActiveFilter(null)}>
             <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px] w-full flex justify-center ">
                 <div className="w-main">
-                    <h2 className="text-[18px] font-medium mb-10px capitalize">{category}</h2>
+                    <h2 className="text-[18px] font-medium mb-10px uppercase">{category}</h2>
                     <Breadcrumb category={category} />
                 </div>
             </div>

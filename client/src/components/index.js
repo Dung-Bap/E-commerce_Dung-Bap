@@ -17,3 +17,4 @@ export { default as UpdateProduct } from '../pages/admin/UpdateProduct';
 export { default as SelectQuantity } from './cart/SelectQuantity';
 export { default as CartItem } from './cart/CartItem';
 export { default as PayPal } from './common/PayPal';
+export { default as Congratulation } from './common/Congratulation';

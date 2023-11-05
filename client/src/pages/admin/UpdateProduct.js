@@ -28,7 +28,6 @@ const UpdateProduct = ({ setEditProduct, editProduct, setUpdated, updated }) => 
         price: yup.number().required('Please enter price product'),
         quantity: yup.number().required('Please enter quantity product'),
         color: yup.string().required('Please enter color product'),
-
         category: yup.string().required('Please select your use case !'),
         brand: yup.string().required('Please select your use case !'),
     });

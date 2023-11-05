@@ -13,12 +13,14 @@ const TopHeader = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const setTimeLogIn = setTimeout(() => {
-            dispatch(getCurrent());
-        }, 300);
-        return () => {
-            clearTimeout(setTimeLogIn);
-        };
+        if (isLoggedIn) {
+            const setTimeLogIn = setTimeout(() => {
+                dispatch(getCurrent());
+            }, 300);
+            return () => {
+                clearTimeout(setTimeLogIn);
+            };
+        }
     }, [dispatch, isLoggedIn]);
 
     useEffect(() => {

@@ -5,7 +5,8 @@ const path = {
     HOME: '',
     ALL: '*',
     LOGIN: 'login',
-    CATEGORY: ':category',
+    PRODUCTS__CATEGORY: ':category',
+    PRODUCTS: 'products', // do path products không có Comp nào để nhảy vào, nên path này chạy vào route category luôn
     BLOGS: 'blogs',
     OUT_SERVICES: 'out_services',
     FAQS: 'faqs',

@@ -1,18 +1,20 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { formatMoney } from '../../ultils/helpers';
-import { PayPal } from '../../components';
+import { Congratulation, PayPal } from '../../components';
 
 const CheckOut = ({ navigate }) => {
-    const { currentCart } = useSelector(state => state.user);
+    const { currentCart, userData } = useSelector(state => state.user);
+    const [isSuccess, setIsSuccess] = useState(false);
     console.log(currentCart);
     return (
         <div className="w-full h-full min-h-screen flex justify-center bg-[#f0f0f0]">
+            {isSuccess && <Congratulation />}
             <div className="min-w-[600px]">
                 <div className="w-full bg-white py-[10px] rounded-xl overflow-hidden shadow-xl my-[50px] ">
                     {currentCart.map(el => (
-                        <div className="w-full flex p-[10px] border-b-2">
+                        <div key={el.product._id} className="w-full flex p-[10px] border-b-2">
                             <div className="w-1/2">
                                 <div className="flex ">
                                     <img
@@ -55,8 +57,8 @@ const CheckOut = ({ navigate }) => {
                             </div>
                         </div>
                     ))}
-                    <div className="flex items-center justify-between p-[20px]">
-                        <span className="text-main">
+                    <div className="flex items-center justify-between px-[20px] py-[10px]">
+                        <span className="text-main font-semibold">
                             Subtotal:
                             <span className="m-[10px]">{`${currentCart.reduce(
                                 (sum, el) => sum + el.quantity,
@@ -67,7 +69,23 @@ const CheckOut = ({ navigate }) => {
                             {formatMoney(currentCart.reduce((sum, el) => sum + el.price * el.quantity, 0))}
                         </span>
                     </div>
-                    <PayPal amount={120} />
+                    <div className="flex items-center justify-between px-[20px] pb-[10px]">
+                        <span className="font-semibold italic">
+                            Address:
+                            <span className="m-[10px]">{userData?.address}</span>
+                        </span>
+                    </div>
+                    <PayPal
+                        payload={{
+                            products: currentCart,
+                            total: Math.round(
+                                +currentCart.reduce((sum, el) => sum + el.price * el.quantity, 0) / 23500,
+                            ),
+                            address: userData?.address,
+                        }}
+                        setIsSuccess={setIsSuccess}
+                        amount={Math.round(+currentCart.reduce((sum, el) => sum + el.price * el.quantity, 0) / 23500)}
+                    />
                 </div>
             </div>
         </div>

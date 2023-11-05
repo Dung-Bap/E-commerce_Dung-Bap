@@ -35,7 +35,7 @@ function App() {
                 <Route path={path.CHECKOUT} element={<CheckOut />} />
                 <Route path={path.PUBLIC} element={<Public />}>
                     <Route path={path.HOME} element={<Home />} />
-                    <Route path={path.CATEGORY} element={<Products />} />
+                    <Route path={path.PRODUCTS__CATEGORY} element={<Products />} />
                     <Route path={path.DETAIL_PRODUCT__CATEGORY__PID__TITLE} element={<DetailProduct />} />
                     <Route path={path.OUT_SERVICES} element={<Services />} />
                     <Route path={path.FAQS} element={<FAQs />} />

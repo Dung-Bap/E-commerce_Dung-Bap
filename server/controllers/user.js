@@ -299,8 +299,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 //api/user/currentupdate
 const updateUser = asyncHandler(async (req, res) => {
     const { _id } = req.user;
-    const { firstname, lastname, email } = req.body;
-    const data = { firstname, lastname, email };
+    const { firstname, lastname, email, address } = req.body;
+    const data = { firstname, lastname, email, address };
     if (req.file) data.avatar = req.file.path;
     if (!_id || Object.keys(req.body) === 0) throw new Error('Missing inputs');
     const response = await User.findByIdAndUpdate(_id, data, { new: true }).select(' -password -role -refreshToken');
