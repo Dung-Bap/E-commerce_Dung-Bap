@@ -10,6 +10,7 @@ const InputFileds = ({
     label,
     invalidRed,
     multiple,
+    readOnly,
 }) => {
     return (
         <div className={` ${withFull ? '' : 'mb-[15px]'} flex flex-col `}>
@@ -23,6 +24,7 @@ const InputFileds = ({
                 type={type ? type : 'text'}
                 defaultValue={defaultValue}
                 multiple={multiple}
+                readOnly={readOnly}
             />
             <span
                 className={`${withFull ? 'w-full' : 'w-[400px]'} ${withFull ? 'text-[12px]' : 'text-sm'} font-light ${

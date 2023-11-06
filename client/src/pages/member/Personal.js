@@ -39,6 +39,10 @@ const Personal = ({ ...props }) => {
         lastname: yup.string().required('Please enter lastname'),
         email: yup.string().required('Please enter email').email('Invalid email !'),
         address: yup.string(),
+        phone: yup
+            .string()
+            .required('Please enter "Phone Number"')
+            .matches(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/, 'Phone number does not exist !'),
     });
 
     const {
@@ -58,6 +62,7 @@ const Personal = ({ ...props }) => {
                 lastname: userData?.lastname,
                 email: userData?.email,
                 address: userData?.address,
+                phone: userData?.phone,
             },
             setPreviewAvatar({
                 avatar: null,
@@ -165,6 +170,16 @@ const Personal = ({ ...props }) => {
                                 registername={register('email')}
                                 errorName={errors.email?.message}
                                 invalidRed
+                                readOnly
+                            />
+                        </div>
+                        <div className="mb-[30px]">
+                            <InputFileds
+                                withFull
+                                label={'Phone Number:'}
+                                registername={register('phone')}
+                                errorName={errors.phone?.message}
+                                invalidRed
                             />
                         </div>
                         <div className="mb-[30px]">
@@ -176,26 +191,31 @@ const Personal = ({ ...props }) => {
                                 invalidRed
                             />
                         </div>
-                        <div className="flex flex-col text-white">
-                            <span className="mb-[30px] italic">
-                                Account Status:{' '}
-                                <span className="font-light">{userData.isBlocked ? 'Blocked' : 'Actived'}</span>
-                            </span>
-                            <span className="mb-[30px] italic">
-                                Role:{' '}
-                                <span className="font-light"> {+userData.role === 1998 ? 'Admin' : 'Member'}</span>
-                            </span>
-                            <span className="mb-[30px] italic">
-                                Date Created:{' '}
-                                <span className="font-light"> {moment(userData.createdAt).format('DD/MM/YYYY')}</span>
-                            </span>
-                        </div>
-                        <div className="flex flex-row-reverse">
-                            {isDirty && (
-                                <Button className="text-white bg-main p-2 rounded-md mr-[10px] px-4 py-2 min-w-[88px] mt-4">
-                                    Update Profile
-                                </Button>
-                            )}
+                        <div className="flex justify-between mb-[30px]">
+                            <div className="flex flex-col text-white">
+                                <span className="mb-[30px] italic">
+                                    Account Status:{' '}
+                                    <span className="font-light">{userData.isBlocked ? 'Blocked' : 'Actived'}</span>
+                                </span>
+                                <span className="mb-[30px] italic">
+                                    Role:{' '}
+                                    <span className="font-light"> {+userData.role === 1998 ? 'Admin' : 'Member'}</span>
+                                </span>
+                                <span className="italic">
+                                    Date Created:{' '}
+                                    <span className="font-light">
+                                        {' '}
+                                        {moment(userData.createdAt).format('DD/MM/YYYY')}
+                                    </span>
+                                </span>
+                            </div>
+                            <div className="flex items-end">
+                                {isDirty && (
+                                    <Button className="text-white bg-main p-2 rounded-md mr-[10px] px-4 py-2 min-w-[88px] mt-4">
+                                        Update Profile
+                                    </Button>
+                                )}
+                            </div>
                         </div>
                     </form>
                 </div>

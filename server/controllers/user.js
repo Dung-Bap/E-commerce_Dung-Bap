@@ -33,9 +33,9 @@ const users = require('../utils/contants');
 
 // api/user/register
 const register = asyncHandler(async (req, res) => {
-    const { firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password, phone } = req.body;
     // kiem tra field, tranh truy van lien tuc vao db
-    if (!firstname || !lastname || !email || !password)
+    if (!firstname || !lastname || !email || !password || !phone)
         return res.status(400).json({
             success: false,
             message: 'Missing Inputs',
@@ -79,6 +79,7 @@ const finalRegister = asyncHandler(async (req, res) => {
         lastname: cookie?.dataregister?.lastname,
         email: cookie?.dataregister?.email,
         password: cookie?.dataregister?.password,
+        phone: cookie?.dataregister?.phone,
     });
     res.clearCookie('dataregister');
     if (newUser) return res.redirect(`${process.env.CLIENT_URL}/finalregister/success`);

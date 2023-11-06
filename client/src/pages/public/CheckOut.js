@@ -1,13 +1,16 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { formatMoney } from '../../ultils/helpers';
 import { Congratulation, PayPal } from '../../components';
+import { getCurrent } from '../../store/user/asyncActions';
 
-const CheckOut = ({ navigate }) => {
+const CheckOut = ({ navigate, dispatch }) => {
     const { currentCart, userData } = useSelector(state => state.user);
     const [isSuccess, setIsSuccess] = useState(false);
-    console.log(currentCart);
+    useEffect(() => {
+        dispatch(getCurrent());
+    }, [dispatch, isSuccess]);
     return (
         <div className="w-full h-full min-h-screen flex justify-center bg-[#f0f0f0]">
             {isSuccess && <Congratulation />}
@@ -75,6 +78,12 @@ const CheckOut = ({ navigate }) => {
                             <span className="m-[10px]">{userData?.address}</span>
                         </span>
                     </div>
+                    <div className="flex items-center justify-between px-[20px] pb-[10px]">
+                        <span className="font-semibold italic">
+                            Phone Number:
+                            <span className="m-[10px]">{userData?.phone}</span>
+                        </span>
+                    </div>
                     <PayPal
                         payload={{
                             products: currentCart,
@@ -82,6 +91,7 @@ const CheckOut = ({ navigate }) => {
                                 +currentCart.reduce((sum, el) => sum + el.price * el.quantity, 0) / 23500,
                             ),
                             address: userData?.address,
+                            phone: userData?.phone,
                         }}
                         setIsSuccess={setIsSuccess}
                         amount={Math.round(+currentCart.reduce((sum, el) => sum + el.price * el.quantity, 0) / 23500)}

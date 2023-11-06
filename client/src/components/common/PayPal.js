@@ -11,7 +11,6 @@ const style = { layout: 'vertical' };
 const ButtonWrapper = ({ showSpinner, currency, amount, payload, setIsSuccess }) => {
     const [{ isPending, options }, dispatch] = usePayPalScriptReducer();
     const navigate = useNavigate();
-
     useEffect(() => {
         dispatch({
             type: 'resetOptions',
@@ -29,13 +28,12 @@ const ButtonWrapper = ({ showSpinner, currency, amount, payload, setIsSuccess })
         if (response.success) {
             Swal.fire({
                 title: 'Congratulation',
-                text: 'Payment success !!!',
+                text: 'Payment success, We will deliver your order within 2 hours, Thank you very much !!!',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Oki',
             }).then(result => {
                 if (result.isConfirmed) {
-                    // dispatch(getCurrent());
                     navigate(`/${path.HOME}`);
                 }
             });
