@@ -19,6 +19,7 @@ import {
     AiOutlineCloseCircle,
     AiOutlineMinus,
     AiOutlinePlus,
+    AiFillHeart,
 } from 'react-icons/ai';
 import { FaOpencart, FaShieldAlt } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
@@ -74,6 +75,7 @@ const icons = {
     AiOutlinePlus,
     IoIosClose,
     ImSpinner10,
+    AiFillHeart,
 };
 
 export default icons;

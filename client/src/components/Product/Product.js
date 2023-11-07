@@ -11,16 +11,17 @@ import icons from '../../ultils/icons';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { DetailProduct } from '../../pages/public';
 import { showModal } from '../../store/app/appSlice';
-import { apiUpdateCart } from '../../apis';
+import { apiUpdateCart, apiUpdateWishlist } from '../../apis';
 import path from '../../ultils/path';
 import { getCurrent } from '../../store/user/asyncActions';
 import SelectOption from '../SelectOption';
+import clsx from 'clsx';
 
-const { AiOutlineHeart, FaOpencart, AiFillEye } = icons;
-const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
+const { AiOutlineHeart, FaOpencart, AiFillEye, AiFillHeart } = icons;
+const Product = ({ data, isLabel, nomal, navigate, dispatch, location, textWhite }) => {
     const [isSelectOption, setIsSelectOption] = useState(false);
     const { userData } = useSelector(state => state.user);
-    const handleClickOptions = async (e, options) => {
+    const handleClickOptions = async (e, options, pid) => {
         e.stopPropagation();
         if (options === 'CART') {
             if (!userData)
@@ -69,7 +70,19 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
                 });
             }
         }
-        if (options === 'WISHLIST') console.log('WISHLIST');
+        if (options === 'WISHLIST') {
+            const response = await apiUpdateWishlist(pid);
+            dispatch(getCurrent());
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: response.message,
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            }
+        }
+
         if (options === 'QUICK_VIEW') {
             dispatch(
                 showModal({
@@ -97,11 +110,19 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
                 >
                     {isSelectOption && (
                         <div className=" animate-slide-top w-full absolute bottom-0 flex justify-center gap-2">
-                            <Tippy content="Add wishlist" placement="bottom">
-                                <span onClick={e => handleClickOptions(e, 'WISHLIST')}>
-                                    <SelectOption icon={<AiOutlineHeart />} />
-                                </span>
-                            </Tippy>
+                            {userData?.wishlist.some(el => el?._id === data?._id) ? (
+                                <Tippy content="Add wishlist" placement="bottom">
+                                    <span onClick={e => handleClickOptions(e, 'WISHLIST', data?._id)}>
+                                        <SelectOption border icon={<AiFillHeart color="red" />} />
+                                    </span>
+                                </Tippy>
+                            ) : (
+                                <Tippy content="Add wishlist" placement="bottom">
+                                    <span onClick={e => handleClickOptions(e, 'WISHLIST', data?._id)}>
+                                        <SelectOption icon={<AiOutlineHeart />} />
+                                    </span>
+                                </Tippy>
+                            )}
                             {userData?.cart.some(el => el.product?._id === data?._id) ? (
                                 <Tippy content="Add Cart" placement="bottom">
                                     <span onClick={e => e.stopPropagation()}>
@@ -139,12 +160,21 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch, location }) => {
                     )}
                 </div>
                 <span className=" flex text-[14px] font-light my-[10px] h-[14px] ">
-                    {renderStars(data.totalRatings, 14)?.map((el, index) => (
+                    {renderStars(data?.totalRatings, 14)?.map((el, index) => (
                         <span key={index}>{el}</span>
                     ))}
                 </span>
-                <span className="text-[16px] font-light mb-[10px] line-clamp-1 hover:text-main">{data?.title}</span>
-                <span className={`text-[16px] font-light`}>{`${formatMoney(data?.price)}`}</span>
+                <span
+                    className={clsx(
+                        textWhite && 'text-white',
+                        'text-[16px] font-light mb-[10px] line-clamp-1 hover:text-main',
+                    )}
+                >
+                    {data?.title}
+                </span>
+                <span className={clsx(textWhite && 'text-white', `text-[16px] font-light`)}>{`${formatMoney(
+                    data?.price,
+                )}`}</span>
             </div>
         </div>
     );

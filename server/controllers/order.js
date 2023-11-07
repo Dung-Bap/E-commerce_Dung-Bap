@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Order = require('../models/order');
-const Coupon = require('../models/coupon');
 const asyncHandler = require('express-async-handler');
 
 const createOrder = asyncHandler(async (req, res) => {
@@ -95,9 +94,19 @@ const getOrders = asyncHandler(async (req, res) => {
     });
 });
 
+const destroyOrder = asyncHandler(async (req, res) => {
+    const _id = req.body;
+    const response = await Order.remove({ _id: { $in: _id } });
+    return res.status(200).json({
+        success: response ? true : false,
+        message: response ? 'Detete completed !' : 'Something went wrong !',
+    });
+});
+
 module.exports = {
     createOrder,
     updateStatus,
     getUserOrder,
     getOrders,
+    destroyOrder,
 };

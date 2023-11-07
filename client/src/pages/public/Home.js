@@ -68,11 +68,11 @@ const Home = () => {
                                 ))}
                         </div>
                     </div>
-                    <div className="w-full mt-[20px]">
+                    {/* <div className="w-full mt-[20px]">
                         <h2 className="w-full font-semibold text-[20px] py-[15px] border-b-2 border-main mb-[20px]">
                             BLOG POSTS
                         </h2>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

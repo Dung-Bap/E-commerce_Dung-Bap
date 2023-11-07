@@ -13,3 +13,10 @@ export const apiGetOrderById = params =>
         method: 'get',
         params,
     });
+
+export const apiDestroyOrder = data =>
+    axios({
+        url: '/order/destroy',
+        method: 'delete',
+        data,
+    });

@@ -129,9 +129,10 @@ const getCurrent = asyncHandler(async (req, res, next) => {
             path: 'cart',
             populate: {
                 path: 'product',
-                select: 'thumbnail title price category',
+                select: 'thumbnail title price category ',
             },
-        }); // .select để không lấy field "-password -refreshToken"
+        })
+        .populate('wishlist', 'title thumbnail price color'); // .select để không lấy field "-password -refreshToken"
     return res.status(200).json({
         success: user ? true : false,
         result: user ? user : 'User not found',
@@ -394,6 +395,26 @@ const insertUsers = asyncHandler(async (req, res) => {
     });
 });
 
+const updateWishList = asyncHandler(async (req, res) => {
+    const { pid } = req.params;
+    const { _id } = req.user;
+    const wishlist = await User.findById(_id);
+    const alreadyAddWishlist = wishlist?.wishlist?.find(el => el.toString() === pid);
+    if (alreadyAddWishlist) {
+        const response = await User.findByIdAndUpdate(_id, { $pull: { wishlist: pid } }, { new: true });
+        return res.status(200).json({
+            success: response ? true : false,
+            message: response ? 'Successfully removed from wishlist !' : 'Something went wrong !',
+        });
+    } else {
+        const response = await User.findByIdAndUpdate(_id, { $push: { wishlist: pid } }, { new: true });
+        return res.status(200).json({
+            success: response ? true : false,
+            message: response ? 'Successfully added product to wishlist !' : 'Something went wrong !',
+        });
+    }
+});
+
 module.exports = {
     register,
     login,
@@ -411,4 +432,5 @@ module.exports = {
     finalRegister,
     insertUsers,
     deleteProductInCart,
+    updateWishList,
 };

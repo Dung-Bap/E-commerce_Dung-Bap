@@ -3,6 +3,7 @@ import { apiGetProducts } from '../../apis/products';
 import { CustomSlider } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../store/products/asyncActions';
+import { Link } from 'react-router-dom';
 
 const BestSeller = () => {
     const dispath = useDispatch();
@@ -56,16 +57,20 @@ const BestSeller = () => {
                 <CustomSlider products={products} activedTab={activedTab} />
             </div>
             <div className="w-full flex gap-5 ">
-                <img
-                    className="flex-1 cursor-pointer"
-                    alt=""
-                    src="https://digital-world-2.myshopify.com/cdn/shop/files/banner2-home2_2000x_crop_center.png?v=1613166657"
-                />
-                <img
-                    className="flex-1 cursor-pointer"
-                    alt=""
-                    src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-home2_2000x_crop_center.png?v=1613166657"
-                />
+                <Link to={`/laptop`}>
+                    <img
+                        className="flex-1 cursor-pointer"
+                        alt=""
+                        src="https://digital-world-2.myshopify.com/cdn/shop/files/banner2-home2_2000x_crop_center.png?v=1613166657"
+                    />
+                </Link>
+                <Link to={`/laptop`}>
+                    <img
+                        className="flex-1 cursor-pointer"
+                        alt=""
+                        src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-home2_2000x_crop_center.png?v=1613166657"
+                    />
+                </Link>
             </div>
         </div>
     );

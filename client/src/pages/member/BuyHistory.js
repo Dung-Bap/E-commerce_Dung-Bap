@@ -1,18 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { apiGetOrderById } from '../../apis';
+import { apiDestroyOrder, apiGetOrderById } from '../../apis';
 import useDebouce from '../../hook/useDebouce';
 import { Pagination } from '../../components/pagination';
 import { useSearchParams } from 'react-router-dom';
 import moment from 'moment';
+import Swal from 'sweetalert2';
+import withBaseComponent from '../../hocs/withBaseComponent';
+import { showModal } from '../../store/app/appSlice';
+import { Button, Loading } from '../../components';
 
-const BuyHistory = () => {
+const BuyHistory = ({ dispatch }) => {
     const [params] = useSearchParams();
-
     const [valueInput, setValueInput] = useState('');
     const debouceValue = useDebouce(valueInput, 800);
     const [AllOrder, setAllOrder] = useState(null);
     const currentPage = +params.get('page') || 1;
-    console.log(AllOrder?.orders);
+
+    const [selected, setSelected] = useState([]);
+    const [updated, setUpdated] = useState(false);
+
+    const handleChange = (e, data) => {
+        const { name, checked } = e.target;
+        if (checked) {
+            if (name === 'allSelect') {
+                setSelected(AllOrder?.orders);
+            } else {
+                setSelected([...selected, data]);
+            }
+        } else {
+            if (name === 'allSelect') {
+                setSelected([]);
+            } else {
+                let temppost = selected.filter(item => item._id !== data._id);
+                setSelected(temppost);
+            }
+        }
+    };
+
+    // console.log(AllOrder?.orders);
     useEffect(() => {
         const fetchApiOrder = async () => {
             const response = await apiGetOrderById({ q: debouceValue });
@@ -20,14 +45,52 @@ const BuyHistory = () => {
         };
 
         fetchApiOrder();
-    }, [debouceValue]);
+    }, [debouceValue, updated]);
+
+    const handleDestroyBuyHistory = async () => {
+        const _id = selected.map(item => item._id);
+        Swal.fire({
+            title: 'Are you sure ?',
+            text: 'Deleted purchase history cannot be restored !',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete !',
+        }).then(async result => {
+            if (result.isConfirmed) {
+                dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
+                const response = await apiDestroyOrder(_id);
+                dispatch(showModal({ isShowModal: false, childrenModal: null }));
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.message,
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                    setUpdated(prev => !prev);
+                    setSelected([]);
+                }
+            }
+        });
+    };
 
     return (
-        <div className="w-full ">
+        <div className="w-full p-4 ">
             <div className="p-4">
                 <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">Buy History</div>
             </div>
-            <div className="flex justify-end p-5">
+            <div className="flex justify-between p-5">
+                {selected.length > 0 && (
+                    <Button
+                        onClick={handleDestroyBuyHistory}
+                        className={'text-white bg-[red] rounded-md mr-[10px] min-w-[88px]'}
+                    >
+                        Delete
+                    </Button>
+                )}
+                {selected.length === 0 && <div></div>}
                 <input
                     className="form-input min-w-[500px] placeholder:italic placeholder:text-sm"
                     placeholder="Search phone, address and status"
@@ -41,6 +104,21 @@ const BuyHistory = () => {
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
+                                <th scope="col" className="p-4">
+                                    <div className="flex items-center">
+                                        <input
+                                            name="allSelect"
+                                            checked={selected?.length === AllOrder?.orders?.length}
+                                            onChange={e => handleChange(e, AllOrder?.orders)}
+                                            id="checkbox-all-search"
+                                            type="checkbox"
+                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500-600-800-gray-800 focus:ring-2 "
+                                        />
+                                        <label htmlFor="checkbox-all-search" className="sr-only">
+                                            checkbox
+                                        </label>
+                                    </div>
+                                </th>
                                 <th scope="col" className="px-2 py-3">
                                     #
                                 </th>
@@ -70,9 +148,23 @@ const BuyHistory = () => {
                         <tbody>
                             {AllOrder?.orders.map((order, index) => (
                                 <tr
-                                    key={index}
+                                    key={order?._id}
                                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                 >
+                                    <td className="w-4 p-4">
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={selected.some(item => item?._id === order?._id)}
+                                                onChange={e => handleChange(e, order)}
+                                                id="checkbox-table-search-1"
+                                                type="checkbox"
+                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 "
+                                            />
+                                            <label htmlFor="checkbox-table-search-1" className="sr-only">
+                                                checkbox
+                                            </label>
+                                        </div>
+                                    </td>
                                     <th scope="row" className="px-2 py-4">
                                         {(currentPage - 1) * process.env.REACT_APP_PAGE_SIZE + index + 1}
                                     </th>
@@ -125,4 +217,4 @@ const BuyHistory = () => {
     );
 };
 
-export default BuyHistory;
+export default withBaseComponent(BuyHistory);
