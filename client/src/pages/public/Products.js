@@ -10,11 +10,18 @@ import { Pagination } from '../../components/pagination';
 
 const Products = () => {
     const { category } = useParams();
-    const [products, setProducts] = useState(null);
+    const [products, setProducts] = useState([]);
     const [activeFilter, setActiveFilter] = useState(null);
     const [params] = useSearchParams();
     const [sort, setSort] = useState('');
     const navigate = useNavigate();
+
+    const breakpointColumnsObj = {
+        default: 4,
+        1100: 3,
+        700: 2,
+        500: 1,
+    };
 
     const changeValue = useCallback(
         value => {
@@ -30,7 +37,8 @@ const Products = () => {
                 pathname: `/${category}`,
                 search: createSearchParams({ sort }).toString(),
             });
-    }, [category, navigate, sort]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sort]);
 
     const changeActiveFilter = useCallback(
         name => {
@@ -39,13 +47,6 @@ const Products = () => {
         },
         [activeFilter],
     );
-
-    const fetchGetProducts = async queries => {
-        if (category && category !== 'products') queries.category = category;
-
-        const response = await apiGetProducts({ ...queries, limit: process.env.REACT_APP_PAGE_SIZE });
-        if (response.success) setProducts(response);
-    };
 
     useEffect(() => {
         // filter color
@@ -62,22 +63,22 @@ const Products = () => {
         if (queries.to) queries.price = { lte: queries.to };
         delete queries.from;
         delete queries.to;
+
         const q = { ...priceQuery, ...queries };
+
+        const fetchGetProducts = async q => {
+            if (category && category !== 'products') q.category = category;
+            const response = await apiGetProducts({ ...q, limit: process.env.REACT_APP_PAGE_SIZE });
+            if (response.success) setProducts(response);
+        };
+
         fetchGetProducts(q);
         window.scrollTo({
             top: 0,
             left: 0,
             behavior: 'smooth',
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params]);
-
-    const breakpointColumnsObj = {
-        default: 4,
-        1100: 3,
-        700: 2,
-        500: 1,
-    };
+    }, [category, params]);
 
     return (
         <div onClick={() => setActiveFilter(null)}>
@@ -111,7 +112,7 @@ const Products = () => {
                             <InputSelect options={sorts} value={sort} changeValue={changeValue} />
                         </div>
                     </div>
-                    <div>
+                    {products?.counts > 0 && (
                         <Masonry
                             breakpointCols={breakpointColumnsObj}
                             className="my-masonry-grid"
@@ -121,10 +122,17 @@ const Products = () => {
                                 <Product nomal={true} key={product._id} data={product} />
                             ))}
                         </Masonry>
-                    </div>
-                    <div className="flex">
-                        <Pagination totalProduct={products?.counts} />
-                    </div>
+                    )}
+                    {products?.counts === 0 && (
+                        <div className="min-h-[500px] flex justify-center items-center text-main font-semibold">
+                            There are no matches for this information !!!
+                        </div>
+                    )}
+                    {products?.counts > 0 && (
+                        <div className="flex">
+                            <Pagination totalProduct={products?.counts} />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

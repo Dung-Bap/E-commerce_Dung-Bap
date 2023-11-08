@@ -7,8 +7,10 @@ import { useSelector } from 'react-redux';
 import icons from '../../ultils/icons';
 import Banner from '../../components/home/Banner';
 import { CustomSlider } from '../../components';
+import withBaseComponent from '../../hocs/withBaseComponent';
+import { createSearchParams } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({ navigate }) => {
     const { newArrivals } = useSelector(state => state.products);
     const { categories } = useSelector(state => state.app);
     const { MdNavigateNext } = icons;
@@ -53,11 +55,21 @@ const Home = () => {
                                                     {categorie.title}
                                                 </h3>
                                                 <ul>
-                                                    {categorie.brand?.map((el, index) => (
+                                                    {categorie.brand?.map((item, index) => (
                                                         <li key={index} className="text-[14px] text-[#808080] mb-[5px]">
-                                                            <span className="flex items-center hover:text-main cursor-pointer">
+                                                            <span
+                                                                onClick={() => {
+                                                                    navigate({
+                                                                        pathname: `/${categorie.title}`,
+                                                                        search: createSearchParams({
+                                                                            brand: item,
+                                                                        }).toString(),
+                                                                    });
+                                                                }}
+                                                                className="flex items-center hover:text-main cursor-pointer"
+                                                            >
                                                                 <MdNavigateNext />
-                                                                {el}
+                                                                {item}
                                                             </span>
                                                         </li>
                                                     ))}
@@ -79,4 +91,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default withBaseComponent(Home);

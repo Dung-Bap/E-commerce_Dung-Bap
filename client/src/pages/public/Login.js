@@ -21,7 +21,6 @@ const Login = () => {
     const [showForgotPassword, setShowForgotPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [searchParams] = useSearchParams();
-    const [img, setImg] = useState(false);
 
     const handleForgotPassword = async () => {
         const response = await apiForgotPassword({ email });
@@ -137,129 +136,121 @@ const Login = () => {
         }
     };
 
-    useEffect(() => {
-        setImg(true);
-    }, []);
-
     return (
-        img && (
-            <div>
-                <img
-                    className="relative w-screen h-screen"
-                    alt=""
-                    src="https://img.freepik.com/free-photo/shopping-trolleys-packets-gift-tags_23-2147961963.jpg?w=1800&t=st=1694255869~exp=1694256469~hmac=f2e9b4243d7d926c015c9fc2a5507bc2df923277818aa728f634aad46074da82"
-                />
-                <div className="absolute flex justify-center top-0 right-0 bottom-0 left-0 items-center ">
-                    <div className="rounded-md bg-main p-[15px]">
-                        {showForgotPassword ? (
-                            <div className="flex flex-col items-center min-w-[400px] min-h-[234px]">
-                                <div>
-                                    <h2 className="text-[18px] font-medium mb-[20px]">RESET YOUR PASSWORD</h2>
-                                </div>
-                                <div className="py-[6px] px-[12px] border mb-[10px]">
-                                    <span className="text-[14px]">
-                                        We will send you an email to reset your password.
-                                    </span>
-                                </div>
-                                <label htmlFor="email" className="mb-[10px] cursor-pointer">
-                                    Email
-                                </label>
-                                <input
-                                    className="min-w-[225px] py-[8px] px-[10px] text-[14px]"
-                                    id="email"
-                                    placeholder="email@gmail.com"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                                <div className="mt-[15px] mr-[-10px]">
-                                    <Button onClick={handleForgotPassword}>Submit</Button>
-                                    <Button onClick={handleShowForgotPassword}>Back</Button>
-                                </div>
+        <div>
+            <img
+                className="relative w-screen h-screen"
+                alt=""
+                src="https://img.freepik.com/free-photo/shopping-trolleys-packets-gift-tags_23-2147961963.jpg?w=1800&t=st=1694255869~exp=1694256469~hmac=f2e9b4243d7d926c015c9fc2a5507bc2df923277818aa728f634aad46074da82"
+            />
+            <div className="absolute flex justify-center top-0 right-0 bottom-0 left-0 items-center ">
+                <div className="rounded-md bg-main p-[15px]">
+                    {showForgotPassword ? (
+                        <div className="flex flex-col items-center min-w-[400px] min-h-[234px]">
+                            <div>
+                                <h2 className="text-[18px] font-medium mb-[20px]">RESET YOUR PASSWORD</h2>
                             </div>
-                        ) : (
-                            <>
-                                <div className="flex justify-between">
-                                    <h2 className="mb-[15px] text-[20px] font-medium">
-                                        {showRegister ? 'Register' : 'Login'}
-                                    </h2>
-                                    <Link to={`/${path.HOME}`}>
-                                        <AiFillHome className="text-[30px] text-white cursor-pointer" />
-                                    </Link>
-                                </div>
-                                <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-                                    {showRegister && (
-                                        <InputFileds
-                                            placeholder={'First Name'}
-                                            registername={register('firstname')}
-                                            errorName={errors.firstname?.message}
-                                        />
-                                    )}
-                                    {showRegister && (
-                                        <InputFileds
-                                            placeholder={'Last Name'}
-                                            registername={register('lastname')}
-                                            errorName={errors.lastname?.message}
-                                        />
-                                    )}
-                                    {showRegister && (
-                                        <InputFileds
-                                            placeholder={'Phone Number'}
-                                            registername={register('phone')}
-                                            errorName={errors.phone?.message}
-                                        />
-                                    )}
+                            <div className="py-[6px] px-[12px] border mb-[10px]">
+                                <span className="text-[14px]">We will send you an email to reset your password.</span>
+                            </div>
+                            <label htmlFor="email" className="mb-[10px] cursor-pointer">
+                                Email
+                            </label>
+                            <input
+                                className="min-w-[225px] py-[8px] px-[10px] text-[14px]"
+                                id="email"
+                                placeholder="email@gmail.com"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                            <div className="mt-[15px] mr-[-10px]">
+                                <Button onClick={handleForgotPassword}>Submit</Button>
+                                <Button onClick={handleShowForgotPassword}>Back</Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="flex justify-between">
+                                <h2 className="mb-[15px] text-[20px] font-medium">
+                                    {showRegister ? 'Register' : 'Login'}
+                                </h2>
+                                <Link to={`/${path.HOME}`}>
+                                    <AiFillHome className="text-[30px] text-white cursor-pointer" />
+                                </Link>
+                            </div>
+                            <form method="POST" onSubmit={handleSubmit(onSubmit)}>
+                                {showRegister && (
                                     <InputFileds
-                                        placeholder={'Your Email'}
-                                        registername={register('email')}
-                                        errorName={errors.email?.message}
+                                        placeholder={'First Name'}
+                                        registername={register('firstname')}
+                                        errorName={errors.firstname?.message}
                                     />
+                                )}
+                                {showRegister && (
                                     <InputFileds
-                                        placeholder={'Password'}
-                                        registername={register('password')}
-                                        errorName={errors.password?.message}
+                                        placeholder={'Last Name'}
+                                        registername={register('lastname')}
+                                        errorName={errors.lastname?.message}
+                                    />
+                                )}
+                                {showRegister && (
+                                    <InputFileds
+                                        placeholder={'Phone Number'}
+                                        registername={register('phone')}
+                                        errorName={errors.phone?.message}
+                                    />
+                                )}
+                                <InputFileds
+                                    placeholder={'Your Email'}
+                                    registername={register('email')}
+                                    errorName={errors.email?.message}
+                                />
+                                <InputFileds
+                                    placeholder={'Password'}
+                                    registername={register('password')}
+                                    errorName={errors.password?.message}
 
+                                    // type={'password'}
+                                />
+                                {showRegister && (
+                                    <InputFileds
+                                        placeholder={'Confirm Password'}
+                                        registername={register('confirmPassword')}
+                                        errorName={errors.confirmPassword?.message}
                                         // type={'password'}
                                     />
-                                    {showRegister && (
-                                        <InputFileds
-                                            placeholder={'Confirm Password'}
-                                            registername={register('confirmPassword')}
-                                            errorName={errors.confirmPassword?.message}
-                                            // type={'password'}
-                                        />
-                                    )}
-                                    <div className="flex w-full justify-center">
-                                        <button
-                                            className="text-white bg-black p-2 rounded-md hover:text-black hover:bg-white w-full mb-[15px]"
-                                            type="submit"
-                                        >
-                                            {showRegister ? 'Create' : 'Sign in'}
-                                        </button>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        {!showRegister && (
-                                            <span
-                                                onClick={handleShowForgotPassword}
-                                                className="text-black hover:text-white cursor-pointer"
-                                            >
-                                                Forgot password ???
-                                            </span>
-                                        )}
+                                )}
+                                <div className="flex w-full justify-center">
+                                    <button
+                                        className="text-white bg-black p-2 rounded-md hover:text-black hover:bg-white w-full mb-[15px]"
+                                        type="submit"
+                                    >
+                                        {showRegister ? 'Create' : 'Sign in'}
+                                    </button>
+                                </div>
+                                <div className="flex justify-between">
+                                    {!showRegister && (
                                         <span
-                                            onClick={hadleShowRegister}
-                                            type="button"
-                                            className="text-black hover:text-white cursor-pointer "
+                                            onClick={handleShowForgotPassword}
+                                            className="text-black hover:text-white cursor-pointer"
                                         >
-                                            {showRegister ? 'Back' : 'Register'}
+                                            Forgot password ???
                                         </span>
-                                    </div>
-                                </form>
-                            </>
-                        )}
-                    </div>
+                                    )}
+                                    <span
+                                        onClick={hadleShowRegister}
+                                        type="button"
+                                        className="text-black hover:text-white cursor-pointer "
+                                    >
+                                        {showRegister ? 'Back' : 'Register'}
+                                    </span>
+                                </div>
+                            </form>
+                        </>
+                    )}
                 </div>
             </div>
-        )
+        </div>
     );
 };
 

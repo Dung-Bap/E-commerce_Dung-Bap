@@ -14,8 +14,8 @@ const Sidebar = () => {
                         to={createSlug(category.title)}
                         className={({ isActive }) =>
                             isActive
-                                ? 'text-[14px] px-5 pt-[15px] pb-[14px] text-main hover:text-main'
-                                : 'text-[14px] px-5 pt-[15px] pb-[14px] hover:text-main'
+                                ? 'text-[14px]  px-5 pt-[15px] pb-[14px] text-main hover:text-main'
+                                : 'text-[14px] font-semibold uppercase px-5 pt-[15px] pb-[14px] hover:text-main'
                         }
                     >
                         {category.title}

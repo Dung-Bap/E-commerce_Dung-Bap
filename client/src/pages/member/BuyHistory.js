@@ -82,7 +82,7 @@ const BuyHistory = ({ dispatch }) => {
                 <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">Buy History</div>
             </div>
             <div className="flex justify-between p-5">
-                {selected.length > 0 && (
+                {selected?.length > 0 && (
                     <Button
                         onClick={handleDestroyBuyHistory}
                         className={'text-white bg-[red] rounded-md mr-[10px] min-w-[88px]'}
@@ -90,7 +90,7 @@ const BuyHistory = ({ dispatch }) => {
                         Delete
                     </Button>
                 )}
-                {selected.length === 0 && <div></div>}
+                {selected?.length === 0 && <div></div>}
                 <input
                     className="form-input min-w-[500px] placeholder:italic placeholder:text-sm"
                     placeholder="Search phone, address and status"
@@ -170,22 +170,22 @@ const BuyHistory = ({ dispatch }) => {
                                     </th>
                                     <td className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div className="flex flex-col">
-                                            {order.products.map(product => (
-                                                <span>{product.title}</span>
+                                            {order.products.map((product, index) => (
+                                                <span key={index}>{product.title}</span>
                                             ))}
                                         </div>
                                     </td>
                                     <td className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div className="flex flex-col">
-                                            {order.products.map(product => (
-                                                <span>{product.color}</span>
+                                            {order.products.map((product, index) => (
+                                                <span key={index}>{product.color}</span>
                                             ))}
                                         </div>
                                     </td>
                                     <td className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div className="flex flex-col">
-                                            {order.products.map(product => (
-                                                <span>{product.quantity}</span>
+                                            {order.products.map((product, index) => (
+                                                <span key={index}>{product.quantity}</span>
                                             ))}
                                         </div>
                                     </td>
