@@ -46,9 +46,9 @@ const TopHeader = () => {
     }, [message]);
 
     return (
-        <div className="w-full flex justify-center bg-main p-2 text-[12px] text-white">
-            <div className="w-main">
-                <div className="flex w-main justify-between">
+        <div className="w-full hidden sm:flex justify-center bg-main p-2 text-[12px] text-white  ">
+            <div className="lg:w-main md:w-full ">
+                <div className="flex w-full justify-between">
                     <span>ORDER ONLINE OR CALL US (+1800) 000 8808</span>
                     {isLoggedIn && userData ? (
                         <div className="flex items-center">

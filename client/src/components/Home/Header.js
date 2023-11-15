@@ -52,24 +52,28 @@ const Header = () => {
         });
     };
     return (
-        <div className="flex justify-between border-b w-main h-[110px] py-[35px]">
+        <div className="flex w-full px-[10px] items-center justify-between sm:border-b lg:w-main md:w-full sm:px-[20px] h-[110px] py-[20px] sm:py-[35px]">
+            <div className="sm:hidden">menu</div>
+
             <Link to={`/${path.HOME}`}>
                 <img
+                    className="max-w-[193px] sm:w-full"
                     alt=""
                     src="https://digital-world-2.myshopify.com/cdn/shop/files/logo_digital_new_250x.png?v=1613166683"
                 />
             </Link>
+
             <div className="flex items-center text-center">
-                <div className="px-5 border-r-2 flex flex-col ">
+                <div className="px-5 border-r-2 hidden flex-col lg:flex">
                     <span className="text-[13px] flex items-center font-medium">
                         <span className="mr-2 text-main">
                             <MdPhone />
                         </span>
                         (+1800) 000 8808
                     </span>
-                    <span className="text-[12px]  font-light">Mon-Sat 9:00AM - 8:00PM</span>
+                    <span className="text-[12px] font-light">Mon-Sat 9:00AM - 8:00PM</span>
                 </div>
-                <div className={`px-5  ${userData ? 'border-r-2' : ''} flex flex-col `}>
+                <div className={`px-5 hidden lg:flex ${userData ? 'border-r-2' : ''} flex flex-col `}>
                     <span className="text-[13px] font-medium flex items-center">
                         <span className="mr-2 text-main">
                             <GrMail />
@@ -80,7 +84,7 @@ const Header = () => {
                 </div>
                 {userData && (
                     <>
-                        <div className="px-5 border-r-2 h-[37.5px] flex items-center">
+                        <div className="sm:px-5 lg:border-r-2 h-[37.5px] flex items-center">
                             <span
                                 onClick={() => dispatch(showCart())}
                                 className="text-[13px] font-medium flex items-center cursor-pointer relative"
@@ -96,7 +100,7 @@ const Header = () => {
                         <div
                             onMouseEnter={() => setDetailProfile(true)}
                             onMouseLeave={() => setDetailProfile(false)}
-                            className="px-5 cursor-pointer relative"
+                            className="px-5 cursor-pointer relative hidden lg:block"
                         >
                             <img
                                 className="w-[30px] h-[30px] rounded-full object-cover mr-[5px]"

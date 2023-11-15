@@ -6,7 +6,7 @@ import { createSlug } from '../../ultils/helpers';
 const Sidebar = () => {
     const { categories } = useSelector(state => state.app);
     return (
-        <div className="flex flex-col border mb-[30px]">
+        <div className="hidden sm:flex flex-col border mb-[30px]">
             {categories.map(category => {
                 return (
                     <NavLink

@@ -17,13 +17,13 @@ const Home = ({ navigate }) => {
     return (
         <>
             <div className="w-full flex justify-center">
-                <div className="w-main">
-                    <div className="w-full mt-[20px] flex">
-                        <div className="flex flex-col w-[25%] ">
+                <div className="w-full px-[10px] sm:px-[20px] lg:w-main lg:p-0">
+                    <div className="w-full sm:mt-[20px] sm:flex">
+                        <div className="flex flex-col w-full sm:w-[25%] ">
                             <Sidebar />
                             <DailyDeal />
                         </div>
-                        <div className="flex flex-col pl-5 w-[75%] ">
+                        <div className="flex flex-col sm:pl-5 sm:w-[75%] ">
                             <Banner />
                             <BestSeller />
                         </div>
@@ -43,14 +43,14 @@ const Home = ({ navigate }) => {
                             {categories
                                 ?.filter(el => el.brand.length > 0)
                                 .map((categorie, index) => (
-                                    <div className=" flex w-1/3 px-[10px] mb-[20px] " key={index}>
-                                        <div className="flex w-full border p-[15px] ">
+                                    <div className=" flex w-1/2 sm:w-1/3 px-[10px] mb-[20px] " key={index}>
+                                        <div className="sm:flex w-full border p-[15px] ">
                                             <img
-                                                className="pl-[20px] object-contain w-[144px] h-[129px]"
+                                                className="lg:pl-[20px] object-contain md:w-[100px] lg:w-[144px] h-[129px]"
                                                 alt=""
                                                 src={categorie.image}
                                             />
-                                            <div className="pl-[20px]">
+                                            <div className="lg:pl-[20px]">
                                                 <h3 className="text-[14px] mb-[14px] font-medium uppercase">
                                                     {categorie.title}
                                                 </h3>

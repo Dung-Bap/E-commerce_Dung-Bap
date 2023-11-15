@@ -56,10 +56,10 @@ const BestSeller = () => {
             <div>
                 <CustomSlider products={products} activedTab={activedTab} />
             </div>
-            <div className="w-full flex gap-5 ">
+            <div className="w-full sm:flex gap-5 ">
                 <Link to={`/laptop`}>
                     <img
-                        className="flex-1 cursor-pointer"
+                        className="flex-1 cursor-pointer mb-[10px] sm:mb-0"
                         alt=""
                         src="https://digital-world-2.myshopify.com/cdn/shop/files/banner2-home2_2000x_crop_center.png?v=1613166657"
                     />

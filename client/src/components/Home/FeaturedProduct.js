@@ -20,13 +20,13 @@ const FeaturedProduct = ({ navigate }) => {
         <>
             <div className="w-full mt-[20px]">
                 <h2 className="w-full font-semibold text-[20px] py-[15px] border-b-2 border-main">FEATURED PRODUCTS</h2>
-                <div className="flex flex-wrap mx-[-10px] mt-[20px]">
+                <div className="sm:flex flex-wrap sm:mx-[-10px] mt-[20px]">
                     {featuredProducts?.map(featuredProduct => (
                         <ProductCard key={featuredProduct._id} data={featuredProduct} />
                     ))}
                 </div>
             </div>
-            <div className="w-full grid grid-cols-4 grid-rows-2 gap-4">
+            <div className="w-full flex flex-col gap-3 sm:grid grid-cols-4 grid-rows-2 sm:gap-4">
                 <img
                     onClick={() => navigate(`/${path.PRODUCTS}`)}
                     alt=""

@@ -38,7 +38,7 @@ const Cart = ({ dispatch, navigate }) => {
     return (
         <div
             onClick={e => e.stopPropagation()}
-            className={`bg-gray-800 min-h-screen w-[400px] text-white p-4 grid grid-rows-10 animate-slide-left `}
+            className={`bg-gray-800 min-h-screen w-[400px] text-white p-4 grid grid-rows-10 animate-slide-left`}
         >
             <div className="flex justify-between items-center border-b border-blue-50 row-span-1 h-full">
                 <span className="text-[18px] uppercase">Your Cart</span>

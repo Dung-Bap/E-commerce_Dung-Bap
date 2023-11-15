@@ -40,8 +40,8 @@ const Navigation = ({ navigate }) => {
     }, [debouceValue]);
 
     return (
-        <div className="w-main flex justify-between border-b  h-[48px] py-2 items-center">
-            <div className="text-[14px]">
+        <div className="lg:w-main md:w-full hidden md:px-[20px] sm:flex justify-between border-b h-[48px] py-2 items-center">
+            <div className="text-[14px] hidden lg:block">
                 {navigation.map(nav => (
                     <NavLink
                         key={nav.id}
@@ -56,6 +56,7 @@ const Navigation = ({ navigate }) => {
                     </NavLink>
                 ))}
             </div>
+            <div className="lg:hidden">menu</div>
             <div className="flex justify-end">
                 <div>
                     <HeadlessTippy

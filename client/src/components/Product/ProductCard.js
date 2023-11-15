@@ -6,7 +6,7 @@ const ProductCard = ({ data }) => {
     return (
         <Link
             to={`/${data?.category?.toLowerCase()}/${data?._id}/${data?.title}`}
-            className="flex w-1/3 px-[10px] mb-[20px] cursor-pointer"
+            className="flex sm:w-1/3 sm:px-[10px] mb-[20px] cursor-pointer"
         >
             <div className="flex border w-full p-[15px] ">
                 <img className="w-[84px] h-[84px] object-contain mr-5" alt="" src={data?.thumbnail} />

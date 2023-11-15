@@ -24,7 +24,7 @@ const DailyDeal = () => {
                 <span className="text-[22px] flex-1 ">
                     <AiFillStar color="red" />
                 </span>
-                <span className="text-[30px] flex-3 font-medium">DAILY DEALS</span>
+                <span className="text-[16px] lg:text-[30px] flex-3 font-medium">DAILY DEALS</span>
                 <span className="flex-1"></span>
             </div>
             <div className="flex flex-col items-center mb-[15px]">
