@@ -17,7 +17,7 @@ const InputFileds = ({
             <label className="text-white">{label}</label>
             <input
                 className={`form-input ${
-                    withFull ? 'w-full' : 'w-[400px]'
+                    withFull ? 'w-full' : 'min-w-[300px] sm:min-w-[400px]'
                 } px-[6px] text-[14px] py-[4px] placeholder:text-[14px] bg-[#f6f6f6] text-[#1c1d1d] placeholder:border-none`}
                 {...registername}
                 placeholder={placeholder}
@@ -27,9 +27,9 @@ const InputFileds = ({
                 readOnly={readOnly}
             />
             <span
-                className={`${withFull ? 'w-full' : 'w-[400px]'} ${withFull ? 'text-[12px]' : 'text-sm'} font-light ${
-                    invalidRed ? 'text-main' : 'text-white'
-                } `}
+                className={`${withFull ? 'w-full' : 'min-w-[300px] sm:min-w-[400px]'} ${
+                    withFull ? 'text-[12px]' : 'text-sm'
+                } font-light ${invalidRed ? 'text-main' : 'text-white'} `}
             >
                 {errorName}
             </span>

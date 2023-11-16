@@ -4,17 +4,17 @@ import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { Cart, CartDetail, CheckOut, FinalRegister, Home, Login, Public, ResetPassword } from './pages/public';
+import { Cart, CartDetail, CheckOut, FinalRegister, Home, Login, Menu, Public, ResetPassword } from './pages/public';
 import path from './ultils/path';
 import { getCategories } from './store/app/asyncActions';
 import { Products, DetailProduct, Blogs, FAQs, Services } from './pages/public';
 import Modal from './components/modal/Modal';
 import { AdminLayout, CreateProducts, Dashboard, ManageOrder, ManageProduct, ManageUser } from './pages/admin';
 import { BuyHistory, MemberLayout, MyCart, Personal, Wishlist } from './pages/member';
-import { showCart } from './store/app/appSlice';
+import { showCart, showMenu } from './store/app/appSlice';
 
 function App() {
-    const { isShowModal, childrenModal, isShowCart } = useSelector(state => state.app);
+    const { isShowModal, childrenModal, isShowCart, isShowMenu } = useSelector(state => state.app);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCategories());
@@ -28,6 +28,11 @@ function App() {
                     className="absolute z-50 inset-0 bg-[rgba(0,0,0,0.5)] flex flex-row-reverse"
                 >
                     <Cart />
+                </div>
+            )}
+            {isShowMenu && (
+                <div onClick={() => dispatch(showMenu())} className="absolute z-50 inset-0 bg-[rgba(0,0,0,0.5)]">
+                    <Menu />
                 </div>
             )}
             {isShowModal && <Modal>{childrenModal}</Modal>}

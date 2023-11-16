@@ -83,13 +83,13 @@ const Products = () => {
     return (
         <div onClick={() => setActiveFilter(null)}>
             <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px] w-full flex justify-center ">
-                <div className="w-main">
+                <div className="w-main px-[20px] lg:px-0">
                     <h2 className="text-[18px] font-medium mb-10px uppercase">{category}</h2>
                     <Breadcrumb category={category} />
                 </div>
             </div>
             <div className="w-full flex justify-center">
-                <div className="w-main">
+                <div className="w-main px-[20px] lg:px-0">
                     <div className="flex items-center border mb-[15px]">
                         <div className="w-4/5 p-2">
                             <h2 className="text-[14px] font-medium mb-[10px]">Filter By</h2>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -23,7 +23,9 @@ const Login = () => {
     const [searchParams] = useSearchParams();
 
     const handleForgotPassword = async () => {
+        dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
         const response = await apiForgotPassword({ email });
+        dispatch(showModal({ isShowModal: false, childrenModal: null }));
         if (response.success) {
             Swal.fire('Congratulation !', response.message, 'success');
         } else Swal.fire('Opps!', response.message, 'error');
@@ -139,14 +141,14 @@ const Login = () => {
     return (
         <div>
             <img
-                className="relative w-screen h-screen"
+                className="relative w-screen h-screen object-cover"
                 alt=""
                 src="https://img.freepik.com/free-photo/shopping-trolleys-packets-gift-tags_23-2147961963.jpg?w=1800&t=st=1694255869~exp=1694256469~hmac=f2e9b4243d7d926c015c9fc2a5507bc2df923277818aa728f634aad46074da82"
             />
             <div className="absolute flex justify-center top-0 right-0 bottom-0 left-0 items-center ">
                 <div className="rounded-md bg-main p-[15px]">
                     {showForgotPassword ? (
-                        <div className="flex flex-col items-center min-w-[400px] min-h-[234px]">
+                        <div className="flex flex-col items-center w-full sm:min-w-[400px] min-h-[234px]">
                             <div>
                                 <h2 className="text-[18px] font-medium mb-[20px]">RESET YOUR PASSWORD</h2>
                             </div>

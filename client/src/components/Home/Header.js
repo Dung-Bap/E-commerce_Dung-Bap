@@ -6,10 +6,10 @@ import icons from '../../ultils/icons';
 import path from '../../ultils/path';
 import Swal from 'sweetalert2';
 import { logout } from '../../store/user/userSlice';
-import { showCart } from '../../store/app/appSlice';
+import { showCart, showMenu } from '../../store/app/appSlice';
 
 const Header = () => {
-    const { MdPhone, GrMail, FaOpencart, IoLogOut, CgProfile, MdOutlineAdminPanelSettings } = icons;
+    const { MdPhone, GrMail, FaOpencart, IoLogOut, CgProfile, MdOutlineAdminPanelSettings, IoMenu } = icons;
     const { userData } = useSelector(state => state.user);
     const [detailProfile, setDetailProfile] = useState(false);
     const dispatch = useDispatch();
@@ -53,7 +53,9 @@ const Header = () => {
     };
     return (
         <div className="flex w-full px-[10px] items-center justify-between sm:border-b lg:w-main md:w-full sm:px-[20px] h-[110px] py-[20px] sm:py-[35px]">
-            <div className="sm:hidden">menu</div>
+            <div onClick={() => dispatch(showMenu())} className="sm:hidden cursor-pointer">
+                <IoMenu size={26} color="red" />
+            </div>
 
             <Link to={`/${path.HOME}`}>
                 <img

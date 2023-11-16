@@ -52,14 +52,14 @@ module.exports = {
             },
             'slide-right': {
                 '0%': {
+                    '-webkit-transform': 'translateX(-400px);',
+                    opacity: 0,
+                    transform: 'translateX(-400px);',
+                },
+                '100%': {
                     '-webkit-transform': ' translateX(0);',
                     opacity: 1,
                     transform: ' translateX(0);',
-                },
-                '100%': {
-                    '-webkit-transform': 'translateX(400px);',
-                    opacity: 0,
-                    transform: 'translateX(400px);',
                 },
             },
             spin: {

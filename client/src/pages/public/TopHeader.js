@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import path from '../../ultils/path';
 import { getCurrent } from '../../store/user/asyncActions';
 import { clearMessage } from '../../store/user/userSlice';
+import { showMenu } from '../../store/app/appSlice';
 
 const TopHeader = () => {
     const { isLoggedIn, userData, message } = useSelector(state => state.user);
@@ -37,9 +38,11 @@ const TopHeader = () => {
                 if (result.isConfirmed) {
                     navigate(`${path.LOGIN}`);
                     dispatch(clearMessage());
+                    dispatch(showMenu());
                 }
                 if (result.isDismissed) {
                     dispatch(clearMessage());
+                    dispatch(showMenu());
                 }
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps

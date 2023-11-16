@@ -15,6 +15,11 @@ const {
     CgProfile,
     MdOutlineHistoryToggleOff,
     PiHeartHalfDuotone,
+    AiFillHome,
+    MdOutlineProductionQuantityLimits,
+    IoMdLogIn,
+    MdOutlineAdminPanelSettings,
+    IoLogOut,
 } = icons;
 
 export const navigation = [
@@ -261,5 +266,60 @@ export const isBlocked = [
     {
         code: true,
         value: 'Blocked',
+    },
+];
+
+export const MENU = [
+    {
+        id: 1,
+        icon: <AiFillHome size={20} />,
+        name: 'Home',
+        role: 2001,
+        path: `/${path.HOME}`,
+    },
+    {
+        id: 2,
+        icon: <MdOutlineProductionQuantityLimits size={20} />,
+        name: 'Products',
+        role: 2001,
+        path: `${path.PRODUCTS}`,
+    },
+    {
+        id: 3,
+        icon: <IoMdLogIn size={20} />,
+        name: 'Login',
+        role: 2001,
+        path: `/${path.LOGIN}`,
+    },
+    {
+        id: 4,
+        icon: <CgProfile size={20} />,
+        name: 'Detail Profile',
+        role: 2001,
+        path: `/${path.MEMBER}/${path.PERSONAL}`,
+    },
+    {
+        id: 5,
+        name: 'Buy History',
+        icon: <MdOutlineHistoryToggleOff size={20} />,
+        path: `/${path.MEMBER}/${path.BUY_HISTORY}`,
+    },
+    {
+        id: 6,
+        name: 'Wishlist',
+        icon: <PiHeartHalfDuotone size={20} />,
+        path: `/${path.MEMBER}/${path.WHISHLIST}`,
+    },
+    {
+        id: 7,
+        icon: <MdOutlineAdminPanelSettings size={20} />,
+        name: 'Admin Workspace',
+        path: `/${path.ADMIN}/${path.DASHBOARD}`,
+    },
+    {
+        id: 8,
+        icon: <IoLogOut />,
+        name: 'Logout',
+        role: 2001,
     },
 ];

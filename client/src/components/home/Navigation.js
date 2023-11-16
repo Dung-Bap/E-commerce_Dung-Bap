@@ -7,15 +7,16 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import { formatMoney } from '../../ultils/helpers';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import icons from '../../ultils/icons';
+import { showMenu } from '../../store/app/appSlice';
 
-const Navigation = ({ navigate }) => {
+const Navigation = ({ navigate, dispatch }) => {
     const [valueInput, setValueInput] = useState('');
     const [showResult, setShowResult] = useState(false);
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(false);
     const debouceValue = useDebouce(valueInput, 800);
     const inputRef = useRef();
-    const { IoIosClose, ImSpinner10 } = icons;
+    const { IoIosClose, ImSpinner10, IoMenu } = icons;
 
     const fetchGetProducts = async debouceValue => {
         setLoading(true);
@@ -56,7 +57,9 @@ const Navigation = ({ navigate }) => {
                     </NavLink>
                 ))}
             </div>
-            <div className="lg:hidden">menu</div>
+            <div className="lg:hidden cursor-pointer" onClick={() => dispatch(showMenu())}>
+                <IoMenu size={26} color="red" />
+            </div>
             <div className="flex justify-end">
                 <div>
                     <HeadlessTippy

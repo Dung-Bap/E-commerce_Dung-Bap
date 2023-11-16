@@ -23,8 +23,8 @@ import {
     AiOutlineArrowUp,
 } from 'react-icons/ai';
 import { FaOpencart, FaShieldAlt } from 'react-icons/fa';
-import { IoLogOut } from 'react-icons/io5';
-import { IoIosClose } from 'react-icons/io';
+import { IoLogOut, IoMenu } from 'react-icons/io5';
+import { IoIosClose, IoMdLogIn } from 'react-icons/io';
 import { PiDotDuotone, PiGiftFill, PiDotOutlineBold, PiHeartHalfDuotone } from 'react-icons/pi';
 import { BsCarFrontFill, BsFillPhoneVibrateFill, BsDash, BsFillCameraFill, BsArrowRight } from 'react-icons/bs';
 import { GiReturnArrow } from 'react-icons/gi';
@@ -34,6 +34,7 @@ import { LuLayoutDashboard } from 'react-icons/lu';
 import { LiaUsersSolid, LiaJediOrder, LiaProductHunt } from 'react-icons/lia';
 import { CgProfile } from 'react-icons/cg';
 import { ImSpinner10 } from 'react-icons/im';
+import { BiRegistered } from 'react-icons/bi';
 
 const icons = {
     MdPhone,
@@ -78,6 +79,9 @@ const icons = {
     ImSpinner10,
     AiFillHeart,
     AiOutlineArrowUp,
+    IoMenu,
+    IoMdLogIn,
+    BiRegistered,
 };
 
 export default icons;
