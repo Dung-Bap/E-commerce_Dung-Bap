@@ -84,7 +84,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
         if (!isShowQuickView)
             titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [category, pid, params.pid]);
+    }, [category, pid, params.pid, update]);
 
     useEffect(() => {
         if (params.pid || pid) fetchDetailProduct();
@@ -151,7 +151,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
         <>
             {!isShowQuickView && (
                 <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px] w-full flex justify-center">
-                    <div ref={titleRef} className="w-main">
+                    <div ref={titleRef} className="w-main px-[20px] lg:px-0">
                         <h2 className="text-[18px] font-medium mb-10px uppercase">
                             {currentProduct?.title || dataProducts?.title}
                         </h2>
@@ -163,16 +163,20 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                 </div>
             )}
             <div className="w-full flex justify-center">
-                <div className={`'w-main' ${isShowQuickView ? 'flex justify-center' : 'w-main'}`}>
+                <div
+                    className={`w-full px-[10px] sm:px-[20px] lg:px-0 ${
+                        isShowQuickView ? 'flex justify-center' : 'lg:w-main'
+                    }`}
+                >
                     <div
                         onClick={e => e.stopPropagation()}
                         className={clsx(
-                            'flex bg-white',
+                            'sm:flex bg-white gap-2 lg:gap-0 ',
                             isShowQuickView &&
                                 'rounded-md overflow-hidden gap-6 p-4 max-w-[700px] max-h-[600px] overflow-y-auto',
                         )}
                     >
-                        <div className={`${isShowQuickView ? 'w-1/2' : 'w-2/5'} flex flex-col gap-6`}>
+                        <div className={`${isShowQuickView ? 'w-1/2' : 'sm:w-2/5'} flex flex-col gap-6`}>
                             <img
                                 className={clsx(
                                     'w-[448px] h-[448px] border object-contain',
@@ -181,13 +185,15 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                 alt=""
                                 src={currentImage}
                             />
-                            <div className={clsx(!isShowQuickView && 'w-[458px]', 'w-[320px] mr-[10px]')}>
+                            <div className={clsx(!isShowQuickView && 'w-[320px] lg:w-[458px]', 'w-[320px] mr-[10px]')}>
                                 <Slider {...settings}>
                                     {currentProduct?.images?.length === 0 &&
                                         dataProducts?.images?.map((image, index) => (
                                             <div key={index} className="pr-[10px] ">
                                                 <img
-                                                    onClick={e => handleClickImage(e, image)}
+                                                    onClick={e => {
+                                                        handleClickImage(e, image);
+                                                    }}
                                                     className={clsx(
                                                         'w-[143px] h-[143px] border object-contain cursor-pointer',
                                                         isShowQuickView && 'w-[100px] h-[100px]',
@@ -201,7 +207,9 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                         currentProduct?.images?.map((image, index) => (
                                             <div key={index} className="pr-[10px] ">
                                                 <img
-                                                    onClick={e => handleClickImage(e, image)}
+                                                    onClick={e => {
+                                                        handleClickImage(e, image);
+                                                    }}
                                                     className={clsx(
                                                         !isShowQuickView && 'w-[143px] h-[143px]',
                                                         'w-[100px] h-[100px] border object-contain cursor-pointer',
@@ -214,7 +222,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                 </Slider>
                             </div>
                         </div>
-                        <div className={`${isShowQuickView ? 'w-1/2' : 'w-2/5'}`}>
+                        <div className={`${isShowQuickView ? 'w-1/2' : 'sm:w-2/5'}`}>
                             <span className={`text-[30px] font-medium`}>{`${formatMoney(
                                 currentProduct?.price || dataProducts?.price,
                             )}`}</span>
@@ -264,6 +272,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                                 price: dataProducts?.price,
                                                 color: dataProducts?.color,
                                             });
+                                            setUpdate(!update);
                                         }}
                                         className={`flex p-3 border w-[240px] mb-[5px] ${!varriants && 'border-main'}`}
                                     >
@@ -283,6 +292,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                             onClick={() => {
                                                 setVarriants(varriant.sku);
                                                 setCurrentImage(varriant.thumbnail);
+                                                setUpdate(!update);
                                             }}
                                             key={varriant.sku}
                                             className={`flex p-3 border w-[240px] mb-[5px] ${
@@ -313,14 +323,14 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                             <Button
                                 onClick={handleAddToCart}
                                 styles={
-                                    'w-full text-white bg-main p-2  hover:bg-[#333333] mr-[10px] px-4 py-2 min-w-[88px] select-none'
+                                    'mb-[20px] sm:mb-[0] w-full text-white bg-main p-2  hover:bg-[#333333] mr-[10px] px-4 py-2 min-w-[88px] select-none'
                                 }
                             >
                                 ADD TO CART
                             </Button>
                         </div>
                         {!isShowQuickView && (
-                            <div className="w-1/5 pl-[20px] ">
+                            <div className="sm:w-1/5 pl-0 lg:pl-[20px]">
                                 <ProductExtrainfo />
                             </div>
                         )}

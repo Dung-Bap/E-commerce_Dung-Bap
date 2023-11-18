@@ -17,16 +17,6 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
     const deboucePriceFrom = useDebouce(price.from, 500);
     const debouceToFrom = useDebouce(price.to, 500);
 
-    const fetchHighestPrice = async () => {
-        const response = await apiGetProducts({ sort: '-price', limit: 1, category });
-        if (response.success) setHighestPrice(response.products[0]?.price);
-    };
-
-    useEffect(() => {
-        if (type === 'input') fetchHighestPrice();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [type]);
-
     useEffect(() => {
         const data = {};
         if (Number(price.from > 0)) data.from = price.from;
@@ -37,6 +27,15 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deboucePriceFrom, debouceToFrom]);
+
+    const fetchHighestPrice = async () => {
+        const response = await apiGetProducts({ sort: '-price', limit: 1 });
+        if (response.success) setHighestPrice(response.products[0]?.price);
+    };
+    useEffect(() => {
+        if (type === 'input') fetchHighestPrice();
+        // eslint-disable-next-line no-use-before-define, react-hooks/exhaustive-deps
+    }, [type]);
 
     useEffect(() => {
         if (price.from && price.to && price.from > price.to)
@@ -80,7 +79,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
                     changeActiveFilter(name);
                     e.stopPropagation();
                 }}
-                className="flex items-center justify-between min-w-[100px] p-3 border mr-[10px] cursor-pointer"
+                className="flex items-center justify-between sm:min-w-[100px] p-3 border mr-[10px] cursor-pointer"
             >
                 <span className="text-[12px] font-light capitalize">{name}</span>
                 {type === 'checkbox' && (
@@ -93,7 +92,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
             {activeFilter === name && (
                 <div
                     onClick={e => e.stopPropagation()}
-                    className="absolute z-10 top-[calc(100%+4px)] bg-white border min-w-[250px]"
+                    className="absolute z-10 top-[calc(100%+4px)] bg-white border min-w-[250px] sm:min-w-[350px]"
                 >
                     {type === 'checkbox' && (
                         <>
@@ -136,7 +135,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
                                     Reset
                                 </span>
                             </div>
-                            <div className="flex items-center justify-between py-[10px] px-[20px] text-[14px] font-light ">
+                            <div className="flex items-center justify-between py-[10px] px-[20px] text-[14px] font-light">
                                 <div>
                                     <label className="font-normal" htmlFor="from">
                                         From
@@ -144,7 +143,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
                                     <input
                                         value={price.form}
                                         onChange={e => setPrice(prev => ({ ...prev, from: e.target.value }))}
-                                        className="border form-input"
+                                        className="form-input w-[100px] sm:w-full"
                                         id="from"
                                         type="number"
                                     />
@@ -156,7 +155,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
                                     <input
                                         value={price.to}
                                         onChange={e => setPrice(prev => ({ ...prev, to: e.target.value }))}
-                                        className="border form-input"
+                                        className="form-input w-[100px] sm:w-full"
                                         id="to"
                                         type="number"
                                     />

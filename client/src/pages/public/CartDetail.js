@@ -36,7 +36,7 @@ const CartDetail = ({ location, navigate }) => {
     return (
         <>
             <div className="bg-[#f7f7f7] min-h-[81px] py-[15px] mb-[20px] w-full flex justify-center">
-                <div className="w-main">
+                <div className="w-main px-[20px] lg:px-0">
                     <h2 className="text-[18px] font-medium mb-10px capitalize">{titleCart}</h2>
                     <Breadcrumb category={titleCart} />
                 </div>

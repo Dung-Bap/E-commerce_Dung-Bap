@@ -13,8 +13,12 @@ const VoteModal = ({ nameProduct, handleVoteSubmit }) => {
     }, []);
 
     return (
-        <div onClick={e => e.stopPropagation()} ref={voteModalRef} className="bg-white min-h-[300px] min-w-[500px]">
-            <div className="flex flex-col items-center p-5">
+        <div
+            onClick={e => e.stopPropagation()}
+            ref={voteModalRef}
+            className="bg-white min-h-[300px] w-full mx-[20px] rounded-md sm:w-[500px]"
+        >
+            <div className="flex flex-col items-center p-2 sm:p-5">
                 <img
                     className="py-[20px]"
                     alt=""
@@ -33,18 +37,18 @@ const VoteModal = ({ nameProduct, handleVoteSubmit }) => {
                         {voteOptions.map(voteOption => (
                             <div
                                 onClick={() => setScore(voteOption.id)}
-                                className="flex flex-col items-center justify-center p-4 mx-2 rounded-md bg-[#ededed] hover:bg-slate-200 cursor-pointer"
+                                className="flex flex-col items-center justify-center p-1 mx-1 sm:p-4 sm:mx-2 rounded-md bg-[#ededed] hover:bg-slate-200 cursor-pointer"
                                 key={voteOption.id}
                             >
                                 {score >= voteOption.id ? <AiFillStar color="orange" /> : <AiFillStar color="gray" />}
-                                <span className="min-w-[50px] flex justify-center">{voteOption.name}</span>
+                                <span className="min-w-[50px] text-[10px] flex justify-center">{voteOption.name}</span>
                             </div>
                         ))}
                     </div>
                 </div>
                 <Button
                     onClick={() => handleVoteSubmit(score, comment)}
-                    className="w-full text-white bg-main p-2 rounded-md mr-[10px] px-4 py-2 min-w-[88px]"
+                    className="w-full text-white bg-main p-2 rounded-md px-4 py-2 min-w-[88px]"
                 >
                     Submit
                 </Button>

@@ -90,8 +90,8 @@ const Products = () => {
             </div>
             <div className="w-full flex justify-center">
                 <div className="w-main px-[20px] lg:px-0">
-                    <div className="flex items-center border mb-[15px]">
-                        <div className="w-4/5 p-2">
+                    <div className="flex border mb-[15px]">
+                        <div className="w-3/5 sm:w-4/5 p-2">
                             <h2 className="text-[14px] font-medium mb-[10px]">Filter By</h2>
                             <div className="flex items-center mb-[10px]">
                                 <Filter
@@ -107,7 +107,7 @@ const Products = () => {
                                 />
                             </div>
                         </div>
-                        <div className="w-1/5 p-2">
+                        <div className="w-2/5 sm:w-1/5 p-2">
                             <h2 className="text-[14px] font-medium mb-[10px]">Sort By</h2>
                             <InputSelect options={sorts} value={sort} changeValue={changeValue} />
                         </div>

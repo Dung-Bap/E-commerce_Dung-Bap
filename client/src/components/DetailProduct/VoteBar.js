@@ -10,11 +10,11 @@ const VoteBar = ({ number, totalRatings, userRating }) => {
 
     return (
         <div className="flex">
-            <div className="w-[10%] flex items-center gap-1">
+            <div className="w-[10%] sm:w-[10%] flex items-center gap-1">
                 <span className="w-[10px] flex justify-center">{number}</span>
                 <AiFillStar color="orange" />
             </div>
-            <div className="w-[70%] flex items-center ">
+            <div className="w-[60%] sm:w-[70%] flex items-center ">
                 <div className="w-full relative  h-2 bg-[#ededed] rounded-r-full rounded-l-full">
                     <div
                         ref={progressBarRef}
@@ -22,7 +22,7 @@ const VoteBar = ({ number, totalRatings, userRating }) => {
                     ></div>
                 </div>
             </div>
-            <div className="w-[20%] flex justify-center">{`${userRating || 0} review`}</div>
+            <div className="w-[30%] sm:w-[20%] flex justify-center">{`${userRating || 0} review`}</div>
         </div>
     );
 };

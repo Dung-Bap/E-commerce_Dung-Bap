@@ -123,7 +123,7 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
                 <div className="w-full">
                     <h2 className="mb-[30px]">{`Review and comments ${titleProduct} `}</h2>
                     <div className="text-[14px] w-full font-light flex ">
-                        <div className="w-[40%] flex flex-col justify-center items-center border-r-2 border-main mr-10">
+                        <div className="w-[30%] sm:w-[40%] flex flex-col justify-center items-center border-r-2 border-main mr-10">
                             <span className="text-[24px] font-medium">{`${totalRatings} / 5`}</span>
                             <div className=" flex text-[14px] my-2 font-light ">
                                 {renderStars(totalRatings, 18)?.map((el, index) => (
@@ -132,7 +132,7 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
                             </div>
                             <span className="hover:text-main">{`${userRating?.length} review`}</span>
                         </div>
-                        <div className="w-[60%] flex flex-col">
+                        <div className=" w-[70%] sm:w-[60%] flex flex-col">
                             {Array.from(Array(5).keys())
                                 .reverse()
                                 .map(el => (
@@ -145,7 +145,7 @@ const ProductEXtrainfoTabs = ({ titleProduct, totalRatings, pid, userRating, rer
                                 ))}
                         </div>
                     </div>
-                    <div className="w-full border-t-2 mt-6 border-main flex flex-col items-center justify-center">
+                    <div className="w-full border-t-2 mt-6 mb-4 border-main flex flex-col items-center justify-center">
                         <span className="py-6">{`How do you rate this product?`}</span>
                         <Button
                             onClick={handleVoteNow}
