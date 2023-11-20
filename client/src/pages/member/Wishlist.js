@@ -2,8 +2,12 @@ import React from 'react';
 import { Product } from '../../components';
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
+import { Link } from 'react-router-dom';
+import path from '../../ultils/path';
+import icons from '../../ultils/icons';
 
 const Wishlist = () => {
+    const { AiFillHome } = icons;
     const { userData } = useSelector(state => state.user);
     const breakpointColumnsObj = {
         default: 4,
@@ -15,6 +19,11 @@ const Wishlist = () => {
     return (
         <div className="w-full p-4 ">
             <div className="p-4">
+                <div className="absolute right-[10px] top-[10px] lg:hidden">
+                    <Link to={`/${path.HOME}`}>
+                        <AiFillHome size={20} color="white" />
+                    </Link>
+                </div>
                 <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">My WishList</div>
             </div>
             {userData?.wishlist?.length === 0 && (

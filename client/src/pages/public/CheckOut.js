@@ -14,7 +14,7 @@ const CheckOut = ({ navigate, dispatch }) => {
     return (
         <div className="w-full h-full min-h-screen flex justify-center bg-[#f0f0f0]">
             {isSuccess && <Congratulation />}
-            <div className="min-w-[600px]">
+            <div className="w-full px-[20px] sm:px-0 sm:w-[600px]">
                 <div className="w-full bg-white py-[10px] rounded-xl overflow-hidden shadow-xl my-[50px] ">
                     {currentCart.map(el => (
                         <div key={el.product._id} className="w-full flex p-[10px] border-b-2">

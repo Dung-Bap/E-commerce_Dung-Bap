@@ -9,7 +9,7 @@ import icons from '../../ultils/icons';
 import Swal from 'sweetalert2';
 import path from '../../ultils/path';
 
-const CartDetail = ({ location, navigate }) => {
+const CartDetail = ({ location, navigate, dispatch }) => {
     const titleCart = location.pathname.slice(1).split('-').join(' ');
     const { currentCart, userData } = useSelector(state => state.user);
     const { BsArrowRight } = icons;
@@ -43,11 +43,11 @@ const CartDetail = ({ location, navigate }) => {
             </div>
             {currentCart.length > 0 && (
                 <>
-                    <div className="w-full flex justify-center">
+                    <div className="w-full pl-[20px] lg:pl-0 flex justify-center">
                         <div className="w-main text-main text-[18px] font-medium italic">Your cart :</div>
                     </div>
-                    <div className="w-full flex justify-center min-h-[500px]">
-                        <div className="min-w-[960px] ">
+                    <div className="w-full px-[20px] sm:px-0 flex justify-center min-h-screen">
+                        <div className="lg:min-w-[960px] ">
                             {currentCart.map(el => (
                                 <CartItem key={el._id} el={el} defaultQuantity={el.quantity} />
                             ))}
@@ -78,7 +78,7 @@ const CartDetail = ({ location, navigate }) => {
                 </>
             )}
             {currentCart.length === 0 && (
-                <div className="w-full flex justify-center min-h-[500px]">
+                <div className="w-full px-[20px] sm:px-0 flex justify-center min-h-screen">
                     <div className="w-main flex flex-col justify-center items-center">
                         <span className="text-main text-[18px] font-medium italic py-[20px]">
                             Your cart is empty, please purchase !

@@ -13,7 +13,8 @@ import { showModal } from '../../store/app/appSlice';
 import { apiUpdateUser } from '../../apis';
 import { getCurrent } from '../../store/user/asyncActions';
 import withBaseComponent from '../../hocs/withBaseComponent';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import path from '../../ultils/path';
 
 const Personal = ({ ...props }) => {
     const { userData } = useSelector(state => state.user);
@@ -21,7 +22,7 @@ const Personal = ({ ...props }) => {
         avatar: null,
     });
     const [updated, setUpdated] = useState(false);
-    const { BsFillCameraFill } = icons;
+    const { BsFillCameraFill, AiFillHome } = icons;
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -112,12 +113,17 @@ const Personal = ({ ...props }) => {
     return (
         <div className="w-full ">
             <div className="p-4">
+                <div className="absolute right-[10px] top-[10px] lg:hidden">
+                    <Link to={`/${path.HOME}`}>
+                        <AiFillHome size={20} color="white" />
+                    </Link>
+                </div>
                 <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">
                     Detail Profile
                 </div>
             </div>
             <div className="flex justify-center">
-                <div className="w-[50%]">
+                <div className="w-full p-4 md:w-[50%]">
                     <form method="POST" onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-col justify-center items-center p-4 ">
                             <div className=" flex flex-col justify-center items-center relative">

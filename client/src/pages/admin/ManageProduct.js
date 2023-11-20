@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
@@ -9,8 +9,11 @@ import { Pagination } from '../../components/pagination';
 import useDebouce from '../../hook/useDebouce';
 import { formatMoney } from '../../ultils/helpers';
 import CustomizeVarriants from './CustomizeVarriants';
+import path from '../../ultils/path';
+import icons from '../../ultils/icons';
 
 const ManageProduct = () => {
+    const { AiFillHome } = icons;
     const [valueInput, setValueInput] = useState('');
     const [totalProducts, setTotalProducts] = useState(null);
     const [editProduct, setEditProduct] = useState(false);
@@ -62,12 +65,17 @@ const ManageProduct = () => {
         <>
             {!editProduct && !varriants && (
                 <div className="p-4">
+                    <div className="absolute right-[10px] top-[10px] lg:hidden">
+                        <Link to={`/${path.HOME}`}>
+                            <AiFillHome size={20} color="white" />
+                        </Link>
+                    </div>
                     <div ref={refForm} className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">
                         Manage Products
                     </div>
                     <div className="flex justify-end p-5">
                         <input
-                            className="form-input min-w-[500px] placeholder:italic placeholder:text-sm"
+                            className="form-input w-full md:w-[500px] placeholder:italic placeholder:text-sm"
                             placeholder="Search title and description..."
                             value={valueInput}
                             onChange={e => setValueInput(e.target.value)}
@@ -77,40 +85,40 @@ const ManageProduct = () => {
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         #
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Thumbnail
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Name Product
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Brand
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Category
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Price
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Quantity
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Sold
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Color
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Ratings
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Date Created
                                     </th>
-                                    <th scope="col" className="px-2 py-3 text-center">
+                                    <th scope="col" className="lg:px-2 lg:py-3 text-center">
                                         Actions
                                     </th>
                                 </tr>
@@ -121,28 +129,28 @@ const ManageProduct = () => {
                                         key={index}
                                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                     >
-                                        <th scope="row" className="px-3 py-4 text-center">
+                                        <th scope="row" className="lg:px-3 lg:py-4 text-center">
                                             {(currentPage - 1) * process.env.REACT_APP_PAGE_SIZE + index + 1}
                                         </th>
-                                        <td className="px-3 py-4 text-center">
+                                        <td className="lg:px-3 lg:py-4 text-center">
                                             <img
                                                 className="w-[50px] h-[50px] object-contain"
                                                 alt=""
                                                 src={product.thumbnail}
                                             />
                                         </td>
-                                        <td className="px-3 py-4 text-center ">{product.title}</td>
-                                        <td className="px-3 py-4 text-center ">{product.brand}</td>
-                                        <td className="px-3 py-4 text-center ">{product.category}</td>
-                                        <td className="px-3 py-4 text-center ">{formatMoney(product.price)}</td>
-                                        <td className="px-3 py-4 text-center ">{product.quantity}</td>
-                                        <td className="px-3 py-4 text-center ">{product.sold}</td>
-                                        <td className="px-3 py-4 text-center ">{product.color}</td>
-                                        <td className="px-3 py-4 text-center ">{product.totalRatings}</td>
-                                        <td className="px-3 py-4 text-center ">
+                                        <td className="lg:px-3 lg:py-4 text-center ">{product.title}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">{product.brand}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">{product.category}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">{formatMoney(product.price)}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">{product.quantity}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">{product.sold}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">{product.color}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">{product.totalRatings}</td>
+                                        <td className="lg:px-3 lg:py-4 text-center ">
                                             {moment(product.updatedAt).format('DD/MM/YYYY')}
                                         </td>
-                                        <td className="px-3 py-4 text-center flex flex-col">
+                                        <td className="lg:px-3 lg:py-4 text-center flex flex-col">
                                             {
                                                 <>
                                                     <span

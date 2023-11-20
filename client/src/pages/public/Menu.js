@@ -46,7 +46,7 @@ const Menu = ({ dispatch, navigate }) => {
                           <div
                               key={menu.id}
                               onClick={() => {
-                                  if (menu.id === 8) handleLogout();
+                                  if (menu.id === 12) handleLogout();
                                   navigate(menu.path);
                                   dispatch(showMenu());
                               }}
@@ -62,7 +62,7 @@ const Menu = ({ dispatch, navigate }) => {
                                   <div
                                       key={menu.id}
                                       onClick={() => {
-                                          if (menu.id === 8) handleLogout();
+                                          if (menu.id === 12) handleLogout();
                                           navigate(menu.path);
                                           dispatch(showMenu());
                                       }}

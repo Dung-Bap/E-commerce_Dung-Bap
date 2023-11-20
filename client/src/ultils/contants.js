@@ -301,12 +301,14 @@ export const MENU = [
     {
         id: 5,
         name: 'Buy History',
+        role: 2001,
         icon: <MdOutlineHistoryToggleOff size={20} />,
         path: `/${path.MEMBER}/${path.BUY_HISTORY}`,
     },
     {
         id: 6,
         name: 'Wishlist',
+        role: 2001,
         icon: <PiHeartHalfDuotone size={20} />,
         path: `/${path.MEMBER}/${path.WHISHLIST}`,
     },
@@ -318,6 +320,30 @@ export const MENU = [
     },
     {
         id: 8,
+        name: 'Manage User',
+        icon: <LiaUsersSolid size={20} />,
+        path: `/${path.ADMIN}/${path.MANAGE_USER}`,
+    },
+    {
+        id: 9,
+        name: 'Create Products',
+        path: `/${path.ADMIN}/${path.CREATE_PRODUCTS}`,
+        icon: <BsDash />,
+    },
+    {
+        id: 10,
+        name: 'Manage Products',
+        path: `/${path.ADMIN}/${path.MANAGE_PRODUCT}`,
+        icon: <BsDash />,
+    },
+    {
+        id: 11,
+        name: 'Manage Orders',
+        icon: <LiaJediOrder size={20} />,
+        path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+    },
+    {
+        id: 12,
         icon: <IoLogOut />,
         name: 'Logout',
         role: 2001,

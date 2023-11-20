@@ -53,7 +53,7 @@ const SidebarAdmin = () => {
         });
     };
     return (
-        <div className="fixed bg-gray-600 top-0 left-0 bottom-0 w-[300px]">
+        <div className="hidden lg:fixed bg-gray-600 top-0 left-0 bottom-0 w-[300px] lg:block">
             <div className="flex flex-col justify-center items-center p-4">
                 <Link to={`/${path.HOME}`}>
                     <img

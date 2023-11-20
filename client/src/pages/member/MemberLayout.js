@@ -12,7 +12,7 @@ const MemberLayout = () => {
     return (
         <div className="relative max-h-screen overflow-y-auto bg-gray-800 min-h-screen">
             <SidebarMember />
-            <div className="pl-[300px]">
+            <div className="lg:pl-[300px]">
                 <Outlet />
             </div>
         </div>

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button, InputFileds, Loading, SelectFileds } from '../../components';
 import { MarkDownEditor } from '../../components/inputs/MarkDownEditor';
@@ -12,8 +12,10 @@ import { validate, convertToBase64 } from '../../ultils/helpers';
 import { apiCreateProducts } from '../../apis';
 import { showModal } from '../../store/app/appSlice';
 import path from '../../ultils/path';
+import icons from '../../ultils/icons';
 
 const CreateProducts = () => {
+    const { AiFillHome } = icons;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { categories } = useSelector(state => state.app);
@@ -126,6 +128,11 @@ const CreateProducts = () => {
     };
     return (
         <div className="p-4">
+            <div className="absolute right-[10px] top-[10px] lg:hidden">
+                <Link to={`/${path.HOME}`}>
+                    <AiFillHome size={20} color="white" />
+                </Link>
+            </div>
             <div className="flex justify-center font-semibold text-white text-lg py-2 uppercase ">Create Products</div>
             <form method="POST" onSubmit={handleSubmit(onSubmit)}>
                 <InputFileds

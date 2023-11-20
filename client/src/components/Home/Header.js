@@ -52,7 +52,7 @@ const Header = () => {
         });
     };
     return (
-        <div className="flex w-full px-[10px] items-center justify-between sm:border-b lg:w-main md:w-full sm:px-[20px] h-[110px] py-[20px] sm:py-[35px]">
+        <div className="flex w-full items-center justify-between sm:border-b lg:w-main md:w-full px-[20px] lg:px-0 h-[110px] py-[20px] sm:py-[35px]">
             <div onClick={() => dispatch(showMenu())} className="sm:hidden cursor-pointer">
                 <IoMenu size={26} color="red" />
             </div>

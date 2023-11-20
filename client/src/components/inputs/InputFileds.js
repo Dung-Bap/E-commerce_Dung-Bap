@@ -14,7 +14,7 @@ const InputFileds = ({
 }) => {
     return (
         <div className={` ${withFull ? '' : 'mb-[15px]'} flex flex-col `}>
-            <label className="text-white">{label}</label>
+            <label className="text-white line-clamp-1">{label}</label>
             <input
                 className={`form-input ${
                     withFull ? 'w-full' : 'min-w-[300px] sm:min-w-[400px]'

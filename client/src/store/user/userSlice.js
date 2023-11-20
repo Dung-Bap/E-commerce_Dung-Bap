@@ -23,6 +23,7 @@ export const userSlice = createSlice({
             state.accessToken = null;
             state.isLoading = false;
             state.message = '';
+            state.currentCart = [];
         },
         clearMessage: state => {
             state.message = '';
