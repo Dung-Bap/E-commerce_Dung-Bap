@@ -54,7 +54,12 @@ const Cart = ({ dispatch, navigate }) => {
                             className="flex justify-between items-center border border-[#343535] my-3 relative "
                         >
                             <div className="flex gap-4 ">
-                                <img className="w-[85px] h-[85px] object-cover" alt="" src={el.thumbnail} />
+                                <img
+                                    loading="lazy"
+                                    className="w-[85px] h-[85px] object-cover"
+                                    alt=""
+                                    src={el.thumbnail}
+                                />
                                 <div className="flex flex-col gap-2 max-w-[230px]">
                                     <span className="line-clamp-1 text-[14px]">{el.title}</span>
                                     <span>{formatMoney(el.price)}</span>

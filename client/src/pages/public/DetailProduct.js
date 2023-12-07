@@ -178,6 +178,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                     >
                         <div className={`${isShowQuickView ? 'w-1/2' : 'sm:w-2/5'} flex flex-col gap-6`}>
                             <img
+                                loading="lazy"
                                 className={clsx(
                                     'w-[448px] h-[448px] border object-contain',
                                     isShowQuickView && 'max-w-[310px] h-[320px]',
@@ -191,6 +192,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                         dataProducts?.images?.map((image, index) => (
                                             <div key={index} className="pr-[10px] ">
                                                 <img
+                                                    loading="lazy"
                                                     onClick={e => {
                                                         handleClickImage(e, image);
                                                     }}
@@ -207,6 +209,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                         currentProduct?.images?.map((image, index) => (
                                             <div key={index} className="pr-[10px] ">
                                                 <img
+                                                    loading="lazy"
                                                     onClick={e => {
                                                         handleClickImage(e, image);
                                                     }}
@@ -277,6 +280,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                         className={`flex p-3 border w-[240px] mb-[5px] ${!varriants && 'border-main'}`}
                                     >
                                         <img
+                                            loading="lazy"
                                             alt=""
                                             src={dataProducts?.thumbnail}
                                             className="w-[40px] h-[40px] object-contain"
@@ -300,6 +304,7 @@ const DetailProduct = ({ isShowQuickView, category, pid, navigate, dispatch, loc
                                             }`}
                                         >
                                             <img
+                                                loading="lazy"
                                                 alt=""
                                                 src={varriant.thumbnail}
                                                 className="w-[40px] h-[40px] object-contain"

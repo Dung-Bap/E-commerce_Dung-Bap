@@ -21,6 +21,7 @@ const CheckOut = ({ navigate, dispatch }) => {
                             <div className="w-1/2">
                                 <div className="flex ">
                                     <img
+                                        loading="lazy"
                                         onClick={() =>
                                             navigate(
                                                 `/${el.product.category?.toLowerCase()}/${el.product._id}/${

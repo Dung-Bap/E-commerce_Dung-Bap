@@ -5,7 +5,7 @@ export const appSlice = createSlice({
     name: 'app',
     initialState: {
         categories: [],
-        isLoading: false,
+        isLoading: true,
         isShowModal: false,
         childrenModal: null,
         isShowCart: false,
@@ -26,9 +26,9 @@ export const appSlice = createSlice({
     },
 
     extraReducers: builder => {
-        // builder.addCase(getCategories.pending, state => {
-        //     state.isLoading = true;
-        // });
+        builder.addCase(actions.getCategories.pending, state => {
+            state.isLoading = true;
+        });
 
         builder.addCase(actions.getCategories.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -36,7 +36,7 @@ export const appSlice = createSlice({
         });
 
         builder.addCase(actions.getCategories.rejected, (state, action) => {
-            state.isLoading = false;
+            state.isLoading = true;
         });
     },
 });

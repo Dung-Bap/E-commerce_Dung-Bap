@@ -28,6 +28,7 @@ const FeaturedProduct = ({ navigate }) => {
             </div>
             <div className="w-full flex flex-col gap-3 sm:grid grid-cols-4 grid-rows-2 sm:gap-4">
                 <img
+                    loading="lazy"
                     onClick={() => navigate(`/${path.PRODUCTS}`)}
                     alt=""
                     className="cursor-pointer w-full h-full object-cover col-span-2 row-span-2 "
@@ -35,18 +36,21 @@ const FeaturedProduct = ({ navigate }) => {
                 />
 
                 <img
+                    loading="lazy"
                     onClick={() => navigate(`/${path.PRODUCTS}`)}
                     alt=""
                     className="cursor-pointer w-full h-full object-cover col-span-1 row-span-1 "
                     src="https://digital-world-2.myshopify.com/cdn/shop/files/banner2-bottom-home2_400x.jpg?v=1613166661"
                 />
                 <img
+                    loading="lazy"
                     onClick={() => navigate(`/${path.PRODUCTS}`)}
                     alt=""
                     className="cursor-pointer w-full h-full object-cover col-span-1 row-span-2 "
                     src="https://digital-world-2.myshopify.com/cdn/shop/files/banner4-bottom-home2_92e12df0-500c-4897-882a-7d061bb417fd_400x.jpg?v=1613166661"
                 />
                 <img
+                    loading="lazy"
                     onClick={() => navigate(`/${path.PRODUCTS}`)}
                     alt=""
                     className="cursor-pointer w-full h-full object-cover col-span-1 row-span-1 "

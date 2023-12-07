@@ -59,6 +59,7 @@ const Header = () => {
 
             <Link to={`/${path.HOME}`}>
                 <img
+                    loading="lazy"
                     className="max-w-[193px] sm:w-full"
                     alt=""
                     src="https://digital-world-2.myshopify.com/cdn/shop/files/logo_digital_new_250x.png?v=1613166683"
@@ -105,6 +106,7 @@ const Header = () => {
                             className="px-5 cursor-pointer relative hidden lg:block"
                         >
                             <img
+                                loading="lazy"
                                 className="w-[30px] h-[30px] rounded-full object-cover mr-[5px]"
                                 alt=""
                                 src={

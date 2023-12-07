@@ -59,6 +59,7 @@ const SidebarMember = () => {
         <div className="hidden lg:fixed bg-gray-600 top-0 left-0 bottom-0 w-[300px] lg:block">
             <div className="flex flex-col justify-center items-center p-4 relative">
                 <img
+                    loading="lazy"
                     className="w-[60px] h-[60px] object-cover rounded-full"
                     alt=""
                     src={

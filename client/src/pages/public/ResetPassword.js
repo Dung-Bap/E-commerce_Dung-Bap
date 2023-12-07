@@ -63,6 +63,7 @@ const ResetPassword = () => {
     return (
         <div>
             <img
+                loading="lazy"
                 className="relative w-screen h-screen"
                 alt=""
                 src="https://img.freepik.com/free-photo/shopping-trolleys-packets-gift-tags_23-2147961963.jpg?w=1800&t=st=1694255869~exp=1694256469~hmac=f2e9b4243d7d926c015c9fc2a5507bc2df923277818aa728f634aad46074da82"

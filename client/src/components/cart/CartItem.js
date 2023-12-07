@@ -51,6 +51,7 @@ const CartItem = ({ navigate, dispatch, el, defaultQuantity = 1 }) => {
         <div key={el._id} className="flex gap-4 border rounded-lg mb-[20px] p-2 ">
             <div className="w-[30%] md:w-[20%]">
                 <img
+                    loading="lazy"
                     onClick={() =>
                         navigate(`/${el.product.category?.toLowerCase()}/${el.product._id}/${el.product.title}`)
                     }

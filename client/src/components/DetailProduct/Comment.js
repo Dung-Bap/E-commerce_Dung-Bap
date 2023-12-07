@@ -8,6 +8,7 @@ const Comment = ({ name = 'Anonymous', ...props }) => {
             <div className="w-full flex justify-between items-center mb-[10px]">
                 <div className="flex items-center">
                     <img
+                        loading="lazy"
                         className="w-[30px] h-[30px] object-cover rounded-[50%] mr-[10px]"
                         alt=""
                         src={

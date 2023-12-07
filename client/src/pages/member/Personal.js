@@ -128,6 +128,7 @@ const Personal = ({ ...props }) => {
                         <div className="flex flex-col justify-center items-center p-4 ">
                             <div className=" flex flex-col justify-center items-center relative">
                                 <img
+                                    loading="lazy"
                                     className=" w-[60px] h-[60px] rounded-full object-cover  "
                                     alt=""
                                     src={

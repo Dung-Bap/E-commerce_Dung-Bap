@@ -81,6 +81,7 @@ const Navigation = ({ navigate, dispatch }) => {
                                     className="flex items-center p-[10px] border-b-2 cursor-pointer"
                                 >
                                     <img
+                                        loading="lazy"
                                         className="w-[60px] h-[60px] object-cover mr-[20px]"
                                         alt=""
                                         src={product.thumbnail}

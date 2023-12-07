@@ -57,6 +57,7 @@ const SidebarAdmin = () => {
             <div className="flex flex-col justify-center items-center p-4">
                 <Link to={`/${path.HOME}`}>
                     <img
+                        loading="lazy"
                         alt=""
                         src="https://digital-world-2.myshopify.com/cdn/shop/files/logo_digital_new_250x.png?v=1613166683"
                     />

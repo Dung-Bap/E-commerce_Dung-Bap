@@ -169,7 +169,12 @@ const CustomizeVarriants = ({ varriants, setVarriants, setUpdated, updated }) =>
                             />
                         </div>
                         {previewImage?.thumbnail && (
-                            <img src={previewImage?.thumbnail} alt="" className="w-1/2 h-[200px] object-contain"></img>
+                            <img
+                                loading="lazy"
+                                src={previewImage?.thumbnail}
+                                alt=""
+                                className="w-1/2 h-[200px] object-contain"
+                            ></img>
                         )}
                     </div>
                     <div className="w-1/2">
@@ -187,6 +192,7 @@ const CustomizeVarriants = ({ varriants, setVarriants, setUpdated, updated }) =>
                         <div className="flex flex-wrap">
                             {previewImage?.images?.map((image, index) => (
                                 <img
+                                    loading="lazy"
                                     key={index}
                                     src={image}
                                     alt=""

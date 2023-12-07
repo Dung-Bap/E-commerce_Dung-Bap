@@ -134,6 +134,7 @@ const ManageProduct = () => {
                                         </th>
                                         <td className="lg:px-3 lg:py-4 text-center">
                                             <img
+                                                loading="lazy"
                                                 className="w-[50px] h-[50px] object-contain"
                                                 alt=""
                                                 src={product.thumbnail}

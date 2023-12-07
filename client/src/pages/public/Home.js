@@ -46,6 +46,7 @@ const Home = ({ navigate }) => {
                                     <div className=" flex w-1/2 sm:w-1/3 px-[10px] mb-[20px] " key={index}>
                                         <div className="sm:flex w-full border p-[15px] ">
                                             <img
+                                                loading="lazy"
                                                 className="lg:pl-[20px] object-contain md:w-[100px] lg:w-[144px] h-[129px]"
                                                 alt=""
                                                 src={categorie.image}
