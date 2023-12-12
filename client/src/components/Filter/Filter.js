@@ -30,7 +30,7 @@ const Filter = ({ name, activeFilter, changeActiveFilter, type = 'checkbox' }) =
 
     const fetchHighestPrice = async () => {
         const response = await apiGetProducts({ sort: '-price', limit: 1 });
-        if (response.success) setHighestPrice(response.products[0]?.price);
+        if (response?.success) setHighestPrice(response.products[0]?.price);
     };
     useEffect(() => {
         if (type === 'input') fetchHighestPrice();

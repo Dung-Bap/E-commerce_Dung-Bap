@@ -22,7 +22,7 @@ const Navigation = ({ navigate, dispatch }) => {
         setLoading(true);
         const response = await apiGetProducts({ q: debouceValue, limit: 5 });
         setLoading(false);
-        if (response.success) setProducts(response.products);
+        if (response?.success) setProducts(response.products);
     };
 
     const handleClear = () => {
@@ -100,7 +100,7 @@ const Navigation = ({ navigate, dispatch }) => {
                 >
                     <div className="flex items-center w-[300px]">
                         <input
-                            className="h-[43px] w-full bg-red-100 p-[10px] outline-none rounded-l-lg placeholder:italic placeholder:text-main text-sm"
+                            className="h-[43px] w-full bg-red-100 p-[10px] outline-none rounded-l-lg rounded-r-none placeholder:italic placeholder:text-main text-sm"
                             placeholder="What are you looking for..."
                             value={valueInput}
                             onChange={e => {
@@ -116,7 +116,7 @@ const Navigation = ({ navigate, dispatch }) => {
                         />
                         <span
                             onClick={handleClear}
-                            className="h-[43px] bg-red-100 p-[10px] rounded-r-lg flex items-center cursor-pointer "
+                            className="h-[43px] bg-red-100 p-[10px] rounded-r-lg rounded-l-none flex items-center cursor-pointer "
                         >
                             {loading ? (
                                 <ImSpinner10 className="animate-spin" size={20} />

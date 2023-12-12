@@ -7,6 +7,7 @@ import { apiGetProducts } from '../../apis/products';
 import { sorts } from '../../ultils/contants';
 import InputSelect from '../../components/filter/InputSelect';
 import { Pagination } from '../../components/pagination';
+import LoadingSkeleton from '../../components/loading/LoadingSkeleton';
 
 const Products = () => {
     const { category } = useParams();
@@ -69,7 +70,7 @@ const Products = () => {
         const fetchGetProducts = async q => {
             if (category && category !== 'products') q.category = category;
             const response = await apiGetProducts({ ...q, limit: process.env.REACT_APP_PAGE_SIZE });
-            if (response.success) setProducts(response);
+            if (response?.success) setProducts(response);
         };
 
         fetchGetProducts(q);
@@ -112,17 +113,27 @@ const Products = () => {
                             <InputSelect options={sorts} value={sort} changeValue={changeValue} />
                         </div>
                     </div>
-                    {products?.counts > 0 && (
-                        <Masonry
-                            breakpointCols={breakpointColumnsObj}
-                            className="my-masonry-grid"
-                            columnClassName="my-masonry-grid_column"
-                        >
-                            {products?.products?.map(product => (
+                    <Masonry
+                        breakpointCols={breakpointColumnsObj}
+                        className="my-masonry-grid"
+                        columnClassName="my-masonry-grid_column"
+                    >
+                        {products?.counts > 0 &&
+                            products?.products?.map(product => (
                                 <Product nomal={true} key={product._id} data={product} />
                             ))}
-                        </Masonry>
-                    )}
+                        {products.length === 0 &&
+                            new Array(10).fill().map((item, index) => (
+                                <div className="pr-5">
+                                    <div className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer">
+                                        <LoadingSkeleton className="h-[243px] w-full" />
+                                        <LoadingSkeleton className={'w-[100px] my-[10px] h-[20px]'} />
+                                        <LoadingSkeleton className={'w-[100px] mb-[10px] h-[20px]'} />
+                                        <LoadingSkeleton className={'w-[100px] h-[20px]'} />
+                                    </div>
+                                </div>
+                            ))}
+                    </Masonry>
                     {products?.counts === 0 && (
                         <div className="min-h-[500px] flex justify-center items-center text-main font-semibold">
                             There are no matches for this information !!!

@@ -9,10 +9,11 @@ import Banner from '../../components/home/Banner';
 import { CustomSlider } from '../../components';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { createSearchParams } from 'react-router-dom';
+import LoadingSkeleton from '../../components/loading/LoadingSkeleton';
 
 const Home = ({ navigate }) => {
     const { newArrivals } = useSelector(state => state.products);
-    const { categories } = useSelector(state => state.app);
+    const { categories, isLoading } = useSelector(state => state.app);
     const { MdNavigateNext } = icons;
     return (
         <>
@@ -40,39 +41,62 @@ const Home = ({ navigate }) => {
                             HOT COLLECTIONS
                         </h2>
                         <div className="flex flex-wrap mx-[-10px] mt-[20px]">
-                            {categories
-                                ?.filter(el => el.brand.length > 0)
-                                .map((categorie, index) => (
-                                    <div className=" flex w-1/2 sm:w-1/3 px-[10px] mb-[20px] " key={index}>
-                                        <div className="sm:flex w-full border p-[15px] ">
-                                            <img
-                                                loading="lazy"
-                                                className="lg:pl-[20px] object-contain md:w-[100px] lg:w-[144px] h-[129px]"
-                                                alt=""
-                                                src={categorie.image}
-                                            />
-                                            <div className="lg:pl-[20px]">
-                                                <h3 className="text-[14px] mb-[14px] font-medium uppercase">
-                                                    {categorie.title}
-                                                </h3>
-                                                <ul>
-                                                    {categorie.brand?.map((item, index) => (
-                                                        <li key={index} className="text-[14px] text-[#808080] mb-[5px]">
-                                                            <span
-                                                                onClick={() => {
-                                                                    navigate({
-                                                                        pathname: `/${categorie.title}`,
-                                                                        search: createSearchParams({
-                                                                            brand: item,
-                                                                        }).toString(),
-                                                                    });
-                                                                }}
-                                                                className="flex items-center hover:text-main cursor-pointer"
+                            {!isLoading &&
+                                categories
+                                    ?.filter(el => el.brand.length > 0)
+                                    .map((categorie, index) => (
+                                        <div className=" flex w-1/2 sm:w-1/3 px-[10px] mb-[20px] " key={index}>
+                                            <div className="sm:flex w-full border p-[15px] ">
+                                                <img
+                                                    loading="lazy"
+                                                    className="lg:pl-[20px] object-contain md:w-[100px] lg:w-[144px] h-[129px]"
+                                                    alt=""
+                                                    src={categorie.image}
+                                                />
+                                                <div className="lg:pl-[20px]">
+                                                    <h3 className="text-[14px] mb-[14px] font-medium uppercase">
+                                                        {categorie.title}
+                                                    </h3>
+                                                    <ul>
+                                                        {categorie.brand?.map((item, index) => (
+                                                            <li
+                                                                key={index}
+                                                                className="text-[14px] text-[#808080] mb-[5px]"
                                                             >
-                                                                <MdNavigateNext />
-                                                                {item}
-                                                            </span>
-                                                        </li>
+                                                                <span
+                                                                    onClick={() => {
+                                                                        navigate({
+                                                                            pathname: `/${categorie.title}`,
+                                                                            search: createSearchParams({
+                                                                                brand: item,
+                                                                            }).toString(),
+                                                                        });
+                                                                    }}
+                                                                    className="flex items-center hover:text-main cursor-pointer"
+                                                                >
+                                                                    <MdNavigateNext />
+                                                                    {item}
+                                                                </span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                            {isLoading &&
+                                new Array(6).fill().map((item, index) => (
+                                    <div key={index} className="flex w-1/2 sm:w-1/3 px-[10px] mb-[20px] ">
+                                        <div className="sm:flex w-full border p-[15px] ">
+                                            <LoadingSkeleton className="lg:ml-[20px] md:w-[100px] lg:w-[144px] h-[129px] md:mr-[10px]" />
+                                            <div className="lg:pl-[20px] mt-[10px] md:mt-0">
+                                                <LoadingSkeleton className={'w-[100px] h-[20px]'} />
+                                                <ul>
+                                                    {new Array(4).fill().map((item, index) => (
+                                                        <LoadingSkeleton
+                                                            key={index}
+                                                            className={'w-[100px] h-[20px] mt-[10px]'}
+                                                        />
                                                     ))}
                                                 </ul>
                                             </div>
@@ -81,6 +105,7 @@ const Home = ({ navigate }) => {
                                 ))}
                         </div>
                     </div>
+
                     {/* <div className="w-full mt-[20px]">
                         <h2 className="w-full font-semibold text-[20px] py-[15px] border-b-2 border-main mb-[20px]">
                             BLOG POSTS

@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-// Outlet sẽ chuyển tới trang con của public trùng với đường dẫn trên url
 import { Footer } from '../../components';
 import TopHeader from './TopHeader';
 import { Header, Navigation } from '../../components/home';
@@ -17,7 +16,7 @@ const Public = () => {
     };
 
     return (
-        <div onScroll={onScroll} className="max-h-screen relative overflow-y-auto flex flex-col items-center">
+        <div onScroll={onScroll} className="max-h-screen overflow-y-auto relative flex flex-col items-center">
             <div ref={pageRef} className="w-full">
                 <TopHeader />
             </div>

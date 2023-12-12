@@ -14,13 +14,13 @@ app.use(
     cors({
         origin: process.env.CLIENT_URL,
         methods: ['POST, PUT, GET, DELETE'],
-        credentials: true, //credentials khi đăng ký tài khoản thì lưu vào cookie trình duyệt
+        credentials: true,
     })
 );
 
-app.use(express.json()); // đọc data của client
-app.use(express.urlencoded({ extended: true })); // đọc được url encode
-app.use(cookieParser()); // đọc cookie parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 dbConnect();
 // app.use("/", (req, res) => {

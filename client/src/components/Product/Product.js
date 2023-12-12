@@ -16,7 +16,6 @@ import path from '../../ultils/path';
 import { getCurrent } from '../../store/user/asyncActions';
 import SelectOption from '../SelectOption';
 import clsx from 'clsx';
-import LoadingSkeleton from '../loading/LoadingSkeleton';
 
 const { AiOutlineHeart, FaOpencart, AiFillEye, AiFillHeart } = icons;
 const Product = ({ data, isLabel, nomal, navigate, dispatch, location, textWhite }) => {
@@ -96,19 +95,8 @@ const Product = ({ data, isLabel, nomal, navigate, dispatch, location, textWhite
         }
     };
 
-    return !data ? (
-        <div className="pr-5">
-            <div className="flex flex-col p-[15px] mb-[20px] border h-[366px] cursor-pointer">
-                <div className="w-full relative ">
-                    <LoadingSkeleton className="h-[243px] w-full " />
-                </div>
-                <LoadingSkeleton className="flex w-[100px] my-[10px] h-[14px] " />
-                <LoadingSkeleton className="w-full h-[20px] mb-[10px] ">{data?.title}</LoadingSkeleton>
-                <LoadingSkeleton className="w-full h-[20px] mb-[10px] ">{data?.title}</LoadingSkeleton>
-            </div>
-        </div>
-    ) : (
-        <div className="pr-5">
+    return (
+        <div className="md:pr-5">
             <div
                 onClick={() => {
                     navigate(`/${data?.category?.toLowerCase()}/${data?._id}/${data.title}`);

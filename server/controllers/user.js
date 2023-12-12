@@ -34,14 +34,12 @@ const users = require('../utils/contants');
 // api/user/register
 const register = asyncHandler(async (req, res) => {
     const { firstname, lastname, email, password, phone } = req.body;
-    // kiem tra field, tranh truy van lien tuc vao db
     if (!firstname || !lastname || !email || !password || !phone)
         return res.status(400).json({
             success: false,
             message: 'Missing Inputs',
         });
 
-    //kiểm tra xem người dùng đã tồn tại từ trước hay chưa
     const user = await User.findOne({ email });
     if (user) throw new Error('Already exists user');
     else {
@@ -89,7 +87,6 @@ const finalRegister = asyncHandler(async (req, res) => {
 //api/user/login
 const login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
-    // kiem tra field, tranh truy van lien tuc vao db
     if (!email || !password)
         return res.status(400).json({
             success: false,
